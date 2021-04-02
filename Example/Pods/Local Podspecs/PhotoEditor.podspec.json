@@ -1,0 +1,22 @@
+{
+  "name": "PhotoEditor",
+  "version": "0.1.0",
+  "summary": "A short description of PhotoEditor.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/234539037@qq.com/PhotoEditor",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "234539037@qq.com": "ex-huangxi001@pingan.com.cn"
+  },
+  "source": {
+    "git": "https://github.com/234539037@qq.com/PhotoEditor.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "source_files": "PhotoEditor/Classes/**/*"
+}

@@ -1,0 +1,16 @@
+PODS:
+  - PhotoEditor (0.1.0)
+
+DEPENDENCIES:
+  - PhotoEditor (from `../`)
+
+EXTERNAL SOURCES:
+  PhotoEditor:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  PhotoEditor: fe4fd8fa23960e1d616b3e122d2f4ac7367c5ab2
+
+PODFILE CHECKSUM: a23067b51e9de8eb912842b3ebe42b876a9984b5
+
+COCOAPODS: 1.8.4
