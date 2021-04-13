@@ -9,6 +9,7 @@
 #import "PAEBPhotoEditViewController.h"
 #import "PAEBPhotoEditDefine.h"
 #import "PAEBPhotoEditBottomView.h"
+#import "PAEBPhotoEditTextView.h"
 #import "UIView+HXExtension.h"
 #import "UIButton+HXExtension.h"
 
@@ -195,11 +196,11 @@
 //                }
             }else if (tag == 1) {
                 // 文字
-//                [HXPhotoEditTextView showEitdTextViewWithConfiguration:weakSelf.configuration completion:^(HXPhotoEditTextModel * _Nonnull textModel) {
-//                    HXPhotoEditStickerItem *item = [[HXPhotoEditStickerItem alloc] init];
+                [PAEBPhotoEditTextView showEitdTextViewWithConfiguration:weakSelf.configuration completion:^(PAEBPhotoEditTextModel * _Nonnull textModel) {
+//                    PAEBPhotoEditStickerItem *item = [[PAEBPhotoEditStickerItem alloc] init];
 //                    item.textModel = textModel;
 //                    [weakSelf.editingView.clippingView.imageView.stickerView addStickerItem:item isSelected:YES];
-//                }];
+                }];
             }else if (tag == 2) {
                 // 裁剪
 //                [weakSelf.editingView photoEditEnable:!isSelected];

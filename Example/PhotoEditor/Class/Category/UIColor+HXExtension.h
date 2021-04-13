@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIColor *)hx_colorWithHexStr:(NSString *)string;
 + (UIColor *)hx_colorWithHexStr:(NSString *)string alpha:(CGFloat)alpha;
 + (UIColor *)hx_colorWithR:(CGFloat)red g:(CGFloat)green b:(CGFloat)blue a:(CGFloat)alpha;
+- (BOOL)hx_colorIsWhite;
 @end
 
 NS_ASSUME_NONNULL_END

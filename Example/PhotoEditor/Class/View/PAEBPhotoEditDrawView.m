@@ -7,7 +7,7 @@
 //
 
 #import "PAEBPhotoEditDrawView.h"
-NSString *const kDrawViewData = @"DrawViewData";
+NSString *const kPAEBDrawViewData = @"kPAEBDrawViewData";
 
 @interface PAEBDrawBezierPath : UIBezierPath
 @property (strong, nonatomic) UIColor *color;
@@ -54,6 +54,128 @@ NSString *const kDrawViewData = @"DrawViewData";
     slayer.strokeColor = path.color.CGColor;
     slayer.lineWidth = path.lineWidth;
     return slayer;
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if ([event allTouches].count == 1 && self.enabled) {
+        self.isWork = NO;
+        self.isBegan = YES;
+        PAEBDrawBezierPath *path = [[PAEBDrawBezierPath alloc] init];
+        UITouch *touch = [touches anyObject];
+        CGPoint point = [touch locationInView:self];
+        path.lineWidth = self.lineWidth;
+        path.lineCapStyle = kCGLineCapRound;
+        path.lineJoinStyle = kCGLineJoinRound;
+        [path moveToPoint:point];
+        path.color = self.lineColor;
+        [self.lineArray addObject:path];
+        
+        CAShapeLayer *slayer = [self createShapeLayer:path];
+        [self.layer addSublayer:slayer];
+        [self.slayerArray addObject:slayer];
+    } else {
+        [super touchesBegan:touches withEvent:event];
+    }
+}
+
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if ([event allTouches].count == 1 && self.enabled){
+        UITouch *touch = [touches anyObject];
+        CGPoint point = [touch locationInView:self];
+        PAEBDrawBezierPath *path = self.lineArray.lastObject;
+        if (!CGPointEqualToPoint(path.currentPoint, point)) {
+            if (self.beganDraw) {
+                self.beganDraw();
+            }
+            self.isBegan = NO;
+            self.isWork = YES;
+            [path addLineToPoint:point];
+            CAShapeLayer *slayer = self.slayerArray.lastObject;
+            slayer.path = path.CGPath;
+        }
+    } else {
+        [super touchesMoved:touches withEvent:event];
+    }
+}
+
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(nullable UIEvent *)event {
+    if ([event allTouches].count == 1 && self.enabled){
+        if (self.isWork) {
+            if (self.endDraw) {
+                self.endDraw();
+            }
+        } else {
+            [self undo];
+        }
+    } else {
+        [super touchesEnded:touches withEvent:event];
+    }
+}
+
+
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    if ([event allTouches].count == 1 && self.enabled){
+        if (self.isWork) {
+            if (self.endDraw) {
+                self.endDraw();
+            }
+        } else {
+            [self undo];
+        }
+    } else {
+        [super touchesCancelled:touches withEvent:event];
+    }
+}
+
+- (void)setEnabled:(BOOL)enabled {
+    _enabled = enabled;
+}
+
+- (BOOL)canUndo {
+    return self.lineArray.count;
+}
+
+- (void)undo {
+    [self.slayerArray.lastObject removeFromSuperlayer];
+    [self.slayerArray removeLastObject];
+    [self.lineArray removeLastObject];
+}
+- (BOOL)isDrawing {
+    if (!self.userInteractionEnabled || !self.enabled) {
+        return NO;
+    }
+    return _isWork;
+}
+
+/** 图层数量 */
+- (NSUInteger)count {
+    return self.lineArray.count;
+}
+
+- (void)clearCoverage {
+    [self.lineArray removeAllObjects];
+    [self.slayerArray performSelector:@selector(removeFromSuperlayer)];
+    [self.slayerArray removeAllObjects];
+}
+
+#pragma mark  - 数据
+- (NSDictionary *)data {
+    if (self.lineArray.count) {
+        return @{kPAEBDrawViewData:[self.lineArray copy]};
+    }
+    return nil;
+}
+
+- (void)setData:(NSDictionary *)data {
+    NSArray *lineArray = data[kPAEBDrawViewData];
+    if (lineArray.count) {
+        for (PAEBDrawBezierPath *path in lineArray) {
+            CAShapeLayer *slayer = [self createShapeLayer:path];
+            [self.layer addSublayer:slayer];
+            [self.slayerArray addObject:slayer];
+        }
+        [self.lineArray addObjectsFromArray:lineArray];
+    }
 }
 
 @end
