@@ -4,6 +4,7 @@ platform :ios, '9.0'
 
 target 'PhotoEditor_Example' do
   pod 'PhotoEditor', :path => '../'
+  pod 'TZImagePickerController' #iOS8 and later
 
   target 'PhotoEditor_Tests' do
     inherit! :search_paths

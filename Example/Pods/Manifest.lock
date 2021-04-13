@@ -1,8 +1,14 @@
 PODS:
   - PhotoEditor (0.1.0)
+  - TZImagePickerController (3.6.0)
 
 DEPENDENCIES:
   - PhotoEditor (from `../`)
+  - TZImagePickerController
+
+SPEC REPOS:
+  trunk:
+    - TZImagePickerController
 
 EXTERNAL SOURCES:
   PhotoEditor:
@@ -10,7 +16,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   PhotoEditor: fe4fd8fa23960e1d616b3e122d2f4ac7367c5ab2
+  TZImagePickerController: a37d7eec87c54436e896a67947033ad2178d498b
 
-PODFILE CHECKSUM: a23067b51e9de8eb912842b3ebe42b876a9984b5
+PODFILE CHECKSUM: 21a1af2a0f8531c9f1208f19cdb42a425c669957
 
 COCOAPODS: 1.8.4
