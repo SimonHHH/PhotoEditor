@@ -27,6 +27,7 @@
         PAEBPhotoModel *photoModel = [PAEBPhotoModel photoModelWithPHAsset:[assets firstObject]];
         ctl.photoModel = photoModel;
         ctl.modalPresentationCapturesStatusBarAppearance = YES;
+        ctl.modalPresentationStyle = UIModalPresentationOverFullScreen;
         [weakSelf presentViewController:ctl animated:YES completion:nil];
     }];
     

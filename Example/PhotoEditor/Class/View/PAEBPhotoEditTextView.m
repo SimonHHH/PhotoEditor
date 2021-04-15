@@ -621,6 +621,7 @@
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(57, 0, self.hx_w-57, 56) collectionViewLayout:self.flowLayout];
         self.collectionView.dataSource = self;
         self.collectionView.delegate = self;
+        self.collectionView.backgroundColor = [UIColor clearColor];
         [self.collectionView registerClass:[PAEBPhotoEditGraffitiColorViewCell class] forCellWithReuseIdentifier:NSStringFromClass([PAEBPhotoEditGraffitiColorViewCell class])];
     }
     return _collectionView;

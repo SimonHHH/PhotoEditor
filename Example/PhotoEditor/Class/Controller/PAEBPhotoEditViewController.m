@@ -85,12 +85,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+#pragma clang diagnostic pop
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self completeTransition:self.editImage];
     [self showTopBottomView];
 }
 
@@ -136,6 +140,36 @@
         [self.view addSubview:self.toolsView];
 //        [self.view addSubview:self.clippingToolBar];
 //    }
+}
+
+- (void)hideImageView {
+    self.editingView.hidden = YES;
+}
+
+- (void)completeTransition:(UIImage *)image {
+    self.transitionCompletion = YES;
+    self.editingView.hidden = NO;
+    if (self.photoModel.photoEdit) {
+        if (!self.editingView.image) {
+            self.editingView.image = self.editImage;
+            [self setupPhotoData];
+        }
+        self.editingView.hidden = NO;
+        if (self.onlyCliping) {
+            [self.editingView setClipping:YES animated:YES];
+//            [self.clippingToolBar setRotateAlpha:1.f];
+            [UIView animateWithDuration:0.2 animations:^{
+//                self.clippingToolBar.alpha = 1;
+            }];
+        }
+        return;
+    }
+    if (self.imageRequestComplete) {
+        [self loadImageCompletion];
+    }else {
+//        [self.view hx_showLoadingHUDText:nil];
+        self.editingView.image = image;
+    }
 }
 
 - (void)hiddenTopBottomView {
@@ -266,7 +300,7 @@
     }
 }
 
-- (void)loadImageCompletion {
+- (void)loadImageCompletion {  //g
     self.imageRequestComplete = YES;
     if (self.transitionCompletion) {
         self.editingView.image = self.editImage;
@@ -356,9 +390,9 @@
 - (void)didBgViewClick {
     [UIView cancelPreviousPerformRequestsWithTarget:self];
     if (self.toolsView.alpha != 1) {
-//        [self showBgViews];
+        [self showBgViews];
     }else {
-//        [self hideBgViews];
+        [self hideBgViews];
     }
 }
 
@@ -470,7 +504,7 @@
 
 - (PAEBPhotoEditingView *)editingView {
     if (!_editingView) {
-        _editingView = [[PAEBPhotoEditingView alloc] initWithFrame:self.view.bounds];
+        _editingView = [[PAEBPhotoEditingView alloc] initWithFrame:CGRectMake(0, 0, HX_ScreenWidth, HX_ScreenHeight)];
         _editingView.onlyCliping = self.onlyCliping;
         _editingView.configuration = self.configuration;
         _editingView.clippingDelegate = self;

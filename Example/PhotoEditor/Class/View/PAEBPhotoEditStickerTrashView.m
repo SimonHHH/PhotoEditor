@@ -11,6 +11,7 @@
 #import "UIImage+HXExtension.h"
 #import "PAEBPhotoEditDefine.h"
 #import "UIColor+HXExtension.h"
+#import "UIFont+HXExtension.h"
 
 @interface PAEBPhotoEditStickerTrashView()
 @property (nonatomic, strong) UIImageView *imageView;
@@ -82,8 +83,9 @@
 
 - (UILabel *)titleLb {
     if (!_titleLb) {
-        _titleLb = [[UILabel alloc] initWithFrame:CGRectMake(0, 2, self.hx_w, 14.5)];
+        _titleLb = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.imageView.frame)+2, self.hx_w, 14.5)];
         _titleLb.textColor = [UIColor whiteColor];
+        _titleLb.font = [UIFont hx_pingFangFontOfSize:10.0];
         _titleLb.textAlignment = NSTextAlignmentCenter;
         _titleLb.backgroundColor = [UIColor clearColor];
         _titleLb.text = @"拖动到此处删除";
