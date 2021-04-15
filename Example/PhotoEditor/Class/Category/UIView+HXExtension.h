@@ -21,6 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) CGPoint hx_origin;
 
 
+- (UIImage *)hx_captureImageAtFrame:(CGRect)rect;
+
+/// 根据坐标获取颜色
+- (UIColor *)hx_colorOfPoint:(CGPoint)point;
 @end
 
 NS_ASSUME_NONNULL_END

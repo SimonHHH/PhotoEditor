@@ -35,10 +35,20 @@ if (@available(iOS 11.0, *)) {\
 
 #define HXTabbarHeight HXBottomMargin + 44.0
 
+#define HXTopMargin ((HXStatusBarHeight == 44) ? 44 : 0)
+
 
 // 弱引用
 #define HXWeakSelf __weak typeof(self) weakSelf = self;
 
 #define HXThemeColor @"FF4800"
+
+#define HXRound(x) (round(x*100000)/100000)
+#define HXRoundHundreds(x) (round(x*100)/100)
+#define HXRoundDecade(x) (round(x*10)/10)
+
+#define HXRoundFrame(rect) CGRectMake(HXRound(rect.origin.x), HXRound(rect.origin.y), HXRound(rect.size.width), HXRound(rect.size.height))
+
+#define HXRoundFrameHundreds(rect) CGRectMake(HXRoundHundreds(rect.origin.x), HXRoundHundreds(rect.origin.y), HXRoundHundreds(rect.size.width), HXRoundHundreds(rect.size.height))
 
 #endif /* PAEBPhotoEditDefine_h */

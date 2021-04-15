@@ -54,6 +54,23 @@
 		E9E0F1B8262581460047146E /* photo_edit_text_normal@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9E0F1AC262581460047146E /* photo_edit_text_normal@3x.png */; };
 		E9E0F1B9262581460047146E /* photo_edit_text_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9E0F1AD262581460047146E /* photo_edit_text_selected@2x.png */; };
 		E9E0F1BE262583F70047146E /* PAEBPhotoEditGraffitiColorViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F1BD262583F70047146E /* PAEBPhotoEditGraffitiColorViewCell.m */; };
+		E9E0F1C92625AAA10047146E /* PAEBPhotoEditImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F1C82625AAA10047146E /* PAEBPhotoEditImageView.m */; };
+		E9E0F1CE2625AB670047146E /* PAEBPhotoEditSplashView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F1CD2625AB670047146E /* PAEBPhotoEditSplashView.m */; };
+		E9E0F1D32625AC890047146E /* PAEBPhotoEditStickerItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F1D22625AC890047146E /* PAEBPhotoEditStickerItem.m */; };
+		E9E0F1D82625AD410047146E /* PAEBPhotoEditStickerItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F1D72625AD410047146E /* PAEBPhotoEditStickerItemView.m */; };
+		E9E0F1DD2625AE250047146E /* PAEBPhotoEditStickerItemContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F1DC2625AE250047146E /* PAEBPhotoEditStickerItemContentView.m */; };
+		E9E0F1E22625B5590047146E /* PAEBPhotoEditStickerTrashView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F1E12625B5590047146E /* PAEBPhotoEditStickerTrashView.m */; };
+		E9E0F1ED2625B6900047146E /* photo_edit_trash_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9E0F1E92625B6900047146E /* photo_edit_trash_close@2x.png */; };
+		E9E0F1EE2625B6900047146E /* photo_edit_trash_open@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9E0F1EA2625B6900047146E /* photo_edit_trash_open@3x.png */; };
+		E9E0F1EF2625B6900047146E /* photo_edit_trash_close@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9E0F1EB2625B6900047146E /* photo_edit_trash_close@3x.png */; };
+		E9E0F1F02625B6900047146E /* photo_edit_trash_open@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E9E0F1EC2625B6900047146E /* photo_edit_trash_open@2x.png */; };
+		E9E0F1F526267AE90047146E /* PAEBPhotoEditSplashMaskLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F1F426267AE90047146E /* PAEBPhotoEditSplashMaskLayer.m */; };
+		E9E0F1FA2626C4FB0047146E /* PAEBPhotoEditGridView.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F1F92626C4FB0047146E /* PAEBPhotoEditGridView.m */; };
+		E9E0F1FF2626C5EC0047146E /* PAEBPhotoEditGridLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F1FE2626C5EC0047146E /* PAEBPhotoEditGridLayer.m */; };
+		E9E0F2042626C6680047146E /* PAEBPhotoEditGridMaskLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F2032626C6680047146E /* PAEBPhotoEditGridMaskLayer.m */; };
+		E9E0F2092626C85E0047146E /* PAEBPhotoEditResizeControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F2082626C85E0047146E /* PAEBPhotoEditResizeControl.m */; };
+		E9E0F20E2626FB3B0047146E /* PAEBAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F20D2626FB3B0047146E /* PAEBAssetManager.m */; };
+		E9E0F2132627089C0047146E /* NSString+HXExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E9E0F2122627089C0047146E /* NSString+HXExtension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +163,36 @@
 		E9E0F1AD262581460047146E /* photo_edit_text_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_edit_text_selected@2x.png"; sourceTree = "<group>"; };
 		E9E0F1BC262583F70047146E /* PAEBPhotoEditGraffitiColorViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditGraffitiColorViewCell.h; sourceTree = "<group>"; };
 		E9E0F1BD262583F70047146E /* PAEBPhotoEditGraffitiColorViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditGraffitiColorViewCell.m; sourceTree = "<group>"; };
+		E9E0F1C72625AAA10047146E /* PAEBPhotoEditImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditImageView.h; sourceTree = "<group>"; };
+		E9E0F1C82625AAA10047146E /* PAEBPhotoEditImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditImageView.m; sourceTree = "<group>"; };
+		E9E0F1CC2625AB670047146E /* PAEBPhotoEditSplashView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditSplashView.h; sourceTree = "<group>"; };
+		E9E0F1CD2625AB670047146E /* PAEBPhotoEditSplashView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditSplashView.m; sourceTree = "<group>"; };
+		E9E0F1D12625AC890047146E /* PAEBPhotoEditStickerItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditStickerItem.h; sourceTree = "<group>"; };
+		E9E0F1D22625AC890047146E /* PAEBPhotoEditStickerItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditStickerItem.m; sourceTree = "<group>"; };
+		E9E0F1D62625AD410047146E /* PAEBPhotoEditStickerItemView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditStickerItemView.h; sourceTree = "<group>"; };
+		E9E0F1D72625AD410047146E /* PAEBPhotoEditStickerItemView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditStickerItemView.m; sourceTree = "<group>"; };
+		E9E0F1DB2625AE250047146E /* PAEBPhotoEditStickerItemContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditStickerItemContentView.h; sourceTree = "<group>"; };
+		E9E0F1DC2625AE250047146E /* PAEBPhotoEditStickerItemContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditStickerItemContentView.m; sourceTree = "<group>"; };
+		E9E0F1E02625B5590047146E /* PAEBPhotoEditStickerTrashView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditStickerTrashView.h; sourceTree = "<group>"; };
+		E9E0F1E12625B5590047146E /* PAEBPhotoEditStickerTrashView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditStickerTrashView.m; sourceTree = "<group>"; };
+		E9E0F1E92625B6900047146E /* photo_edit_trash_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_edit_trash_close@2x.png"; sourceTree = "<group>"; };
+		E9E0F1EA2625B6900047146E /* photo_edit_trash_open@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_edit_trash_open@3x.png"; sourceTree = "<group>"; };
+		E9E0F1EB2625B6900047146E /* photo_edit_trash_close@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_edit_trash_close@3x.png"; sourceTree = "<group>"; };
+		E9E0F1EC2625B6900047146E /* photo_edit_trash_open@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo_edit_trash_open@2x.png"; sourceTree = "<group>"; };
+		E9E0F1F326267AE90047146E /* PAEBPhotoEditSplashMaskLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditSplashMaskLayer.h; sourceTree = "<group>"; };
+		E9E0F1F426267AE90047146E /* PAEBPhotoEditSplashMaskLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditSplashMaskLayer.m; sourceTree = "<group>"; };
+		E9E0F1F82626C4FB0047146E /* PAEBPhotoEditGridView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditGridView.h; sourceTree = "<group>"; };
+		E9E0F1F92626C4FB0047146E /* PAEBPhotoEditGridView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditGridView.m; sourceTree = "<group>"; };
+		E9E0F1FD2626C5EC0047146E /* PAEBPhotoEditGridLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditGridLayer.h; sourceTree = "<group>"; };
+		E9E0F1FE2626C5EC0047146E /* PAEBPhotoEditGridLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditGridLayer.m; sourceTree = "<group>"; };
+		E9E0F2022626C6680047146E /* PAEBPhotoEditGridMaskLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditGridMaskLayer.h; sourceTree = "<group>"; };
+		E9E0F2032626C6680047146E /* PAEBPhotoEditGridMaskLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditGridMaskLayer.m; sourceTree = "<group>"; };
+		E9E0F2072626C85E0047146E /* PAEBPhotoEditResizeControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBPhotoEditResizeControl.h; sourceTree = "<group>"; };
+		E9E0F2082626C85E0047146E /* PAEBPhotoEditResizeControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBPhotoEditResizeControl.m; sourceTree = "<group>"; };
+		E9E0F20C2626FB3B0047146E /* PAEBAssetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAEBAssetManager.h; sourceTree = "<group>"; };
+		E9E0F20D2626FB3B0047146E /* PAEBAssetManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAEBAssetManager.m; sourceTree = "<group>"; };
+		E9E0F2112627089C0047146E /* NSString+HXExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+HXExtension.h"; sourceTree = "<group>"; };
+		E9E0F2122627089C0047146E /* NSString+HXExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+HXExtension.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +346,8 @@
 				E9E0F1492623DEDA0047146E /* PAEBPhotoModel.m */,
 				E9E0F192262541650047146E /* PAEBPhotoEditGraffitiColorModel.h */,
 				E9E0F193262541650047146E /* PAEBPhotoEditGraffitiColorModel.m */,
+				E9E0F1D12625AC890047146E /* PAEBPhotoEditStickerItem.h */,
+				E9E0F1D22625AC890047146E /* PAEBPhotoEditStickerItem.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -316,6 +365,8 @@
 				E9E0F084261D99740047146E /* UIView+HXExtension.m */,
 				E9E0F19D26254ABB0047146E /* UIFont+HXExtension.h */,
 				E9E0F19E26254ABB0047146E /* UIFont+HXExtension.m */,
+				E9E0F2112627089C0047146E /* NSString+HXExtension.h */,
+				E9E0F2122627089C0047146E /* NSString+HXExtension.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -328,6 +379,8 @@
 				E9E0F063261D61670047146E /* Model */,
 				E9E0F066261D61DC0047146E /* Category */,
 				E9E0F073261D85510047146E /* PAEBPhotoEditDefine.h */,
+				E9E0F20C2626FB3B0047146E /* PAEBAssetManager.h */,
+				E9E0F20D2626FB3B0047146E /* PAEBAssetManager.m */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -341,14 +394,34 @@
 				E9E0F178262465750047146E /* PAEBPhotoEditingView.m */,
 				E9E0F17C262520860047146E /* PAEBPhotoClippingView.h */,
 				E9E0F17D262520860047146E /* PAEBPhotoClippingView.m */,
+				E9E0F1C72625AAA10047146E /* PAEBPhotoEditImageView.h */,
+				E9E0F1C82625AAA10047146E /* PAEBPhotoEditImageView.m */,
 				E9E0F1812625259D0047146E /* PAEBPhotoEditDrawView.h */,
 				E9E0F1822625259D0047146E /* PAEBPhotoEditDrawView.m */,
 				E9E0F18826253B290047146E /* PAEBPhotoEditStickerView.h */,
 				E9E0F18926253B290047146E /* PAEBPhotoEditStickerView.m */,
+				E9E0F1CC2625AB670047146E /* PAEBPhotoEditSplashView.h */,
+				E9E0F1CD2625AB670047146E /* PAEBPhotoEditSplashView.m */,
 				E9E0F18D26253C8D0047146E /* PAEBPhotoEditTextView.h */,
 				E9E0F18E26253C8D0047146E /* PAEBPhotoEditTextView.m */,
 				E9E0F1BC262583F70047146E /* PAEBPhotoEditGraffitiColorViewCell.h */,
 				E9E0F1BD262583F70047146E /* PAEBPhotoEditGraffitiColorViewCell.m */,
+				E9E0F1D62625AD410047146E /* PAEBPhotoEditStickerItemView.h */,
+				E9E0F1D72625AD410047146E /* PAEBPhotoEditStickerItemView.m */,
+				E9E0F1DB2625AE250047146E /* PAEBPhotoEditStickerItemContentView.h */,
+				E9E0F1DC2625AE250047146E /* PAEBPhotoEditStickerItemContentView.m */,
+				E9E0F1E02625B5590047146E /* PAEBPhotoEditStickerTrashView.h */,
+				E9E0F1E12625B5590047146E /* PAEBPhotoEditStickerTrashView.m */,
+				E9E0F1F326267AE90047146E /* PAEBPhotoEditSplashMaskLayer.h */,
+				E9E0F1F426267AE90047146E /* PAEBPhotoEditSplashMaskLayer.m */,
+				E9E0F1F82626C4FB0047146E /* PAEBPhotoEditGridView.h */,
+				E9E0F1F92626C4FB0047146E /* PAEBPhotoEditGridView.m */,
+				E9E0F1FD2626C5EC0047146E /* PAEBPhotoEditGridLayer.h */,
+				E9E0F1FE2626C5EC0047146E /* PAEBPhotoEditGridLayer.m */,
+				E9E0F2022626C6680047146E /* PAEBPhotoEditGridMaskLayer.h */,
+				E9E0F2032626C6680047146E /* PAEBPhotoEditGridMaskLayer.m */,
+				E9E0F2072626C85E0047146E /* PAEBPhotoEditResizeControl.h */,
+				E9E0F2082626C85E0047146E /* PAEBPhotoEditResizeControl.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -368,6 +441,10 @@
 				E9E0F1A2262581450047146E /* photo_edit_tools_mosaic@3x.png */,
 				E9E0F1A8262581460047146E /* photo_edit_tools_text@2x.png */,
 				E9E0F1AB262581460047146E /* photo_edit_tools_text@3x.png */,
+				E9E0F1E92625B6900047146E /* photo_edit_trash_close@2x.png */,
+				E9E0F1EB2625B6900047146E /* photo_edit_trash_close@3x.png */,
+				E9E0F1EC2625B6900047146E /* photo_edit_trash_open@2x.png */,
+				E9E0F1EA2625B6900047146E /* photo_edit_trash_open@3x.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -462,12 +539,16 @@
 				E9E0F1B5262581460047146E /* photo_edit_text_normal@2x.png in Resources */,
 				71719F9F1E33DC2100824A3D /* LaunchScreen.storyboard in Resources */,
 				E9E0F1AF262581460047146E /* photo_edit_tools_clip@3x.png in Resources */,
+				E9E0F1F02625B6900047146E /* photo_edit_trash_open@2x.png in Resources */,
+				E9E0F1ED2625B6900047146E /* photo_edit_trash_close@2x.png in Resources */,
 				E9E0F1B4262581460047146E /* photo_edit_tools_text@2x.png in Resources */,
 				E9E0F1B9262581460047146E /* photo_edit_text_selected@2x.png in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				E9E0F1AE262581460047146E /* photo_edit_tools_mosaic@3x.png in Resources */,
 				E9E0F1B2262581460047146E /* photo_edit_text_selected@3x.png in Resources */,
+				E9E0F1EF2625B6900047146E /* photo_edit_trash_close@3x.png in Resources */,
+				E9E0F1EE2625B6900047146E /* photo_edit_trash_open@3x.png in Resources */,
 				E9E0F1B3262581460047146E /* photo_edit_tools_clip@2x.png in Resources */,
 				E9E0F1B1262581460047146E /* photo_edit_tools_graffiti@2x.png in Resources */,
 				E9E0F1B8262581460047146E /* photo_edit_text_normal@3x.png in Resources */,
@@ -557,9 +638,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9E0F1D82625AD410047146E /* PAEBPhotoEditStickerItemView.m in Sources */,
 				6003F59E195388D20070C39A /* HXAppDelegate.m in Sources */,
+				E9E0F1DD2625AE250047146E /* PAEBPhotoEditStickerItemContentView.m in Sources */,
+				E9E0F20E2626FB3B0047146E /* PAEBAssetManager.m in Sources */,
 				E9E0F04E261D574E0047146E /* UIButton+HXExtension.m in Sources */,
 				E9E0F18F26253C8D0047146E /* PAEBPhotoEditTextView.m in Sources */,
+				E9E0F1F526267AE90047146E /* PAEBPhotoEditSplashMaskLayer.m in Sources */,
 				E9E0F05A261D60550047146E /* PAEBPhotoEdit.m in Sources */,
 				E9E0F19F26254ABB0047146E /* UIFont+HXExtension.m in Sources */,
 				E9E0F1832625259D0047146E /* PAEBPhotoEditDrawView.m in Sources */,
@@ -569,15 +654,24 @@
 				E9E0F17E262520860047146E /* PAEBPhotoClippingView.m in Sources */,
 				E9E0F085261D99740047146E /* UIView+HXExtension.m in Sources */,
 				6003F5A7195388D20070C39A /* HXViewController.m in Sources */,
+				E9E0F1CE2625AB670047146E /* PAEBPhotoEditSplashView.m in Sources */,
+				E9E0F1FA2626C4FB0047146E /* PAEBPhotoEditGridView.m in Sources */,
 				E9E0F179262465750047146E /* PAEBPhotoEditingView.m in Sources */,
+				E9E0F2092626C85E0047146E /* PAEBPhotoEditResizeControl.m in Sources */,
 				E9E0F194262541650047146E /* PAEBPhotoEditGraffitiColorModel.m in Sources */,
 				E9E0F047261D56E10047146E /* UIColor+HXExtension.m in Sources */,
+				E9E0F1FF2626C5EC0047146E /* PAEBPhotoEditGridLayer.m in Sources */,
+				E9E0F2132627089C0047146E /* NSString+HXExtension.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
+				E9E0F1D32625AC890047146E /* PAEBPhotoEditStickerItem.m in Sources */,
 				E9E0F1BE262583F70047146E /* PAEBPhotoEditGraffitiColorViewCell.m in Sources */,
+				E9E0F1E22625B5590047146E /* PAEBPhotoEditStickerTrashView.m in Sources */,
 				E9E0F053261D59BD0047146E /* PAEBPhotoEditConfiguration.m in Sources */,
 				E9E0F05F261D610E0047146E /* UIImage+HXExtension.m in Sources */,
 				E9E0F18A26253B290047146E /* PAEBPhotoEditStickerView.m in Sources */,
 				E9E0F040261D55D00047146E /* PAEBPhotoEditViewController.m in Sources */,
+				E9E0F1C92625AAA10047146E /* PAEBPhotoEditImageView.m in Sources */,
+				E9E0F2042626C6680047146E /* PAEBPhotoEditGridMaskLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

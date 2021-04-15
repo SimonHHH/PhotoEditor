@@ -19,7 +19,7 @@
 }
 - (CGFloat)brushLineWidth {
     if (!_brushLineWidth) {
-        _brushLineWidth = 12.f;
+        _brushLineWidth = 7.f;
     }
     return _brushLineWidth;
 }

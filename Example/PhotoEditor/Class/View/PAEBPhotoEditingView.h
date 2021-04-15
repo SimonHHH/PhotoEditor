@@ -62,21 +62,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)canReset;
 /// 旋转
 - (void)rotate;
-/// 镜像翻转
-- (void)mirrorFlip;
 /// 默认长宽比例
 @property (nonatomic, assign) NSUInteger defaultAspectRatioIndex;
-/// 固定长宽比例
-@property (nonatomic, assign) BOOL fixedAspectRatio;
 /// 自定义固定比例
 @property (assign, nonatomic) CGSize customRatioSize;
 /// 只要裁剪
 @property (assign, nonatomic) BOOL onlyCliping;
-
-/// 长宽比例
-- (NSArray <NSString *>*)aspectRatioDescs;
-- (void)setAspectRatioIndex:(NSUInteger)aspectRatioIndex;- (void)setAspectRatioIndex:(NSUInteger)aspectRatioIndex animated:(BOOL)animated;
-- (NSUInteger)aspectRatioIndex;
 
 - (void)resetToRridRectWithAspectRatioIndex:(NSInteger)aspectRatioIndex;
 

@@ -59,8 +59,17 @@ typedef void (^ PAEBPhotoEditViewControllerDidCancelBlock)(PAEBPhotoEditViewCont
                     configuration:(PAEBPhotoEditConfiguration *)configuration;
 
 #pragma mark - < other >
+@property (assign, nonatomic) BOOL imageRequestComplete;
+@property (assign, nonatomic) BOOL transitionCompletion;
 @property (assign, nonatomic) BOOL isCancel;
-
+- (CGRect)getImageFrame;
+- (void)showBgViews;
+- (void)completeTransition:(UIImage *)image;
+- (CGRect)getDismissImageFrame;
+- (UIImage *)getCurrentImage;
+- (void)hideImageView;
+- (void)hiddenTopBottomView;
+- (void)showTopBottomView;
 @end
 
 NS_ASSUME_NONNULL_END

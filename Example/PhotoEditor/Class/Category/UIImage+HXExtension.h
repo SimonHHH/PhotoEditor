@@ -13,6 +13,22 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIImage (HXExtension)
 + (CGSize)hx_scaleImageSizeBySize:(CGSize)imageSize targetSize:(CGSize)size isBoth:(BOOL)isBoth;
 - (UIImage *)hx_scaleToFitSize:(CGSize)size;
+
+/// 合并图片(图片大小以第一张为准)
++ (UIImage *)hx_mergeimages:(NSArray <UIImage *>*)images;
+/** 合并图片（图片大小一致） */
+- (UIImage *)hx_mergeimages:(NSArray <UIImage *>*)images;
+
+- (UIImage *)hx_rotationImage:(UIImageOrientation)orient;
+
+- (UIImage *)hx_scaleToFillSize:(CGSize)size;
+
+- (UIImage *)hx_cropInRect:(CGRect)rect;
+
+- (UIImage *)hx_roundClipingImage;
+
+- (UIImage *)hx_normalizedImage;
+
 @end
 
 NS_ASSUME_NONNULL_END
