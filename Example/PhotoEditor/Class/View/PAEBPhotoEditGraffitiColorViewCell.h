@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PAEBPhotoEditGraffitiColorViewCell : UICollectionViewCell
-@property (strong, nonatomic) PAEBPhotoEditGraffitiColorModel *model;
+@property (nonatomic, strong) PAEBPhotoEditGraffitiColorModel *model;
 @end
 
 NS_ASSUME_NONNULL_END

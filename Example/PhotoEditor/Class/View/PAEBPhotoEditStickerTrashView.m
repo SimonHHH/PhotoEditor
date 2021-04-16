@@ -37,7 +37,12 @@
 
 - (void)initUI {
     [self addSubview:self.redView];
+    
+    UIBlurEffect *blur = [UIBlurEffect effectWithStyle: UIBlurEffectStyleDark];
+    self.visualView = [[UIVisualEffectView alloc] initWithEffect:blur];
+    self.visualView.frame = self.bounds;
     [self addSubview:self.visualView];
+
     [self addSubview:self.imageView];
     [self addSubview:self.titleLb];
     
@@ -62,15 +67,6 @@
         _redView.backgroundColor = [UIColor hx_colorWithHexStr:@"#FF5653"];
     }
     return _redView;
-}
-
-- (UIVisualEffectView *)visualView {
-    if (_visualView) {
-        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-        _visualView = [[UIVisualEffectView alloc] initWithFrame:self.bounds];
-        _visualView.effect = effect;
-    }
-    return _visualView;
 }
 
 - (UIImageView *)imageView {

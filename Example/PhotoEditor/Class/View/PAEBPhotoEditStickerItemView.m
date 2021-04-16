@@ -20,14 +20,14 @@
 #define PAEBItemView_margin 22
 
 @interface PAEBPhotoEditStickerItemView ()
-@property (strong, nonatomic) PAEBPhotoEditStickerItemContentView *contentView;
+@property (nonatomic, strong) PAEBPhotoEditStickerItemContentView *contentView;
 /// 拖动时初始的坐标
-@property (assign, nonatomic) CGPoint initialPoint;
+@property (nonatomic, assign) CGPoint initialPoint;
 /// 捏合时的初始比例
-@property (assign, nonatomic) CGFloat initialScale;
+@property (nonatomic, assign) CGFloat initialScale;
 /// 旋转时的初始弧度
-@property (assign, nonatomic) CGFloat initialArg;
-@property (assign, nonatomic) BOOL touching;
+@property (nonatomic, assign) CGFloat initialArg;
+@property (nonatomic, assign) BOOL touching;
 @end
 
 @implementation PAEBPhotoEditStickerItemView

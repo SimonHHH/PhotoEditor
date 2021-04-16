@@ -42,7 +42,7 @@
 @property (nonatomic, strong) UIView *cropView;
 
 @property (nonatomic, assign) double progress;
-@property (strong, nonatomic) UIAlertController *alertView;
+@property (nonatomic, strong) UIAlertController *alertView;
 @property (nonatomic, strong) UIView *iCloudErrorView;
 @end
 

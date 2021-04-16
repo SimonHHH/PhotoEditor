@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 @class PAEBPhotoEditStickerItem;
 @interface PAEBPhotoEditStickerItemContentView : UIView
-@property (strong, nonatomic, readonly) PAEBPhotoEditStickerItem *item;
+@property (nonatomic, strong, readonly) PAEBPhotoEditStickerItem *item;
 - (instancetype)initWithItem:(PAEBPhotoEditStickerItem *)item;
 - (void)updateItem:(PAEBPhotoEditStickerItem *)item;
 @end

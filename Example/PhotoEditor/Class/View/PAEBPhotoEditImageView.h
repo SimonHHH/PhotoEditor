@@ -20,14 +20,14 @@ typedef NS_ENUM(NSUInteger, PAEBPhotoEditImageViewType) {
 };
 @class PAEBPhotoEditConfiguration;
 @interface PAEBPhotoEditImageView : UIView
-@property (strong, nonatomic, readonly) UIImageView *imageView;
-@property (strong, nonatomic) UIImage *image;
-@property (assign, nonatomic) PAEBPhotoEditImageViewType type;
-@property (strong, nonatomic, readonly) PAEBPhotoEditDrawView *drawView;
-@property (strong, nonatomic, readonly) PAEBPhotoEditStickerView *stickerView;
-@property (strong, nonatomic, readonly) PAEBPhotoEditSplashView *splashView;
+@property (nonatomic, strong, readonly) UIImageView *imageView;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, assign) PAEBPhotoEditImageViewType type;
+@property (nonatomic, strong, readonly) PAEBPhotoEditDrawView *drawView;
+@property (nonatomic, strong, readonly) PAEBPhotoEditStickerView *stickerView;
+@property (nonatomic, strong, readonly) PAEBPhotoEditSplashView *splashView;
 
-@property (assign, nonatomic) BOOL splashViewEnable;
+@property (nonatomic, assign) BOOL splashViewEnable;
 /// 显示界面的缩放率
 @property (nonatomic, assign) CGFloat screenScale;
 
@@ -36,7 +36,7 @@ typedef NS_ENUM(NSUInteger, PAEBPhotoEditImageViewType) {
 @property (nonatomic, copy, nullable) CGFloat (^ getMinScale)(CGSize size);
 @property (nonatomic, copy, nullable) CGFloat (^ getMaxScale)(CGSize size);
 
-@property (strong, nonatomic) PAEBPhotoEditConfiguration *configuration;
+@property (nonatomic, strong) PAEBPhotoEditConfiguration *configuration;
 /** 数据 */
 @property (nonatomic, strong, nullable) NSDictionary *photoEditData;
 - (UIImage * _Nullable)editOtherImagesInRect:(CGRect)rect rotate:(CGFloat)rotate mirrorHorizontally:(BOOL)mirrorHorizontally;

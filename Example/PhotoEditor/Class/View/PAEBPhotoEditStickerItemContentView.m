@@ -11,9 +11,9 @@
 #import "PAEBPhotoEditViewController.h"
 
 @interface PAEBPhotoEditStickerItemContentView ()<UIGestureRecognizerDelegate>
-@property (strong, nonatomic) UIImageView *imageView;
+@property (nonatomic, strong) UIImageView *imageView;
 
-@property (strong, nonatomic) PAEBPhotoEditStickerItem *item;
+@property (nonatomic, strong) PAEBPhotoEditStickerItem *item;
 @end
 
 @implementation PAEBPhotoEditStickerItemContentView

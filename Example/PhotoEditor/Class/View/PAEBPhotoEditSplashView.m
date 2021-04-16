@@ -47,7 +47,7 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
 }
 - (void)customInit {
     self.exclusiveTouch = YES;
-    _squareWidth = 15.f;
+    _squareWidth = 10.f;
     _paintSize = CGSizeMake(50, 50);
     _state = PAEBPhotoEditSplashStateType_Mosaic;
     _layerArray = [NSMutableArray array];

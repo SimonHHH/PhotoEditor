@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, readonly) UIView *clipZoomView;
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, weak) id<PAEBPhotoEditingViewDelegate> clippingDelegate;
-@property (strong, nonatomic) PAEBPhotoEditConfiguration *configuration;
+@property (nonatomic, strong) PAEBPhotoEditConfiguration *configuration;
 
 /// 最小尺寸 CGSizeMake(80, 80)
 @property (nonatomic, assign) CGSize clippingMinSize;
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 启用贴图
 @property (nonatomic, readonly) BOOL stickerEnable;
 
-@property (assign, nonatomic) CGFloat drawLineWidth;
+@property (nonatomic, assign) CGFloat drawLineWidth;
 
 /// 开启编辑模式
 @property (nonatomic, assign, getter=isClipping) BOOL clipping;
@@ -65,9 +65,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 默认长宽比例
 @property (nonatomic, assign) NSUInteger defaultAspectRatioIndex;
 /// 自定义固定比例
-@property (assign, nonatomic) CGSize customRatioSize;
+@property (nonatomic, assign) CGSize customRatioSize;
 /// 只要裁剪
-@property (assign, nonatomic) BOOL onlyCliping;
+@property (nonatomic, assign) BOOL onlyCliping;
 
 - (void)resetToRridRectWithAspectRatioIndex:(NSInteger)aspectRatioIndex;
 

@@ -28,16 +28,16 @@ NSString *const kHXStickerViewData_movingView_rotation = @"HXStickerViewData_mov
 NSString *const kHXStickerViewData_movingView_superAngel = @"HXStickerViewData_movingView_superAngel";
 
 @interface PAEBPhotoEditStickerView ()
-@property (weak, nonatomic) PAEBPhotoEditStickerItemView *selectItemView;
-@property (strong, nonatomic) PAEBPhotoEditStickerTrashView *transhView;
-@property (assign, nonatomic) BOOL hasImpactFeedback;
-@property (assign, nonatomic) BOOL addWindowCompletion;
-@property (assign, nonatomic) BOOL transhViewIsVisible;
-@property (assign, nonatomic) BOOL transhViewDidRemove;
-@property (assign, nonatomic) BOOL touching;
-@property (assign, nonatomic) CGFloat currentItemDegrees;
-@property (assign, nonatomic) CGFloat currentItemArg;
-@property (assign, nonatomic) CGFloat beforeItemArg;
+@property (nonatomic, weak) PAEBPhotoEditStickerItemView *selectItemView;
+@property (nonatomic, strong) PAEBPhotoEditStickerTrashView *transhView;
+@property (nonatomic, assign) BOOL hasImpactFeedback;
+@property (nonatomic, assign) BOOL addWindowCompletion;
+@property (nonatomic, assign) BOOL transhViewIsVisible;
+@property (nonatomic, assign) BOOL transhViewDidRemove;
+@property (nonatomic, assign) BOOL touching;
+@property (nonatomic, assign) CGFloat currentItemDegrees;
+@property (nonatomic, assign) CGFloat currentItemArg;
+@property (nonatomic, assign) CGFloat beforeItemArg;
 @end
 
 @implementation PAEBPhotoEditStickerView

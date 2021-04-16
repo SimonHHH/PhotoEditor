@@ -98,17 +98,17 @@
 /// 默认为YES，如果设置为NO, 用户将不能拍摄视频
 @property(nonatomic, assign) BOOL allowTakeVideo;
 /// Default value is 10 minutes / 视频最大拍摄时间，默认是10分钟，单位是秒
-@property (assign, nonatomic) NSTimeInterval videoMaximumDuration;
+@property (nonatomic, assign) NSTimeInterval videoMaximumDuration;
 /// Customizing UIImagePickerController's other properties, such as videoQuality / 定制UIImagePickerController的其它属性，比如视频拍摄质量videoQuality
 @property (nonatomic, copy) void(^uiImagePickerControllerSettingBlock)(UIImagePickerController *imagePickerController);
 
 /// 首选语言，如果设置了就用该语言，不设则取当前系统语言。
 /// 支持zh-Hans、zh-Hant、en、vi等值，详见TZImagePickerController.bundle内的语言资源
-@property (copy, nonatomic) NSString *preferredLanguage;
+@property (nonatomic, copy) NSString *preferredLanguage;
 
 /// 语言bundle，preferredLanguage变化时languageBundle会变化
 /// 可通过手动设置bundle，让选择器支持新的的语言（需要在设置preferredLanguage后设置languageBundle）。欢迎提交PR把语言文件提交上来~
-@property (strong, nonatomic) NSBundle *languageBundle;
+@property (nonatomic, strong) NSBundle *languageBundle;
 
 /// Default is YES, if set NO, user can't preview photo.
 /// 默认为YES，如果设置为NO,预览按钮将隐藏,用户将不能去预览照片
@@ -120,24 +120,24 @@
 
 /// Default is NO, if set YES, in the delegate method the photos and infos will be nil, only assets hava value.
 /// 默认为NO，如果设置为YES，代理方法里photos和infos会是nil，只返回assets
-@property (assign, nonatomic) BOOL onlyReturnAsset;
+@property (nonatomic, assign) BOOL onlyReturnAsset;
 
 /// Default is NO, if set YES, will show the image's selected index.
 /// 默认为NO，如果设置为YES，会显示照片的选中序号
-@property (assign, nonatomic) BOOL showSelectedIndex;
+@property (nonatomic, assign) BOOL showSelectedIndex;
 
 /// Default is NO, if set YES, when selected photos's count up to maxImagesCount, other photo will show float layer what's color is cannotSelectLayerColor.
 /// 默认是NO，如果设置为YES，当照片选择张数达到maxImagesCount时，其它照片会显示颜色为cannotSelectLayerColor的浮层
-@property (assign, nonatomic) BOOL showPhotoCannotSelectLayer;
+@property (nonatomic, assign) BOOL showPhotoCannotSelectLayer;
 /// Default is white color with 0.8 alpha;
-@property (strong, nonatomic) UIColor *cannotSelectLayerColor;
+@property (nonatomic, strong) UIColor *cannotSelectLayerColor;
 
 /// Default is YES, if set NO, the result photo will be scaled to photoWidth pixel width. The photoWidth default is 828px
 /// 默认是YES，如果设置为NO，内部会缩放图片到photoWidth像素宽
-@property (assign, nonatomic) BOOL notScaleImage;
+@property (nonatomic, assign) BOOL notScaleImage;
 
 /// 默认是NO，如果设置为YES，导出视频时会修正转向（慎重设为YES，可能导致部分安卓下拍的视频导出失败）
-@property (assign, nonatomic) BOOL needFixComposition;
+@property (nonatomic, assign) BOOL needFixComposition;
 
 /// The photos user have selected
 /// 用户选中过的图片数组
@@ -157,7 +157,7 @@
 /// Deprecated, Use statusBarStyle (顶部statusBar 是否为系统默认的黑色，默认为NO)
 @property (nonatomic, assign) BOOL isStatusBarDefault __attribute__((deprecated("Use -statusBarStyle.")));
 /// statusBar的样式，默认为UIStatusBarStyleLightContent
-@property (assign, nonatomic) UIStatusBarStyle statusBarStyle;
+@property (nonatomic, assign) UIStatusBarStyle statusBarStyle;
 
 #pragma mark -
 /// Single selection mode, valid when maxImagesCount = 1
@@ -199,7 +199,7 @@
 - (void)showProgressHUD;
 - (void)hideProgressHUD;
 @property (nonatomic, assign) BOOL isSelectOriginalPhoto;
-@property (assign, nonatomic) BOOL needShowStatusBar;
+@property (nonatomic, assign) BOOL needShowStatusBar;
 
 #pragma mark -
 @property (nonatomic, copy) NSString *takePictureImageName __attribute__((deprecated("Use -takePictureImage.")));
@@ -236,7 +236,7 @@
 
 /// Icon theme color, default is green color like wechat, the value is r:31 g:185 b:34. Currently only support image selection icon when showSelectedIndex is YES. If you need it, please set it as soon as possible
 /// icon主题色，默认是微信的绿色，值是r:31 g:185 b:34。目前仅支持showSelectedIndex为YES时的图片选中icon。如需要，请尽早设置它。
-@property (strong, nonatomic) UIColor *iconThemeColor;
+@property (nonatomic, strong) UIColor *iconThemeColor;
 
 #pragma mark -
 - (void)cancelButtonClick;
@@ -308,7 +308,7 @@
 
 @interface TZAlbumPickerController : UIViewController
 @property (nonatomic, assign) NSInteger columnNumber;
-@property (assign, nonatomic) BOOL isFirstAppear;
+@property (nonatomic, assign) BOOL isFirstAppear;
 - (void)configTableView;
 @end
 
@@ -332,17 +332,17 @@
 
 @interface TZImagePickerConfig : NSObject
 + (instancetype)sharedInstance;
-@property (copy, nonatomic) NSString *preferredLanguage;
+@property (nonatomic, copy) NSString *preferredLanguage;
 @property(nonatomic, assign) BOOL allowPickingImage;
 @property (nonatomic, assign) BOOL allowPickingVideo;
-@property (strong, nonatomic) NSBundle *languageBundle;
-@property (assign, nonatomic) BOOL showSelectedIndex;
-@property (assign, nonatomic) BOOL showPhotoCannotSelectLayer;
-@property (assign, nonatomic) BOOL notScaleImage;
-@property (assign, nonatomic) BOOL needFixComposition;
+@property (nonatomic, strong) NSBundle *languageBundle;
+@property (nonatomic, assign) BOOL showSelectedIndex;
+@property (nonatomic, assign) BOOL showPhotoCannotSelectLayer;
+@property (nonatomic, assign) BOOL notScaleImage;
+@property (nonatomic, assign) BOOL needFixComposition;
 
 /// 默认是50，如果一个GIF过大，里面图片个数可能超过1000，会导致内存飙升而崩溃
-@property (assign, nonatomic) NSInteger gifPreviewMaxImagesCount;
+@property (nonatomic, assign) NSInteger gifPreviewMaxImagesCount;
 /// 【自定义GIF播放方案】为了避免内存过大，内部默认限制只播放50帧（平均取），可通过gifPreviewMaxImagesCount属性调整，若对GIF预览有更好的效果要求，可实现这个block采用FLAnimatedImage等三方库来播放，但注意FLAnimatedImage有播放速度较慢问题，自行取舍下。
 @property (nonatomic, copy) void (^gifImagePlayBlock)(TZPhotoPreviewView *view, UIImageView *imageView, NSData *gifData, NSDictionary *info);
 @end

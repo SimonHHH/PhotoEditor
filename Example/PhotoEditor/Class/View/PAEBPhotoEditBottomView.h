@@ -11,8 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PAEBPhotoEditBottomView : UIView
-@property (copy, nonatomic) void (^ didToolsBtnBlock)(NSInteger tag, BOOL isSelected);
-@property (copy, nonatomic) void (^ didDoneBtnBlock)(void);
+@property (nonatomic, copy) void (^ didToolsBtnBlock)(NSInteger tag, BOOL isSelected);
+@property (nonatomic, copy) void (^ didDoneBtnBlock)(void);
 - (void)endCliping;
 @end
 

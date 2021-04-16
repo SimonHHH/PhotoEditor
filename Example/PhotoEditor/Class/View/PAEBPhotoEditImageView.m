@@ -20,10 +20,10 @@ NSString *const kHXImageViewData_splash = @"HXImageViewData_splash";
 NSString *const kHXImageViewData_filter = @"HXImageViewData_filter";
 
 @interface PAEBPhotoEditImageView ()
-@property (strong, nonatomic) UIImageView *imageView;
-@property (strong, nonatomic) PAEBPhotoEditDrawView *drawView;
-@property (strong, nonatomic) PAEBPhotoEditStickerView *stickerView;
-@property (strong, nonatomic) PAEBPhotoEditSplashView *splashView;
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) PAEBPhotoEditDrawView *drawView;
+@property (nonatomic, strong) PAEBPhotoEditStickerView *stickerView;
+@property (nonatomic, strong) PAEBPhotoEditSplashView *splashView;
 @end
 
 @implementation PAEBPhotoEditImageView

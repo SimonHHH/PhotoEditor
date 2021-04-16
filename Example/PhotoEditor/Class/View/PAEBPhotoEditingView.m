@@ -23,11 +23,11 @@
 #define HXClipZoom_margin 20.f
 CGFloat const hx_editingView_splashWidth = 50.f;
 
-typedef NS_ENUM(NSUInteger, HXPhotoEditingViewOperation) {
-    HXPhotoEditingViewOperationNone = 0,
-    HXPhotoEditingViewOperationDragging = 1 << 0,
-    HXPhotoEditingViewOperationZooming = 1 << 1,
-    HXPhotoEditingViewOperationGridResizing = 1 << 2,
+typedef NS_ENUM(NSUInteger, PAEBPhotoEditingViewOperation) {
+    PAEBPhotoEditingViewOperationNone = 0,
+    PAEBPhotoEditingViewOperationDragging = 1 << 0,
+    PAEBPhotoEditingViewOperationZooming = 1 << 1,
+    PAEBPhotoEditingViewOperationGridResizing = 1 << 2,
 };
 
 NSString *const kHXEditingViewData = @"kHXClippingViewData";
@@ -55,7 +55,7 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
 @property (nonatomic, copy) hx_me_dispatch_cancelable_block_t maskViewBlock;
 
 /** 编辑操作次数记录-有3种编辑操作 拖动、缩放、网格 并且可以同时触发任意2种，避免多次回调代理 */
-@property (nonatomic, assign) HXPhotoEditingViewOperation editedOperation;
+@property (nonatomic, assign) PAEBPhotoEditingViewOperation editedOperation;
 
 /** 默认最大化缩放 */
 @property (nonatomic, assign) CGFloat defaultMaximumZoomScale;
@@ -66,7 +66,7 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
 /** 默认长宽比例，执行一次 */
 @property (nonatomic, assign) NSInteger onceDefaultAspectRatioIndex;
 
-@property (assign, nonatomic) BOOL firstShow;
+@property (nonatomic, assign) BOOL firstShow;
 @end
 @implementation PAEBPhotoEditingView
 @synthesize image = _image;
@@ -98,7 +98,7 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
     /** 缩放 */
     self.maximumZoomScale = HXMaxZoomScale;
     self.minimumZoomScale = 1.0;
-    _editToolbarDefaultHeight = 110.f;
+    _editToolbarDefaultHeight = 56.f;
     _defaultMaximumZoomScale = HXMaxZoomScale;
     
     /** 创建缩放层，避免直接缩放LFClippingView，会改变其transform */
@@ -310,7 +310,7 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
         }
         return;
     }
-    self.editedOperation = HXPhotoEditingViewOperationNone;
+    self.editedOperation = PAEBPhotoEditingViewOperationNone;
     _clipping = clipping;
     self.clippingView.useGesture = clipping;
     
@@ -461,7 +461,7 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
 /** 取消剪裁 */
 - (void)cancelClipping:(BOOL)animated {
     [self.clippingView setContentOffset:self.clippingView.contentOffset animated:NO];
-    self.editedOperation = HXPhotoEditingViewOperationNone;
+    self.editedOperation = PAEBPhotoEditingViewOperationNone;
     _clipping = NO;
     self.clippingView.useGesture = _clipping;
     if ([self.clippingDelegate respondsToSelector:@selector(editingViewWillDisappearClip:)]) {
@@ -684,10 +684,10 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
 
 #pragma mark - HXPhotoClippingViewDelegate
 - (void (^)(CGRect))clippingViewWillBeginZooming:(PAEBPhotoClippingView *)clippingView {
-    if (self.editedOperation == HXPhotoEditingViewOperationNone && [self.clippingDelegate respondsToSelector:@selector(editingViewWillBeginEditing:)]) {
+    if (self.editedOperation == PAEBPhotoEditingViewOperationNone && [self.clippingDelegate respondsToSelector:@selector(editingViewWillBeginEditing:)]) {
         [self.clippingDelegate editingViewWillBeginEditing:self];
     }
-    self.editedOperation |= HXPhotoEditingViewOperationZooming;
+    self.editedOperation |= PAEBPhotoEditingViewOperationZooming;
     
     __weak typeof(self) weakSelf = self;
     void (^block)(CGRect) = ^(CGRect rect){
@@ -718,13 +718,13 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
 }
 
 - (void)clippingViewDidEndZooming:(PAEBPhotoClippingView *)clippingView {
-    if (self.editedOperation & HXPhotoEditingViewOperationZooming) {
-        self.editedOperation ^= HXPhotoEditingViewOperationZooming;
+    if (self.editedOperation & PAEBPhotoEditingViewOperationZooming) {
+        self.editedOperation ^= PAEBPhotoEditingViewOperationZooming;
     }
     __weak typeof(self) weakSelf = self;
     self.maskViewBlock = hx_dispatch_block_t(0.25f, ^{
         
-        if (weakSelf.editedOperation == HXPhotoEditingViewOperationNone) {
+        if (weakSelf.editedOperation == PAEBPhotoEditingViewOperationNone) {
             if (!weakSelf.gridView.isDragging) {
                 if ([weakSelf.clippingDelegate respondsToSelector:@selector(editingViewDidEndEditing:)]) {
                     [weakSelf.clippingDelegate editingViewDidEndEditing:weakSelf];
@@ -737,10 +737,10 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
 }
 
 - (void)clippingViewWillBeginDragging:(PAEBPhotoClippingView *)clippingView {
-    if (self.editedOperation == HXPhotoEditingViewOperationNone && [self.clippingDelegate respondsToSelector:@selector(editingViewWillBeginEditing:)]) {
+    if (self.editedOperation == PAEBPhotoEditingViewOperationNone && [self.clippingDelegate respondsToSelector:@selector(editingViewWillBeginEditing:)]) {
         [self.clippingDelegate editingViewWillBeginEditing:self];
     }
-    self.editedOperation |= HXPhotoEditingViewOperationDragging;
+    self.editedOperation |= PAEBPhotoEditingViewOperationDragging;
     /** 移动开始，隐藏 */
     self.gridView.showMaskLayer = NO;
     hx_me_dispatch_cancel(self.maskViewBlock);
@@ -749,16 +749,16 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
     /** 移动结束，显示 */
     if (!self.gridView.isDragging && !CGRectEqualToRect(self.gridView.gridRect, self.clippingView.frame)) {
         [self supplementHandle];
-        if (self.editedOperation & HXPhotoEditingViewOperationDragging) {
-            self.editedOperation ^= HXPhotoEditingViewOperationDragging;
+        if (self.editedOperation & PAEBPhotoEditingViewOperationDragging) {
+            self.editedOperation ^= PAEBPhotoEditingViewOperationDragging;
         }
     } else {
-        if (self.editedOperation & HXPhotoEditingViewOperationDragging) {
-            self.editedOperation ^= HXPhotoEditingViewOperationDragging;
+        if (self.editedOperation & PAEBPhotoEditingViewOperationDragging) {
+            self.editedOperation ^= PAEBPhotoEditingViewOperationDragging;
         }
         __weak typeof(self) weakSelf = self;
         self.maskViewBlock = hx_dispatch_block_t(0.25f, ^{
-            if (weakSelf.editedOperation == HXPhotoEditingViewOperationNone) {
+            if (weakSelf.editedOperation == PAEBPhotoEditingViewOperationNone) {
                 if (!weakSelf.gridView.isDragging) {
                     if ([weakSelf.clippingDelegate respondsToSelector:@selector(editingViewDidEndEditing:)]) {
                         [weakSelf.clippingDelegate editingViewDidEndEditing:weakSelf];
@@ -783,10 +783,10 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
 }
 #pragma mark - PAEBPhotoEditGridViewDelegate
 - (void)gridViewDidBeginResizing:(PAEBPhotoEditGridView *)gridView {
-    if (self.editedOperation == HXPhotoEditingViewOperationNone && [self.clippingDelegate respondsToSelector:@selector(editingViewWillBeginEditing:)]) {
+    if (self.editedOperation == PAEBPhotoEditingViewOperationNone && [self.clippingDelegate respondsToSelector:@selector(editingViewWillBeginEditing:)]) {
         [self.clippingDelegate editingViewWillBeginEditing:self];
     }
-    self.editedOperation |= HXPhotoEditingViewOperationGridResizing;
+    self.editedOperation |= PAEBPhotoEditingViewOperationGridResizing;
     [self.clippingView setContentOffset:self.clippingView.contentOffset animated:NO];
     gridView.showMaskLayer = NO;
     hx_me_dispatch_cancel(self.maskViewBlock);
@@ -799,14 +799,14 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
 - (void)gridViewDidEndResizing:(PAEBPhotoEditGridView *)gridView {
     /** 缩小 */
     [self.clippingView zoomOutToRect:gridView.gridRect];
-    if (self.editedOperation & HXPhotoEditingViewOperationGridResizing) {
-        self.editedOperation ^= HXPhotoEditingViewOperationGridResizing;
+    if (self.editedOperation & PAEBPhotoEditingViewOperationGridResizing) {
+        self.editedOperation ^= PAEBPhotoEditingViewOperationGridResizing;
     }
 }
 /** 调整长宽比例 */
 - (void)gridViewDidAspectRatio:(PAEBPhotoEditGridView *)gridView {
     if (!CGRectEqualToRect(HXRoundFrameHundreds(gridView.gridRect), HXRoundFrameHundreds(self.clippingView.frame))) {
-        self.editedOperation |= HXPhotoEditingViewOperationGridResizing;
+        self.editedOperation |= PAEBPhotoEditingViewOperationGridResizing;
         gridView.showMaskLayer = NO;
         hx_me_dispatch_cancel(self.maskViewBlock);
         if (self.firstShow && self.onlyCliping) {
@@ -824,8 +824,8 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
             /** 缩小 */
             [self.clippingView zoomOutToRect:gridView.gridRect];
         }
-        if (self.editedOperation & HXPhotoEditingViewOperationGridResizing) {
-            self.editedOperation ^= HXPhotoEditingViewOperationGridResizing;
+        if (self.editedOperation & PAEBPhotoEditingViewOperationGridResizing) {
+            self.editedOperation ^= PAEBPhotoEditingViewOperationGridResizing;
         }
     }else {
         if (self.firstShow) {

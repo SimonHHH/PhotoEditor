@@ -11,14 +11,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIView (HXExtension)
-@property (assign, nonatomic) CGFloat hx_x;
-@property (assign, nonatomic) CGFloat hx_y;
-@property (assign, nonatomic) CGFloat hx_w;
-@property (assign, nonatomic) CGFloat hx_h;
-@property (assign, nonatomic) CGFloat hx_centerX;
-@property (assign, nonatomic) CGFloat hx_centerY;
-@property (assign, nonatomic) CGSize hx_size;
-@property (assign, nonatomic) CGPoint hx_origin;
+@property (nonatomic, assign) CGFloat hx_x;
+@property (nonatomic, assign) CGFloat hx_y;
+@property (nonatomic, assign) CGFloat hx_w;
+@property (nonatomic, assign) CGFloat hx_h;
+@property (nonatomic, assign) CGFloat hx_centerX;
+@property (nonatomic, assign) CGFloat hx_centerY;
+@property (nonatomic, assign) CGSize hx_size;
+@property (nonatomic, assign) CGPoint hx_origin;
+@property (nonatomic, assign, readonly) CGFloat hx_maxX;
+@property (nonatomic, assign, readonly) CGFloat hx_maxY;
 
 
 - (UIImage *)hx_captureImageAtFrame:(CGRect)rect;

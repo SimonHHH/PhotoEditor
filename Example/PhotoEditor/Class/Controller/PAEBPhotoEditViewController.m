@@ -14,17 +14,21 @@
 #import "PAEBPhotoEditStickerItem.h"
 #import "PAEBPhotoEditingView.h"
 #import "PAEBPhotoClippingView.h"
+#import "PAEBPhotoEditGraffitiColorView.h"
+#import "PAEBPhotoEditClippingToolBar.h"
+#import "PAEBPhotoEditMosaicView.h"
 
 #import "UIView+HXExtension.h"
 #import "UIImage+HXExtension.h"
 #import "UIButton+HXExtension.h"
+#import "NSString+HXExtension.h"
 
 #import "PAEBHXCancelBlock.h"
 
 
-#define HXGraffitiColorViewHeight 60.f
-#define HXmosaicViewHeight 60.f
-#define HXClippingToolBar 60.f
+#define HXGraffitiColorViewHeight 56.f
+#define HXmosaicViewHeight 56.f
+#define HXClippingToolBar 56.f
 
 @interface PAEBPhotoEditViewController () <UIGestureRecognizerDelegate, PAEBPhotoEditingViewDelegate>
 @property (nonatomic, strong) UIView *topMaskView;
@@ -34,13 +38,16 @@
 @property (nonatomic, strong) UIView *bottomMaskView;
 @property (nonatomic, strong) CAGradientLayer *bottomMaskLayer;
 
-@property (strong, nonatomic) PAEBPhotoEditingView *editingView;
+@property (nonatomic, strong) PAEBPhotoEditingView *editingView;
 
-@property (assign, nonatomic) PHContentEditingInputRequestID requestId;
-@property (assign, nonatomic) CGFloat imageWidth;
-@property (assign, nonatomic) CGFloat imageHeight;
+@property (nonatomic, assign) PHContentEditingInputRequestID requestId;
+@property (nonatomic, assign) CGFloat imageWidth;
+@property (nonatomic, assign) CGFloat imageHeight;
 
 @property (nonatomic, strong) PAEBPhotoEditBottomView *toolsView;
+@property (nonatomic, strong) PAEBPhotoEditGraffitiColorView *graffitiColorView;
+@property (nonatomic, strong) PAEBPhotoEditClippingToolBar *clippingToolBar;
+@property (nonatomic, strong) PAEBPhotoEditMosaicView *mosaicView;
 
 @property (nonatomic, weak) UITapGestureRecognizer *tap;
 @property (nonatomic, strong, nullable) NSDictionary *editData;
@@ -114,11 +121,11 @@
         self.onlyCliping = self.configuration.onlyCliping;
     }
     self.backBtn.alpha = 0;
-//    self.clippingToolBar.alpha = 0;
+    self.clippingToolBar.alpha = 0;
     self.toolsView.alpha = 0;
     self.topMaskView.alpha = 0;
     self.bottomMaskView.alpha = 0;
-//
+
     self.view.backgroundColor = [UIColor blackColor];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didBgViewClick)];
     tap.numberOfTapsRequired = 1;
@@ -129,17 +136,17 @@
     [self setupPhotoModel];
     [self.view addSubview:self.editingView];
     [self.view addSubview:self.bottomMaskView];
-//    if (self.onlyCliping) {
-//        [self.view addSubview:self.clippingToolBar];
-//        [self.editingView photoEditEnable:NO];
-//        self.tap.enabled = NO;
-//        self.clippingToolBar.userInteractionEnabled = YES;
-//    }else {
+    if (self.onlyCliping) {
+        [self.view addSubview:self.clippingToolBar];
+        [self.editingView photoEditEnable:NO];
+        self.tap.enabled = NO;
+        self.clippingToolBar.userInteractionEnabled = YES;
+    }else {
         [self.view addSubview:self.topMaskView];
         [self.topMaskView addSubview:self.backBtn];
         [self.view addSubview:self.toolsView];
-//        [self.view addSubview:self.clippingToolBar];
-//    }
+        [self.view addSubview:self.clippingToolBar];
+    }
 }
 
 - (void)hideImageView {
@@ -157,9 +164,8 @@
         self.editingView.hidden = NO;
         if (self.onlyCliping) {
             [self.editingView setClipping:YES animated:YES];
-//            [self.clippingToolBar setRotateAlpha:1.f];
             [UIView animateWithDuration:0.2 animations:^{
-//                self.clippingToolBar.alpha = 1;
+                self.clippingToolBar.alpha = 1;
             }];
         }
         return;
@@ -174,7 +180,7 @@
 
 - (void)hiddenTopBottomView {
     self.backBtn.hx_y = HXNavigationBarHeight - 20 - self.backBtn.hx_h - 13;
-//    self.clippingToolBar.hx_y = self.view.hx_h;
+    self.clippingToolBar.hx_y = self.view.hx_h;
     self.toolsView.hx_y = self.view.hx_h;
 }
 
@@ -182,7 +188,7 @@
     [self changeSubviewFrame];
     self.backBtn.alpha = 1;
     if (self.onlyCliping) {
-//        self.clippingToolBar.alpha = 1;
+        self.clippingToolBar.alpha = 1;
     }
     self.toolsView.alpha = 1;
     self.topMaskView.alpha = 1;
@@ -190,19 +196,15 @@
 }
 
 - (void)changeSubviewFrame {
-    CGFloat leftMargin = HXBottomMargin;
-    leftMargin = 0;
+    CGFloat leftMargin = 0;
     self.backBtn.hx_x = 20;
     self.backBtn.hx_y = HXNavigationBarHeight - 13 - self.backBtn.hx_h;
-//    self.clippingToolBar.frame = CGRectMake(0, self.view.hx_h - HXClippingToolBar - hxBottomMargin, self.view.hx_w, HXClippingToolBar + hxBottomMargin);
+    self.clippingToolBar.frame = CGRectMake(0, self.view.hx_h - HXClippingToolBar - HXBottomMargin, self.view.hx_w, HXClippingToolBar + HXBottomMargin);
     self.toolsView.frame = CGRectMake(0, self.view.hx_h - 56 - HXBottomMargin, self.view.hx_w, 56 + HXBottomMargin);
         
-//    self.graffitiColorView.frame = CGRectMake(leftMargin, self.toolsView.hx_y - HXGraffitiColorViewHeight, self.view.hx_w - leftMargin * 2, HXGraffitiColorViewHeight);
-//    self.graffitiColorSizeView.frame = CGRectMake(self.view.hx_w - 50 - 12, 0, 50, 180);
-//    self.graffitiColorSizeView.hx_centerY = self.view.hx_h / 2;
-//    [self setBrushinePromptViewSize];
+    self.graffitiColorView.frame = CGRectMake(leftMargin, self.toolsView.hx_y - HXGraffitiColorViewHeight, self.view.hx_w, HXGraffitiColorViewHeight);
     
-//    self.mosaicView.frame = CGRectMake(leftMargin, self.toolsView.hx_y - HXmosaicViewHeight, self.view.hx_w - leftMargin * 2, HXmosaicViewHeight);
+    self.mosaicView.frame = CGRectMake(leftMargin, self.toolsView.hx_y - HXmosaicViewHeight, self.view.hx_w, HXmosaicViewHeight);
     self.topMaskView.frame = CGRectMake(0, 0, HX_ScreenWidth, HXNavigationBarHeight);
     self.topMaskLayer.frame = CGRectMake(0, 0, HX_ScreenWidth, HXNavigationBarHeight + 30.f);
 
@@ -226,15 +228,13 @@
 - (void)showBgViews {
     self.backBtn.userInteractionEnabled = YES;
     self.toolsView.userInteractionEnabled = YES;
-//    self.graffitiColorView.userInteractionEnabled = YES;
-//    self.graffitiColorSizeView.userInteractionEnabled = YES;
-//    self.mosaicView.userInteractionEnabled = YES;
+    self.graffitiColorView.userInteractionEnabled = YES;
+    self.mosaicView.userInteractionEnabled = YES;
     [UIView animateWithDuration:0.25 animations:^{
         self.backBtn.alpha = 1;
         self.toolsView.alpha = 1;
-//        self.graffitiColorView.alpha = 1;
-//        self.graffitiColorSizeView.alpha = 1;
-//        self.mosaicView.alpha = 1;
+        self.graffitiColorView.alpha = 1;
+        self.mosaicView.alpha = 1;
         self.topMaskView.alpha = 1;
         self.bottomMaskView.alpha = 1;
     }];
@@ -243,18 +243,33 @@
 - (void)hideBgViews {
     self.backBtn.userInteractionEnabled = NO;
     self.toolsView.userInteractionEnabled = NO;
-//    self.graffitiColorView.userInteractionEnabled = NO;
-//    self.graffitiColorSizeView.userInteractionEnabled = NO;
-//    self.mosaicView.userInteractionEnabled = NO;
+    self.graffitiColorView.userInteractionEnabled = NO;
+    self.mosaicView.userInteractionEnabled = NO;
     [UIView animateWithDuration:0.25 animations:^{
         self.backBtn.alpha = 0;
         self.toolsView.alpha = 0;
-//        self.graffitiColorView.alpha = 0;
-//        self.graffitiColorSizeView.alpha = 0;
-//        self.mosaicView.alpha = 0;
+        self.graffitiColorView.alpha = 0;
+        self.mosaicView.alpha = 0;
         self.topMaskView.alpha = 0;
         self.bottomMaskView.alpha = 0;
     }];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([touch.view isKindOfClass:NSClassFromString(@"PAEBPhotoEditStickerItemContentView")] ||
+        touch.view == self.backBtn) {
+        return NO;
+    }
+    if ([touch.view isDescendantOfView:self.editingView] ||
+        touch.view == self.view ||
+        touch.view == self.topMaskView) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 - (void)setupPhotoModel {
@@ -307,9 +322,8 @@
         [self setupPhotoData];
         if (self.onlyCliping) {
             [self.editingView setClipping:YES animated:YES];
-//            [self.clippingToolBar setRotateAlpha:1.f];
             [UIView animateWithDuration:0.2 animations:^{
-//                self.clippingToolBar.alpha = 1;
+                self.clippingToolBar.alpha = 1;
             }];
         }
 //        [self.view hx_handleLoading];
@@ -379,8 +393,8 @@
 - (void)setupPhotoData {
     if (self.editData) {
         self.editingView.photoEditData = self.editData;
-//        self.graffitiColorView.undo = self.editingView.clippingView.imageView.drawView.canUndo;
-//        self.mosaicView.undo = self.editingView.clippingView.imageView.splashView.canUndo;
+        self.graffitiColorView.undo = self.editingView.clippingView.imageView.drawView.canUndo;
+        self.mosaicView.undo = self.editingView.clippingView.imageView.splashView.canUndo;
         self.editData = nil;
     }
 }
@@ -403,20 +417,17 @@
 }
 /** 开始编辑目标 */
 - (void)editingViewWillBeginEditing:(PAEBPhotoEditingView *)EditingView {
-    [UIView animateWithDuration:0.25f animations:^{
-//        [self.clippingToolBar setRotateAlpha: 0.5f];
-    }];
+
 }
 /** 停止编辑目标 */
 - (void)editingViewDidEndEditing:(PAEBPhotoEditingView *)EditingView {
     [UIView animateWithDuration:0.25f animations:^{
-//        [self.clippingToolBar setRotateAlpha:1.f];
     }];
-//    self.clippingToolBar.enableReset = self.editingView.canReset;
+    self.clippingToolBar.enableReset = self.editingView.canReset;
 }
 /** 进入剪切界面 */
 - (void)editingViewDidAppearClip:(PAEBPhotoEditingView *)EditingView {
-//    self.clippingToolBar.enableReset = self.editingView.canReset;
+    self.clippingToolBar.enableReset = self.editingView.canReset;
 }
 /// 离开剪切界面
 - (void)editingViewDidDisappearClip:(PAEBPhotoEditingView *)EditingView {
@@ -430,19 +441,19 @@
         _toolsView = [[PAEBPhotoEditBottomView alloc] initWithFrame:CGRectMake(0, self.view.hx_h - 56 - HXBottomMargin, self.view.hx_w, 56 + HXBottomMargin)];
         HXWeakSelf
         _toolsView.didToolsBtnBlock = ^(NSInteger tag, BOOL isSelected) {
-//            [weakSelf.editingView.clippingView.imageView.stickerView removeSelectItem];
+            [weakSelf.editingView.clippingView.imageView.stickerView removeSelectItem];
             if (tag == 0) {
                 // 绘画
-//                [weakSelf.mosaicView removeFromSuperview];
-//                weakSelf.editingView.splashEnable = NO;
-//                weakSelf.editingView.drawEnable = isSelected;
-//                if (isSelected) {
-//                    weakSelf.editingView.clippingView.imageView.type = HXPhotoEditImageViewTypeDraw;
-//                    [weakSelf.view addSubview:weakSelf.graffitiColorView];
-//                }else {
-//                    weakSelf.editingView.clippingView.imageView.type = HXPhotoEditImageViewTypeNormal;
-//                    [weakSelf.graffitiColorView removeFromSuperview];
-//                }
+                [weakSelf.mosaicView removeFromSuperview];
+                weakSelf.editingView.splashEnable = NO;
+                weakSelf.editingView.drawEnable = isSelected;
+                if (isSelected) {
+                    weakSelf.editingView.clippingView.imageView.type = PAEBPhotoEditImageViewTypeDraw;
+                    [weakSelf.view addSubview:weakSelf.graffitiColorView];
+                }else {
+                    weakSelf.editingView.clippingView.imageView.type = PAEBPhotoEditImageViewTypeNormal;
+                    [weakSelf.graffitiColorView removeFromSuperview];
+                }
             }else if (tag == 1) {
                 // 文字
                 [PAEBPhotoEditTextView showEitdTextViewWithConfiguration:weakSelf.configuration completion:^(PAEBPhotoEditTextModel * _Nonnull textModel) {
@@ -452,41 +463,88 @@
                 }];
             }else if (tag == 2) {
                 // 裁剪
-//                [weakSelf.editingView photoEditEnable:!isSelected];
-//                weakSelf.tap.enabled = !isSelected;
-//                weakSelf.clippingToolBar.userInteractionEnabled = isSelected;
-//                [UIView animateWithDuration:0.25 animations:^{
-//                    weakSelf.clippingToolBar.alpha = isSelected ? 1 : 0;
-//                }];
-//                [weakSelf.clippingToolBar setRotateAlpha:1.f];
-//                if (isSelected) {
-//                    [weakSelf.editingView setClipping:YES animated:YES];
-//                    [weakSelf hideBgViews];
-//                    weakSelf.bottomMaskView.alpha = 1;
-//                }else {
-//                    [weakSelf showBgViews];
-//                }
+                [weakSelf.editingView photoEditEnable:!isSelected];
+                weakSelf.tap.enabled = !isSelected;
+                weakSelf.clippingToolBar.userInteractionEnabled = isSelected;
+                [UIView animateWithDuration:0.25 animations:^{
+                    weakSelf.clippingToolBar.alpha = isSelected ? 1 : 0;
+                }];
+                if (isSelected) {
+                    [weakSelf.editingView setClipping:YES animated:YES];
+                    [weakSelf hideBgViews];
+                    weakSelf.bottomMaskView.alpha = 1;
+                }else {
+                    [weakSelf showBgViews];
+                }
             }else if (tag == 3) {
                 // 马赛克
-//                weakSelf.editingView.drawEnable = NO;
-//                weakSelf.editingView.splashEnable = isSelected;
-//                weakSelf.editingView.clippingView.imageView.type = HXPhotoEditImageViewTypeNormal;
-//                [weakSelf.graffitiColorView removeFromSuperview];
-//                [weakSelf.graffitiColorSizeView removeFromSuperview];
-//                if (isSelected) {
-//                    weakSelf.editingView.clippingView.imageView.type = HXPhotoEditImageViewTypeSplash;
-//                    [weakSelf.view addSubview:weakSelf.mosaicView];
-//                }else {
-//                    weakSelf.editingView.clippingView.imageView.type = HXPhotoEditImageViewTypeNormal;
-//                    [weakSelf.mosaicView removeFromSuperview];
-//                }
+                weakSelf.editingView.drawEnable = NO;
+                weakSelf.editingView.splashEnable = isSelected;
+                weakSelf.editingView.clippingView.imageView.type = PAEBPhotoEditImageViewTypeNormal;
+                [weakSelf.graffitiColorView removeFromSuperview];
+                if (isSelected) {
+                    weakSelf.editingView.clippingView.imageView.type = PAEBPhotoEditImageViewTypeSplash;
+                    [weakSelf.view addSubview:weakSelf.mosaicView];
+                }else {
+                    weakSelf.editingView.clippingView.imageView.type = PAEBPhotoEditImageViewTypeNormal;
+                    [weakSelf.mosaicView removeFromSuperview];
+                }
             }
         };
         _toolsView.didDoneBtnBlock = ^{
-//            [weakSelf startEditImage];
+            [weakSelf startEditImage];
         };
     }
     return _toolsView;
+}
+
+- (void)startEditImage {
+    self.view.userInteractionEnabled = NO;
+//    [self.view hx_showLoadingHUDText:nil];
+    __block PAEBPhotoEdit *photoEdit = nil;
+    NSDictionary *data = [self.editingView photoEditData];
+    HXWeakSelf
+    void (^finishImage)(UIImage *) = ^(UIImage *image){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            if (data) {
+                NSString *fileName = [[NSString hx_fileName] stringByAppendingString:@".jpg"];
+                NSString *fullPathToFile = [NSTemporaryDirectory() stringByAppendingPathComponent:fileName];
+                NSData *imageData = HX_UIImageJPEGRepresentation(weakSelf.editImage);
+                if ([imageData writeToFile:fullPathToFile atomically:YES]) {
+                    photoEdit = [[PAEBPhotoEdit alloc] initWithEditImagePath:fullPathToFile previewImage:image data:data];
+                }
+            }
+            if (!photoEdit) {
+                [weakSelf.photoModel.photoEdit clearData];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.photoModel.photoEdit = photoEdit;
+                weakSelf.photoModel.assetByte = 0;
+
+                if ([weakSelf.delegate respondsToSelector:@selector(photoEditingController:didFinishPhotoEdit:photoModel:)]) {
+                    [weakSelf.delegate photoEditingController:weakSelf didFinishPhotoEdit:photoEdit photoModel:weakSelf.photoModel];
+                }
+                if (weakSelf.finishBlock) {
+                    weakSelf.finishBlock(photoEdit, weakSelf.photoModel, weakSelf);
+                }
+                [weakSelf dissmissClick];
+            });
+        });
+    };
+    [weakSelf.editingView.clippingView.imageView.stickerView removeSelectItem];
+    [weakSelf.editingView createEditImage:^(UIImage *editImage) {
+        finishImage(editImage);
+    }];
+}
+
+- (void)dissmissClick {
+//    [self.view hx_handleLoading:NO];
+    self.view.userInteractionEnabled = YES;
+    if (self.navigationController.viewControllers.count <= 1) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (UIButton *)backBtn {
@@ -523,7 +581,7 @@
             [UIView cancelPreviousPerformRequestsWithTarget:weakSelf];
         };
         _editingView.clippingView.imageView.splashView.splashEnded = ^{
-//            weakSelf.mosaicView.undo = YES;
+            weakSelf.mosaicView.undo = YES;
             [weakSelf performSelector:@selector(showBgViews) withObject:nil afterDelay:.5f];
         };
         _editingView.clippingView.imageView.drawView.beganDraw = ^{
@@ -533,7 +591,7 @@
         };
         _editingView.clippingView.imageView.drawView.endDraw = ^{
             // 结束绘画
-//            weakSelf.graffitiColorView.undo = YES;
+            weakSelf.graffitiColorView.undo = YES;
             [weakSelf performSelector:@selector(showBgViews) withObject:nil afterDelay:.5f];
         };
         _editingView.clippingView.imageView.stickerView.touchBegan = ^(PAEBPhotoEditStickerItemView * _Nonnull itemView) {
@@ -544,6 +602,86 @@
         };
     }
     return _editingView;
+}
+
+- (PAEBPhotoEditGraffitiColorView *)graffitiColorView {
+    if (!_graffitiColorView) {
+        _graffitiColorView = [PAEBPhotoEditGraffitiColorView initView];
+        _graffitiColorView.frame = CGRectMake(0, self.toolsView.hx_y - HXGraffitiColorViewHeight, self.view.hx_w, HXGraffitiColorViewHeight);
+        _graffitiColorView.defaultDarwColorIndex = self.configuration.defaultDarwColorIndex;
+        _graffitiColorView.drawColors = self.configuration.drawColors;
+        HXWeakSelf
+        _graffitiColorView.selectColorBlock = ^(UIColor * _Nonnull color) {
+            weakSelf.editingView.clippingView.imageView.drawView.lineColor = color;
+        };
+        _graffitiColorView.undoBlock = ^{
+            [weakSelf.editingView.clippingView.imageView.drawView undo];
+            weakSelf.graffitiColorView.undo = weakSelf.editingView.clippingView.imageView.drawView.canUndo;
+        };
+    }
+    return _graffitiColorView;
+}
+
+- (PAEBPhotoEditClippingToolBar *)clippingToolBar {
+    if (!_clippingToolBar) {
+        _clippingToolBar = [PAEBPhotoEditClippingToolBar initView];
+        _clippingToolBar.enableRotaio = YES;
+        _clippingToolBar.userInteractionEnabled = NO;
+        _clippingToolBar.alpha = 0;
+        _clippingToolBar.hx_y = self.view.hx_h - HXClippingToolBar - HXBottomMargin;
+        HXWeakSelf
+        _clippingToolBar.didRotateBlock = ^{
+            [weakSelf.editingView rotate];
+            weakSelf.clippingToolBar.enableReset = weakSelf.editingView.canReset;
+        };
+        _clippingToolBar.didBtnBlock = ^(NSInteger tag) {
+            BOOL aspectRotioNone = YES;
+            if (tag == 0) {
+                weakSelf.editingView.clippingView.fixedAspectRatio = NO;
+                [weakSelf.editingView resetToRridRectWithAspectRatioIndex:0];
+                // 取消
+                if (weakSelf.onlyCliping) {
+                    [weakSelf didBackClick];
+                    return;
+                }
+                [weakSelf.toolsView endCliping];
+                [weakSelf.editingView cancelClipping:YES];
+            }else if (tag == 1) {
+                // 确认
+                if (weakSelf.onlyCliping) {
+                    [weakSelf startEditImage];
+                    return;
+                }
+                [weakSelf.toolsView endCliping];
+                [weakSelf.editingView setClipping:NO animated:YES completion:^{
+                    weakSelf.editingView.clippingView.fixedAspectRatio = NO;
+                    [weakSelf.editingView resetToRridRectWithAspectRatioIndex:0];
+                }];
+            }else if (tag == 2) {
+                // 还原
+                if (aspectRotioNone) {
+                    weakSelf.editingView.clippingView.fixedAspectRatio = NO;
+                    [weakSelf.editingView resetToRridRectWithAspectRatioIndex:0];
+                }
+                [weakSelf.editingView reset];
+                weakSelf.clippingToolBar.enableReset = weakSelf.editingView.canReset;
+            }
+        };
+    }
+    return _clippingToolBar;
+}
+
+- (PAEBPhotoEditMosaicView *)mosaicView {
+    if (!_mosaicView) {
+        _mosaicView = [PAEBPhotoEditMosaicView initView];
+        _mosaicView.frame = CGRectMake(0, self.toolsView.hx_y - HXmosaicViewHeight, self.view.hx_w, HXmosaicViewHeight);
+        HXWeakSelf
+        _mosaicView.undoBlock = ^{
+            [weakSelf.editingView.clippingView.imageView.splashView undo];
+            weakSelf.mosaicView.undo = weakSelf.editingView.clippingView.imageView.splashView.canUndo;
+        };
+    }
+    return _mosaicView;
 }
 
 - (UIView *)topMaskView {

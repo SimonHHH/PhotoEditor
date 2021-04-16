@@ -11,11 +11,11 @@
 NSString *const hxGridLayerAnimtionKey = @"hxGridLayerAnimtionKey";
 
 @interface PAEBPhotoEditGridLayer ()<CAAnimationDelegate>
-@property (weak, nonatomic) CAShapeLayer *topLeftCornerLayer;
-@property (weak, nonatomic) CAShapeLayer *topRightCornerLayer;
-@property (weak, nonatomic) CAShapeLayer *bottomLeftCornerLayer;
-@property (weak, nonatomic) CAShapeLayer *bottomRightCornerLayer;
-@property (weak, nonatomic) CAShapeLayer *middleLineLayer;
+@property (nonatomic, weak) CAShapeLayer *topLeftCornerLayer;
+@property (nonatomic, weak) CAShapeLayer *topRightCornerLayer;
+@property (nonatomic, weak) CAShapeLayer *bottomLeftCornerLayer;
+@property (nonatomic, weak) CAShapeLayer *bottomRightCornerLayer;
+@property (nonatomic, weak) CAShapeLayer *middleLineLayer;
 @property (nonatomic, copy) void (^callback)(BOOL finished);
 @end
 

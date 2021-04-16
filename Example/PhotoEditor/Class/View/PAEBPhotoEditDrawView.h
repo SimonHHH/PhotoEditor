@@ -12,10 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PAEBPhotoEditDrawView : UIView
 
-@property (assign, nonatomic) CGFloat lineWidth;
-@property (strong, nonatomic) UIColor *lineColor;
-@property (copy, nonatomic) void (^ beganDraw)(void);
-@property (copy, nonatomic) void (^ endDraw)(void);
+@property (nonatomic, assign) CGFloat lineWidth;
+@property (nonatomic, strong) UIColor *lineColor;
+@property (nonatomic, copy) void (^ beganDraw)(void);
+@property (nonatomic, copy) void (^ endDraw)(void);
 
 /** 正在绘画 */
 @property (nonatomic, readonly) BOOL isDrawing;
@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 显示界面的缩放率
 @property (nonatomic, assign) CGFloat screenScale;
 
-@property (assign, nonatomic) BOOL enabled;
+@property (nonatomic, assign) BOOL enabled;
 
 /** 数据 */
 @property (nonatomic, strong, nullable) NSDictionary *data;

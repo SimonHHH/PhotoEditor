@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PAEBPhotoEditStickerTrashView : UIView
-@property (assign, nonatomic) BOOL inArea;
+@property (nonatomic, assign) BOOL inArea;
 + (instancetype)initView;
 @end
 

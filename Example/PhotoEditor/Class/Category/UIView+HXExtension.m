@@ -104,6 +104,16 @@
     return self.frame.origin;
 }
 
+- (CGFloat)hx_maxX
+{
+    return self.frame.origin.x + self.frame.size.width;
+}
+
+- (CGFloat)hx_maxY
+{
+    return self.frame.origin.y + self.frame.size.height;
+}
+
 
 - (UIImage *)hx_captureImageAtFrame:(CGRect)rect {
     

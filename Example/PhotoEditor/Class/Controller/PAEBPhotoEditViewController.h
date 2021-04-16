@@ -38,30 +38,30 @@ typedef void (^ PAEBPhotoEditViewControllerDidCancelBlock)(PAEBPhotoEditViewCont
 /// 编辑配置
 @property (nonatomic, strong) PAEBPhotoEditConfiguration *configuration;
 /// 编辑原图
-@property (strong, nonatomic) UIImage *editImage;
+@property (nonatomic, strong) UIImage *editImage;
 
-@property (strong, nonatomic) PAEBPhotoModel *photoModel;
+@property (nonatomic, strong) PAEBPhotoModel *photoModel;
 /// 编辑的数据
 /// 传入之前的编辑数据可以在原有基础上继续编辑
-@property (strong, nonatomic) PAEBPhotoEdit *photoEdit;
+@property (nonatomic, strong) PAEBPhotoEdit *photoEdit;
 
 /// 只要裁剪
-@property (assign, nonatomic) BOOL onlyCliping;
+@property (nonatomic, assign) BOOL onlyCliping;
 
-@property (weak, nonatomic) id<PAEBPhotoEditViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<PAEBPhotoEditViewControllerDelegate> delegate;
 
-@property (copy, nonatomic) PAEBPhotoEditViewControllerDidFinishBlock finishBlock;
+@property (nonatomic, copy) PAEBPhotoEditViewControllerDidFinishBlock finishBlock;
 
-@property (copy, nonatomic) PAEBPhotoEditViewControllerDidCancelBlock cancelBlock;
+@property (nonatomic, copy) PAEBPhotoEditViewControllerDidCancelBlock cancelBlock;
 
 - (instancetype)initWithConfiguration:(PAEBPhotoEditConfiguration *)configuration;
 - (instancetype)initWithPhotoEdit:(PAEBPhotoEdit *)photoEdit
                     configuration:(PAEBPhotoEditConfiguration *)configuration;
 
 #pragma mark - < other >
-@property (assign, nonatomic) BOOL imageRequestComplete;
-@property (assign, nonatomic) BOOL transitionCompletion;
-@property (assign, nonatomic) BOOL isCancel;
+@property (nonatomic, assign) BOOL imageRequestComplete;
+@property (nonatomic, assign) BOOL transitionCompletion;
+@property (nonatomic, assign) BOOL isCancel;
 - (CGRect)getImageFrame;
 - (void)showBgViews;
 - (void)completeTransition:(UIImage *)image;

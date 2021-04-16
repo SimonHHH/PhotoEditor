@@ -14,11 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PAEBPhotoEditStickerView : UIView
 
-@property (weak, nonatomic, readonly) PAEBPhotoEditStickerItemView *selectItemView;
-@property (copy, nonatomic) void (^ touchBegan)(PAEBPhotoEditStickerItemView *itemView);
-@property (copy, nonatomic) void (^ touchEnded)(PAEBPhotoEditStickerItemView *itemView);
+@property (nonatomic, weak, readonly) PAEBPhotoEditStickerItemView *selectItemView;
+@property (nonatomic, copy) void (^ touchBegan)(PAEBPhotoEditStickerItemView *itemView);
+@property (nonatomic, copy) void (^ touchEnded)(PAEBPhotoEditStickerItemView *itemView);
 
-@property (strong, nonatomic) PAEBPhotoEditConfiguration *configuration;
+@property (nonatomic, strong) PAEBPhotoEditConfiguration *configuration;
 /** 贴图数量 */
 @property (nonatomic, readonly) NSUInteger count;
 /// 显示界面的缩放率
@@ -31,10 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 数据 */
 @property (nonatomic, strong, nullable) NSDictionary *data;
-@property (assign, nonatomic, getter=isHitTestSubView) BOOL hitTestSubView;
+@property (nonatomic, assign, getter=isHitTestSubView) BOOL hitTestSubView;
 - (PAEBPhotoEditStickerItemView *)addStickerItem:(PAEBPhotoEditStickerItem *)item isSelected:(BOOL)selected;
 
-@property (assign, nonatomic) NSInteger angle;
+@property (nonatomic, assign) NSInteger angle;
 
 - (void)removeSelectItem;
 - (void)clearCoverage;

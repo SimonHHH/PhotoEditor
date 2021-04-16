@@ -47,42 +47,46 @@ typedef NS_ENUM(NSUInteger, PAEBPhotoModelMediaTypeCameraPhotoType) {
 /// PHAsset对象
 @property (nonatomic, strong) PHAsset * _Nullable asset;
 /// 照片格式
-@property (assign, nonatomic) PAEBPhotoModelFormat photoFormat;
+@property (nonatomic, assign) PAEBPhotoModelFormat photoFormat;
 /// 照片类型
-@property (assign, nonatomic) PAEBPhotoModelMediaType type;
+@property (nonatomic, assign) PAEBPhotoModelMediaType type;
 /// 照片子类型
-@property (assign, nonatomic) PAEBPhotoModelMediaTypeCameraPhotoType cameraPhotoType;
+@property (nonatomic, assign) PAEBPhotoModelMediaTypeCameraPhotoType cameraPhotoType;
 /// 照片原始宽高
-@property (assign, nonatomic) CGSize imageSize;
+@property (nonatomic, assign) CGSize imageSize;
 
 /// 编辑的数据
 /// 传入之前的编辑数据可以在原有基础上继续编辑
-@property (strong, nonatomic) PAEBPhotoEdit * _Nullable photoEdit;
+@property (nonatomic, strong) PAEBPhotoEdit * _Nullable photoEdit;
 
 /// 临时的列表小图 - 本地图片才用这个上传
 /// 获取图片请使用 request相关方法
-@property (strong, nonatomic) UIImage * _Nullable thumbPhoto;
+@property (nonatomic, strong) UIImage * _Nullable thumbPhoto;
 
 /// 临时的预览大图  - 本地图片才用这个上传
 /// 获取图片请使用 request相关方法
-@property (strong, nonatomic) UIImage * _Nullable previewPhoto;
+@property (nonatomic, strong) UIImage * _Nullable previewPhoto;
 
 /// 图片本地地址
 /// 正常情况下为空
 /// 1.调用过 requestImageURLStartRequestICloud 这个方法会有值
 /// 2.HXPhotoConfiguration.requestImageAfterFinishingSelection = YES 时，并且选择了原图或者 tpye = HXPhotoModelMediaTypePhotoGif 有值
-@property (strong, nonatomic) NSURL * _Nullable imageURL;
+@property (nonatomic, strong) NSURL * _Nullable imageURL;
+
+/// 当前资源的大小 单位：b 字节
+/// 网络图片/视频为0
+@property (assign, nonatomic) NSUInteger assetByte;
 
 
 #pragma mark - < Disabled >
 /// 是否正在下载iCloud上的资源
-@property (assign, nonatomic) BOOL iCloudDownloading;
+@property (nonatomic, assign) BOOL iCloudDownloading;
 
 /// iCloud下载进度
-@property (assign, nonatomic) CGFloat iCloudProgress;
+@property (nonatomic, assign) CGFloat iCloudProgress;
 
 /// 下载iCloud的请求id
-@property (assign, nonatomic) PHImageRequestID iCloudRequestID;
+@property (nonatomic, assign) PHImageRequestID iCloudRequestID;
 
 /// 通过PHAsset对象初始化
 /// @param asset PHAsset

@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param rotate 旋转角度
 - (UIImage *)editOtherImagesInRect:(CGRect)rect rotate:(CGFloat)rotate;
 
-@property (strong, nonatomic) PAEBPhotoEditConfiguration *configuration;
+@property (nonatomic, strong) PAEBPhotoEditConfiguration *configuration;
 
 @property (nonatomic, weak) id<PAEBPhotoClippingViewDelegate> clippingDelegate;
 /** 首次缩放后需要记录最小缩放值 */
@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 是否旋转中 */
 @property (nonatomic, readonly) BOOL isRotating;
 /** 旋转系数 */
-@property (assign, nonatomic, readonly) NSInteger angle;
+@property (nonatomic, assign, readonly) NSInteger angle;
 /** 是否缩放中 */
 //@property (nonatomic, readonly) BOOL isZooming;
 /** 是否可还原 */

@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, strong) PAEBPhotoEditTextModel *textModel;
 
-@property (assign, nonatomic) CGRect itemFrame;
+@property (nonatomic, assign) CGRect itemFrame;
 
 @end
 NS_ASSUME_NONNULL_END

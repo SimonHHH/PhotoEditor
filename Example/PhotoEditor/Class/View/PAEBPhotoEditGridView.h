@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL aspectRatioHorizontally;
 
 /// 自定义固定比例
-@property (assign, nonatomic) CGSize customRatioSize;
+@property (nonatomic, assign) CGSize customRatioSize;
 
 
 @property (nonatomic, weak) id<HXPhotoEditGridViewDelegate> delegate;

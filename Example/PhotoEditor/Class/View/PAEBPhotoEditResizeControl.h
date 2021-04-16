@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol PAEBPhotoEditResizeControlDelegate;
 
 @interface PAEBPhotoEditResizeControl : UIView
-@property (weak, nonatomic) id<PAEBPhotoEditResizeControlDelegate> delegate;
+@property (nonatomic, weak) id<PAEBPhotoEditResizeControlDelegate> delegate;
 @property (nonatomic, readonly) CGPoint translation;
 @property (nonatomic, getter=isEnabled) BOOL enabled;
 @end

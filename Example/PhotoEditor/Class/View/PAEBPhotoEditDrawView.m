@@ -10,7 +10,7 @@
 NSString *const kPAEBDrawViewData = @"kPAEBDrawViewData";
 
 @interface PAEBDrawBezierPath : UIBezierPath
-@property (strong, nonatomic) UIColor *color;
+@property (nonatomic, strong) UIColor *color;
 @end
 
 @implementation PAEBDrawBezierPath
@@ -18,11 +18,11 @@ NSString *const kPAEBDrawViewData = @"kPAEBDrawViewData";
 
 @interface PAEBPhotoEditDrawView ()
 /// 笔画
-@property (strong, nonatomic) NSMutableArray <PAEBDrawBezierPath *>*lineArray;
+@property (nonatomic, strong) NSMutableArray <PAEBDrawBezierPath *>*lineArray;
 /// 图层
-@property (strong, nonatomic) NSMutableArray <CAShapeLayer *>*slayerArray;
-@property (assign, nonatomic) BOOL isWork;
-@property (assign, nonatomic) BOOL isBegan;
+@property (nonatomic, strong) NSMutableArray <CAShapeLayer *>*slayerArray;
+@property (nonatomic, assign) BOOL isWork;
+@property (nonatomic, assign) BOOL isBegan;
 @end
 
 
