@@ -35,7 +35,23 @@
 }
 
 - (IBAction)takePhoto:(id)sender {
+    self.imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
     
+    // 你可以通过block或者代理，来得到用户选择的照片.
+    __weak typeof(self) weakSelf = self;
+    [self.imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+        PAEBPhotoEditConfiguration *photoEditConfig = [[PAEBPhotoEditConfiguration alloc] init];
+        photoEditConfig.isRoundCliping = YES;
+        PAEBPhotoEditViewController *ctl = [[PAEBPhotoEditViewController alloc] initWithConfiguration:photoEditConfig];
+        PAEBPhotoModel *photoModel = [PAEBPhotoModel photoModelWithPHAsset:[assets firstObject]];
+        ctl.photoModel = photoModel;
+        ctl.onlyCliping = YES;
+        ctl.modalPresentationCapturesStatusBarAppearance = YES;
+        ctl.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        [weakSelf presentViewController:ctl animated:YES completion:nil];
+    }];
+    
+    [self presentViewController:self.imagePickerVc animated:NO completion:nil];
 }
 
 

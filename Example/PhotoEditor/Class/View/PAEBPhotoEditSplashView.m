@@ -40,7 +40,7 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
     return self;
 }
 - (CGSize)paintSize {
-    return CGSizeMake(50.f / self.screenScale, 50.f / self.screenScale);
+    return CGSizeMake(_paintSize.width / self.screenScale, _paintSize.height / self.screenScale);
 }
 - (CGFloat)squareWidth {
     return _squareWidth / self.screenScale;
@@ -48,7 +48,7 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
 - (void)customInit {
     self.exclusiveTouch = YES;
     _squareWidth = 10.f;
-    _paintSize = CGSizeMake(50, 50);
+    _paintSize = CGSizeMake(15, 15);
     _state = PAEBPhotoEditSplashStateType_Mosaic;
     _layerArray = [NSMutableArray array];
     _frameArray = [NSMutableArray array];
@@ -95,7 +95,7 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
     return array;
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     if (touches.allObjects.count == 1) {
         _isWork = NO;
         _isBegan = YES;
@@ -136,7 +136,7 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
     }
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     if (touches.allObjects.count == 1) {
         //1、触摸坐标
         UITouch *touch = [touches anyObject];
@@ -169,7 +169,7 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
     }
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     if ([event allTouches].count == 1){
         if (_isWork) {
             if (self.splashEnded) self.splashEnded();
