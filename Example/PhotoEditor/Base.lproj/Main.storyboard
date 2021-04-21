@@ -39,6 +39,17 @@
                                     <action selector="takePhoto:" destination="whP-gf-Uak" eventType="touchUpInside" id="5so-8e-rz3"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXA-JR-zKZ">
+                                <rect key="frame" x="170" y="272" width="35" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="编辑">
+                                    <color key="titleColor" red="1" green="0.66329045897609284" blue="0.1331339682659689" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="editClick:" destination="whP-gf-Uak" eventType="touchUpInside" id="eAq-im-ilv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>

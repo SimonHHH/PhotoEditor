@@ -11,8 +11,10 @@
 #import "PAEBPhotoEditViewController.h"
 #import "PAEBPhotoEditConfiguration.h"
 
-@interface HXViewController () <TZImagePickerControllerDelegate>
+@interface HXViewController () <TZImagePickerControllerDelegate, PAEBPhotoEditViewControllerDelegate>
 @property (nonatomic, strong) TZImagePickerController *imagePickerVc;
+@property (nonatomic, strong) PAEBPhotoEdit *photoEdit;
+@property (nonatomic, strong) PAEBPhotoModel *photoModel;
 @end
 
 @implementation HXViewController
@@ -24,6 +26,7 @@
     [self.imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         PAEBPhotoEditConfiguration *photoEditConfig = [[PAEBPhotoEditConfiguration alloc] init];
         PAEBPhotoEditViewController *ctl = [[PAEBPhotoEditViewController alloc] initWithConfiguration:photoEditConfig];
+        ctl.delegate = weakSelf;
         PAEBPhotoModel *photoModel = [PAEBPhotoModel photoModelWithPHAsset:[assets firstObject]];
         ctl.photoModel = photoModel;
         ctl.modalPresentationCapturesStatusBarAppearance = YES;
@@ -54,6 +57,15 @@
     [self presentViewController:self.imagePickerVc animated:NO completion:nil];
 }
 
+- (IBAction)editClick:(id)sender {
+    PAEBPhotoEditConfiguration *photoEditConfig = [[PAEBPhotoEditConfiguration alloc] init];
+    PAEBPhotoEditViewController *vc = [[PAEBPhotoEditViewController alloc] initWithConfiguration:photoEditConfig];
+    vc.photoModel = self.photoModel;
+    vc.delegate = self;
+    vc.modalPresentationStyle = UIModalPresentationOverFullScreen;
+    vc.modalPresentationCapturesStatusBarAppearance = YES;
+    [self presentViewController:vc animated:YES completion:nil];
+}
 
 - (void)viewDidLoad
 {
@@ -67,6 +79,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)photoEditingController:(PAEBPhotoEditViewController *)photoEditingVC
+            didFinishPhotoEdit:(PAEBPhotoEdit *)photoEdit
+                    photoModel:(PAEBPhotoModel *)photoModel {
+    _photoEdit = photoEdit;
+    _photoModel = photoModel;
+    NSLog(@"Finish");
 }
 
 @end

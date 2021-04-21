@@ -72,17 +72,6 @@
     return self;
 }
 
-- (instancetype)initWithPhotoEdit:(PAEBPhotoEdit *)photoEdit
-                    configuration:(PAEBPhotoEditConfiguration *)configuration {
-    self = [super init];
-    if (self) {
-        self.modalPresentationStyle = UIModalPresentationFullScreen;
-        self.photoEdit = photoEdit;
-        self.configuration = configuration;
-    }
-    return self;
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (self.requestId) {
@@ -315,7 +304,7 @@
     }
 }
 
-- (void)loadImageCompletion {  //g
+- (void)loadImageCompletion {  //
     self.imageRequestComplete = YES;
     if (self.transitionCompletion) {
         self.editingView.image = self.editImage;

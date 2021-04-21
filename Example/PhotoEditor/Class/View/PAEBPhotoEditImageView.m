@@ -62,6 +62,7 @@ NSString *const kHXImageViewData_filter = @"HXImageViewData_filter";
 - (void)setImage:(UIImage *)image {
     _image = image;
     self.imageView.image = image;
+    self.splashView.image = image;
 }
 
 - (void)setMoveCenter:(BOOL (^)(CGRect))moveCenter {

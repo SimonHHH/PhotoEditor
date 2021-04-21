@@ -8,7 +8,7 @@
 
 #import "UIColor+HXExtension.h"
 
-@implementation UIColor (HXExtension)
+@implementation UIColor (HXExtension) 
 
 + (UIColor *)hx_colorWithHexStr:(NSString *)string {
     return [UIColor hx_colorWithHexStr:string alpha:1.0];

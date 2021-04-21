@@ -68,6 +68,12 @@
     }
 }
 
+- (void)didDoneBtnClick:(UIButton *)button {
+    if (self.didDoneBtnBlock) {
+        self.didDoneBtnBlock();
+    }
+}
+
 - (void)resetAllBtnState:(UIButton *)button {
     if (self.graffitiBtn != button) {
         self.graffitiBtn.selected = NO;
@@ -179,7 +185,7 @@
         [_doneBtn setBackgroundColor:[UIColor hx_colorWithHexStr:HXThemeColor]];
         _doneBtn.layer.cornerRadius = 16.0;
         _doneBtn.clipsToBounds = YES;
-        [_doneBtn addTarget:self action:@selector(didToolsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [_doneBtn addTarget:self action:@selector(didDoneBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _doneBtn;
 }

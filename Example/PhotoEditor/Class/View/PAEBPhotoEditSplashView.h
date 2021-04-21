@@ -22,6 +22,8 @@ typedef NS_ENUM(NSUInteger, PAEBPhotoEditSplashStateType) {
 /** 数据 */
 @property (nonatomic, strong, nullable) NSDictionary *data;
 
+@property (nonatomic, strong) UIImage *image;
+
 @property (nonatomic, copy) void(^splashBegan)(void);
 @property (nonatomic, copy) void(^splashEnded)(void);
 /** 绘画颜色 */

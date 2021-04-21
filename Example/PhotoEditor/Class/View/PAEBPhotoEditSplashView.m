@@ -18,16 +18,21 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
     BOOL _isWork;
     BOOL _isBegan;
 }
+
+/// 笔画
+@property (nonatomic, strong) NSMutableArray <UIBezierPath *>*lineArray;
 /** 图层 */
-@property (nonatomic, strong) NSMutableArray <PAEBPhotoEditSplashMaskLayer *>*layerArray;
+@property (nonatomic, strong) NSMutableArray <CALayer *>*layerArray;
 /** 已显示坐标 */
-@property (nonatomic, strong) NSMutableArray <NSValue *>*frameArray;
+//@property (nonatomic, strong) NSMutableArray <NSValue *>*frameArray;
 
 @property (nonatomic, assign) BOOL isErase;
 /** 方形大小 */
-@property (nonatomic, assign) CGFloat squareWidth;
+//@property (nonatomic, assign) CGFloat squareWidth;
 /** 画笔大小 */
-@property (nonatomic, assign) CGSize paintSize;
+@property (nonatomic, assign) CGFloat paintWidth;
+
+@property (nonatomic, strong) UIImage *mosaicImage;
 @end
 
 @implementation PAEBPhotoEditSplashView
@@ -39,60 +44,27 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
     }
     return self;
 }
-- (CGSize)paintSize {
-    return CGSizeMake(_paintSize.width / self.screenScale, _paintSize.height / self.screenScale);
+
+- (CGFloat)paintWidth {
+    return _paintWidth / self.screenScale;
 }
-- (CGFloat)squareWidth {
-    return _squareWidth / self.screenScale;
-}
+
 - (void)customInit {
     self.exclusiveTouch = YES;
-    _squareWidth = 10.f;
-    _paintSize = CGSizeMake(15, 15);
+    _paintWidth = 15.0;
     _state = PAEBPhotoEditSplashStateType_Mosaic;
+    _lineArray = [NSMutableArray array];
     _layerArray = [NSMutableArray array];
-    _frameArray = [NSMutableArray array];
     self.screenScale = 1;
 }
 
-- (CGPoint)divideMosaicPoint:(CGPoint)point {
-    CGFloat scope = self.squareWidth;
-    int x = point.x/scope;
-    int y = point.y/scope;
-    return CGPointMake(x*scope, y*scope);
+- (void)layoutSubviews {
+    [super layoutSubviews];
 }
 
-- (NSArray <NSValue *>*)divideMosaicRect:(CGRect)rect {
-    CGFloat scope = self.squareWidth;
-    
-    NSMutableArray *array = @[].mutableCopy;
-    
-    if (CGRectEqualToRect(CGRectZero, rect)) {
-        return array;
-    }
-    
-    CGFloat minX = CGRectGetMinX(rect);
-    CGFloat maxX = CGRectGetMaxX(rect);
-    CGFloat minY = CGRectGetMinY(rect);
-    CGFloat maxY = CGRectGetMaxY(rect);
-    
-    /** 左上角 */
-    CGPoint leftTop = [self divideMosaicPoint:CGPointMake(minX, minY)];
-    /** 右下角 */
-    CGPoint rightBoom = [self divideMosaicPoint:CGPointMake(maxX, maxY)];
-    
-    NSInteger countX = (rightBoom.x - leftTop.x)/scope;
-    NSInteger countY = (rightBoom.y - leftTop.y)/scope;
-    
-    for (NSInteger i = 0; i < countX; i++) {
-        for (NSInteger j = 0; j < countY;  j++) {
-            CGPoint point = CGPointMake(leftTop.x + i * scope, leftTop.y + j * scope);
-            NSValue *value = [NSValue valueWithCGPoint:point];
-            [array addObject:value];
-        }
-    }
-    
-    return array;
+- (void)setImage:(UIImage *)image {
+    _image = image;
+    _mosaicImage = [self mosaicImage:image mosaicLevel:20];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -105,77 +77,71 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
         CGPoint point = [touch locationInView:self];
         //2、创建LFSplashBlur
         if (self.state == PAEBPhotoEditSplashStateType_Mosaic) {
-            CGPoint mosaicPoint = [self divideMosaicPoint:point];
-            NSValue *value = [NSValue valueWithCGPoint:mosaicPoint];
-            if (![self.frameArray containsObject:value]) {
-                [self.frameArray addObject:value];
-                
-                PAEBPhotoEditSplashBlur *blur = [PAEBPhotoEditSplashBlur new];
-                blur.rect = CGRectMake(mosaicPoint.x, mosaicPoint.y, self.squareWidth, self.squareWidth);
-                if (self.splashColor) {
-                    blur.color = self.splashColor(blur.rect.origin);
-                }
-//                blur.color = self.splashColor ? self.splashColor(blur.rect.origin) : nil;
-                
-                PAEBPhotoEditSplashMaskLayer *layer = [PAEBPhotoEditSplashMaskLayer layer];
-                layer.frame = self.bounds;
-                [layer.lineArray addObject:blur];
-                
-                [self.layer addSublayer:layer];
-                [self.layerArray addObject:layer];
-            } else {
-                PAEBPhotoEditSplashMaskLayer *layer = [PAEBPhotoEditSplashMaskLayer layer];
-                layer.frame = self.bounds;
-                
-                [self.layer addSublayer:layer];
-                [self.layerArray addObject:layer];
-            }
+            
+            UIBezierPath *path = [[UIBezierPath alloc] init];
+            path.lineWidth = self.paintWidth;
+            path.lineCapStyle = kCGLineCapRound;
+            path.lineJoinStyle = kCGLineJoinRound;
+            [path moveToPoint:point];
+            [self.lineArray addObject:path];
+
+            CALayer *layer = [self createShapeLayer:path];
+            [self.layer addSublayer:layer];
+            [self.layerArray addObject:layer];
+            
         }
     } else {
         [super touchesBegan:touches withEvent:event];
     }
 }
 
+- (CALayer *)createShapeLayer:(UIBezierPath *)path {
+    
+    CAShapeLayer *slayer = [CAShapeLayer layer];
+    slayer.path = path.CGPath;
+    slayer.fillColor = nil;
+    slayer.lineCap = kCALineCapRound;
+    slayer.lineJoin = kCALineJoinRound;
+    slayer.strokeColor = [[UIColor blueColor] CGColor];
+    slayer.lineWidth = path.lineWidth;
+    
+    CALayer *layer = [CALayer layer];
+    layer.frame = self.bounds;
+    layer.contents = (__bridge id _Nullable)(self.mosaicImage.CGImage);
+    layer.mask = slayer;
+    return layer;
+}
+
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    if (touches.allObjects.count == 1) {
-        //1、触摸坐标
+    if ([event allTouches].count == 1) {
         UITouch *touch = [touches anyObject];
         CGPoint point = [touch locationInView:self];
-        if (_isBegan && self.splashBegan) self.splashBegan();
-        _isWork = YES;
-        _isBegan = NO;
-        /** 获取上一个对象坐标判断是否重叠 */
-        PAEBPhotoEditSplashMaskLayer *layer = self.layerArray.lastObject;
-        
-        if (self.state == PAEBPhotoEditSplashStateType_Mosaic) {
-            CGPoint mosaicPoint = [self divideMosaicPoint:point];
-            NSValue *value = [NSValue valueWithCGPoint:mosaicPoint];
-            if (![self.frameArray containsObject:value]) {
-                [self.frameArray addObject:value];
-                //2、创建LFSplashBlur
-                PAEBPhotoEditSplashBlur *blur = [PAEBPhotoEditSplashBlur new];
-                blur.rect = CGRectMake(mosaicPoint.x, mosaicPoint.y, self.squareWidth, self.squareWidth);
-                if (self.splashColor) {
-                    blur.color = self.splashColor(blur.rect.origin);
-                }
-//                blur.color = self.splashColor ? self.splashColor(blur.rect.origin) : nil;
-                
-                [layer.lineArray addObject:blur];
-                [layer setNeedsDisplay];
+        UIBezierPath *path = self.lineArray.lastObject;
+        if (!CGPointEqualToPoint(path.currentPoint, point)) {
+            if (self.splashBegan) {
+                self.splashBegan();
             }
+            _isBegan = NO;
+            _isWork = YES;
+            [path addLineToPoint:point];
+            CALayer *layer = self.layerArray.lastObject;
+            if (layer.mask && [layer.mask isKindOfClass:[CAShapeLayer class]]) {
+                CAShapeLayer *slayer = layer.mask;
+                slayer.path = path.CGPath;
+            }
+            
         }
     } else {
-        [super touchesMoved:touches withEvent:event];
+        [super touchesBegan:touches withEvent:event];
     }
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     if ([event allTouches].count == 1){
+        
         if (_isWork) {
-            if (self.splashEnded) self.splashEnded();
-            PAEBPhotoEditSplashMaskLayer *layer = self.layerArray.lastObject;
-            if (layer.lineArray.count == 0) {
-                [self undo];
+            if (self.splashEnded) {
+                self.splashEnded();
             }
         } else {
             [self undo];
@@ -188,10 +154,8 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     if ([event allTouches].count == 1){
         if (_isWork) {
-            if (self.splashEnded) self.splashEnded();
-            PAEBPhotoEditSplashMaskLayer *layer = self.layerArray.lastObject;
-            if (layer.lineArray.count == 0) {
-                [self undo];
+            if (self.splashEnded) {
+                self.splashEnded();
             }
         } else {
             [self undo];
@@ -208,58 +172,113 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
 
 //撤销
 - (void)undo {
-    PAEBPhotoEditSplashMaskLayer *layer = self.layerArray.lastObject;
-    if ([layer.lineArray.firstObject isMemberOfClass:[PAEBPhotoEditSplashBlur class]]) {
-        for (PAEBPhotoEditSplashBlur *blur in layer.lineArray) {
-            [self.frameArray removeObject:[NSValue valueWithCGPoint:blur.rect.origin]];
-        }
-    }
-    [layer removeFromSuperlayer];
+    [self.layerArray.lastObject removeFromSuperlayer];
     [self.layerArray removeLastObject];
+    [self.lineArray removeLastObject];
 }
 
-- (void)clearCoverage {
-    for (PAEBPhotoEditSplashMaskLayer *layer in self.layerArray) {
-        if ([layer.lineArray.firstObject isMemberOfClass:[PAEBPhotoEditSplashBlur class]]) {
-            for (PAEBPhotoEditSplashBlur *blur in layer.lineArray) {
-                [self.frameArray removeObject:[NSValue valueWithCGPoint:blur.rect.origin]];
+#pragma mark  - 数据
+//- (NSDictionary *)data {
+//    if (self.layerArray.count) {
+//        NSMutableArray *lineArray = [@[] mutableCopy];
+//        for (PAEBPhotoEditSplashMaskLayer *layer in self.layerArray) {
+//            [lineArray addObject:layer.lineArray];
+//        }
+//
+//        return @{kHXSplashViewData:@{
+//                         kHXSplashViewData_layerArray:[lineArray copy],
+//                         kHXSplashViewData_frameArray:[self.frameArray copy]
+//                         }};
+//    }
+//    return nil;
+//}
+
+//- (void)setData:(NSDictionary *)data {
+//    NSDictionary *dataDict = data[kHXSplashViewData];
+//    NSArray *lineArray = dataDict[kHXSplashViewData_layerArray];
+//    for (NSArray *subLineArray in lineArray) {
+//        PAEBPhotoEditSplashMaskLayer *layer = [PAEBPhotoEditSplashMaskLayer layer];
+//        layer.frame = self.bounds;
+//        [layer.lineArray addObjectsFromArray:subLineArray];
+//
+//        [self.layer addSublayer:layer];
+//        [self.layerArray addObject:layer];
+//        [layer setNeedsDisplay];
+//    }
+//    NSArray *frameArray = dataDict[kHXSplashViewData_frameArray];
+//    [self.frameArray addObjectsFromArray:frameArray];
+//}
+
+#pragma mark - 转成马赛克图
+- (UIImage *)mosaicImage:(UIImage *)sourceImage mosaicLevel:(NSUInteger)level {
+    
+    //1、这一部分是为了把原始图片转成位图，位图再转成可操作的数据
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();//颜色通道
+    CGImageRef imageRef = sourceImage.CGImage;//位图
+    CGFloat width = CGImageGetWidth(imageRef);//位图宽
+    CGFloat height = CGImageGetHeight(imageRef);//位图高
+    CGContextRef context = CGBitmapContextCreate(nil, width, height, 8, width * 4, colorSpace, kCGImageAlphaPremultipliedLast);//生成上下文
+    CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, width, height), imageRef);//绘制图片到上下文中
+    unsigned char *bitmapData = CGBitmapContextGetData(context);//获取位图的数据
+    
+    
+    //2、这一部分是往右往下填充色值
+    NSUInteger index,preIndex;
+    unsigned char pixel[4] = {0};
+    for (int i = 0; i < height; i++) {//表示高，也可以说是行
+        for (int j = 0; j < width; j++) {//表示宽，也可以说是列
+            index = i * width + j;
+            if (i % level == 0) {
+                if (j % level == 0) {
+                    //把当前的色值数据保存一份，开始为i=0，j=0，所以一开始会保留一份
+                    memcpy(pixel, bitmapData + index * 4, 4);
+                }else{
+                    //把上一次保留的色值数据填充到当前的内存区域，这样就起到把前面数据往后挪的作用，也是往右填充
+                    memcpy(bitmapData +index * 4, pixel, 4);
+                }
+            }else{
+                //这里是把上一行的往下填充
+                preIndex = (i - 1) * width + j;
+                memcpy(bitmapData + index * 4, bitmapData + preIndex * 4, 4);
             }
         }
-        [layer removeFromSuperlayer];
     }
-    [self.layerArray removeAllObjects];
-    [self.frameArray removeAllObjects];
-}
-#pragma mark  - 数据
-- (NSDictionary *)data {
-    if (self.layerArray.count) {
-        NSMutableArray *lineArray = [@[] mutableCopy];
-        for (PAEBPhotoEditSplashMaskLayer *layer in self.layerArray) {
-            [lineArray addObject:layer.lineArray];
-        }
-        
-        return @{kHXSplashViewData:@{
-                         kHXSplashViewData_layerArray:[lineArray copy],
-                         kHXSplashViewData_frameArray:[self.frameArray copy]
-                         }};
+    
+    //把数据转回位图，再从位图转回UIImage
+    NSUInteger dataLength = width * height * 4;
+    CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, bitmapData, dataLength, NULL);
+    CGImageRef mosaicImageRef = CGImageCreate(width, height,
+                                              8,
+                                              32,
+                                              width*4 ,
+                                              colorSpace,
+                                              kCGBitmapByteOrderDefault,
+                                              provider,
+                                              NULL, NO,
+                                              kCGRenderingIntentDefault);
+    CGContextRef outputContext = CGBitmapContextCreate(nil,
+                                                       width,
+                                                       height,
+                                                       8,
+                                                       width*4,
+                                                       colorSpace,
+                                                       kCGImageAlphaPremultipliedLast);
+    CGContextDrawImage(outputContext, CGRectMake(0.0f, 0.0f, width, height), mosaicImageRef);
+    CGImageRef resultImageRef = CGBitmapContextCreateImage(outputContext);
+    UIImage *resultImage = nil;
+    if([UIImage respondsToSelector:@selector(imageWithCGImage:scale:orientation:)]) {
+        float scale = [[UIScreen mainScreen] scale];
+        resultImage = [UIImage imageWithCGImage:resultImageRef scale:scale orientation:UIImageOrientationUp];
+    } else {
+        resultImage = [UIImage imageWithCGImage:resultImageRef];
     }
-    return nil;
-}
-
-- (void)setData:(NSDictionary *)data {
-    NSDictionary *dataDict = data[kHXSplashViewData];
-    NSArray *lineArray = dataDict[kHXSplashViewData_layerArray];
-    for (NSArray *subLineArray in lineArray) {
-        PAEBPhotoEditSplashMaskLayer *layer = [PAEBPhotoEditSplashMaskLayer layer];
-        layer.frame = self.bounds;
-        [layer.lineArray addObjectsFromArray:subLineArray];
-        
-        [self.layer addSublayer:layer];
-        [self.layerArray addObject:layer];
-        [layer setNeedsDisplay];
-    }
-    NSArray *frameArray = dataDict[kHXSplashViewData_frameArray];
-    [self.frameArray addObjectsFromArray:frameArray];
+    CFRelease(resultImageRef);
+    CFRelease(mosaicImageRef);
+    CFRelease(colorSpace);
+    CFRelease(provider);
+    CFRelease(context);
+    CFRelease(outputContext);
+    return resultImage;
 }
 
 @end

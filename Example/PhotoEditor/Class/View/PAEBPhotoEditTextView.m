@@ -149,7 +149,7 @@
         model.color = color;
         [self.colorModels addObject:model];
         if (self.textModel) {
-            if (color == self.textModel.textColor) {
+            if ([color isEqual:self.textModel.textColor]) {
                 if (self.textModel.showBackgroud) {
                     if ([model.color hx_colorIsWhite]) {
                         [self changeTextViewTextColor:[UIColor blackColor]];
@@ -163,7 +163,7 @@
                 model.selected = YES;
                 self.currentSelectModel = model;
             }
-        }else {
+        } else {
             if (self.colorModels.count == 1) {
                 [self changeTextViewTextColor:color];
                 model.selected = YES;

@@ -55,8 +55,6 @@ typedef void (^ PAEBPhotoEditViewControllerDidCancelBlock)(PAEBPhotoEditViewCont
 @property (nonatomic, copy) PAEBPhotoEditViewControllerDidCancelBlock cancelBlock;
 
 - (instancetype)initWithConfiguration:(PAEBPhotoEditConfiguration *)configuration;
-- (instancetype)initWithPhotoEdit:(PAEBPhotoEdit *)photoEdit
-                    configuration:(PAEBPhotoEditConfiguration *)configuration;
 
 #pragma mark - < other >
 @property (nonatomic, assign) BOOL imageRequestComplete;
