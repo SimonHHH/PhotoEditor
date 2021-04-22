@@ -30,11 +30,11 @@ typedef NS_ENUM(NSUInteger, PAEBPhotoEditingViewOperation) {
     PAEBPhotoEditingViewOperationGridResizing = 1 << 2,
 };
 
-NSString *const kHXEditingViewData = @"kHXClippingViewData";
+NSString *const kPAEBEditingViewData = @"kPAEBClippingViewData";
 
-NSString *const kHXEditingViewData_gridView_aspectRatio = @"kHXEditingViewData_gridView_aspectRatio";
+NSString *const kPAEBEditingViewData_gridView_aspectRatio = @"kPAEBEditingViewData_gridView_aspectRatio";
 
-NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingView";
+NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clippingView";
 
 @interface PAEBPhotoEditingView ()<UIScrollViewDelegate, PAEBPhotoClippingViewDelegate, HXPhotoEditGridViewDelegate>
 
@@ -982,7 +982,7 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
     NSMutableDictionary *data = [@{} mutableCopy];
     
     NSDictionary *clippingViewData = self.clippingView.photoEditData;
-    if (clippingViewData) [data setObject:clippingViewData forKey:kHXEditingViewData_clippingView];
+    if (clippingViewData) [data setObject:clippingViewData forKey:kPAEBEditingViewData_clippingView];
     
     if (data.count) {
         return data;
@@ -991,7 +991,7 @@ NSString *const kHXEditingViewData_clippingView = @"kHXEditingViewData_clippingV
 }
 
 - (void)setPhotoEditData:(NSDictionary *)photoEditData {
-    self.clippingView.photoEditData = photoEditData[kHXEditingViewData_clippingView];
+    self.clippingView.photoEditData = photoEditData[kPAEBEditingViewData_clippingView];
     _clippingRect = self.clippingView.frame;
     self.gridView.gridRect = self.clippingRect;
     self.maximumZoomScale = MIN(MAX(self.minimumZoomScale + self.defaultMaximumZoomScale - self.defaultMaximumZoomScale * (self.clippingView.zoomScale/self.clippingView.maximumZoomScale), self.minimumZoomScale), self.defaultMaximumZoomScale);

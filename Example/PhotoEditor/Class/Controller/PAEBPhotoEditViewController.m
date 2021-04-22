@@ -25,6 +25,8 @@
 
 #import "PAEBHXCancelBlock.h"
 
+#import "HXAppDelegate.h"
+
 
 #define HXGraffitiColorViewHeight 56.f
 #define HXmosaicViewHeight 56.f
@@ -80,6 +82,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
     [self.navigationController setNavigationBarHidden:YES];
     
 #pragma clang diagnostic push

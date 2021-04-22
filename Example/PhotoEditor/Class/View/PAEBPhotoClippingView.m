@@ -17,21 +17,21 @@
 
 #define HXDefaultMaximumZoomScale 5.f
 
-NSString *const kHXClippingViewData = @"HXClippingViewData";
-NSString *const kHXStickerViewData_screenScale = @"HXStickerViewData_screenScale";
-NSString *const kHXClippingViewData_frame = @"HXClippingViewData_frame";
-NSString *const kHXClippingViewData_zoomScale = @"HXClippingViewData_zoomScale";
-NSString *const kHXClippingViewData_contentSize = @"HXClippingViewData_contentSize";
-NSString *const kHXClippingViewData_contentOffset = @"HXClippingViewData_contentOffset";
-NSString *const kHXClippingViewData_minimumZoomScale = @"HXClippingViewData_minimumZoomScale";
-NSString *const kHXClippingViewData_maximumZoomScale = @"HXClippingViewData_maximumZoomScale";
-NSString *const kHXClippingViewData_clipsToBounds = @"HXClippingViewData_clipsToBounds";
-NSString *const kHXClippingViewData_transform = @"HXClippingViewData_transform";
-NSString *const kHXClippingViewData_angle = @"HXClippingViewData_angle";
+NSString *const kPAEBClippingViewData = @"HXClippingViewData";
+NSString *const kPAEBStickerViewData_screenScale = @"HXStickerViewData_screenScale";
+NSString *const kPAEBClippingViewData_frame = @"HXClippingViewData_frame";
+NSString *const kPAEBClippingViewData_zoomScale = @"HXClippingViewData_zoomScale";
+NSString *const kPAEBClippingViewData_contentSize = @"HXClippingViewData_contentSize";
+NSString *const kPAEBClippingViewData_contentOffset = @"HXClippingViewData_contentOffset";
+NSString *const kPAEBClippingViewData_minimumZoomScale = @"HXClippingViewData_minimumZoomScale";
+NSString *const kPAEBClippingViewData_maximumZoomScale = @"HXClippingViewData_maximumZoomScale";
+NSString *const kPAEBClippingViewData_clipsToBounds = @"HXClippingViewData_clipsToBounds";
+NSString *const kPAEBClippingViewData_transform = @"HXClippingViewData_transform";
+NSString *const kPAEBClippingViewData_angle = @"HXClippingViewData_angle";
 
-NSString *const kHXClippingViewData_first_minimumZoomScale = @"HXClippingViewData_first_minimumZoomScale";
+NSString *const kPAEBClippingViewData_first_minimumZoomScale = @"HXClippingViewData_first_minimumZoomScale";
 
-NSString *const kHXClippingViewData_zoomingView = @"HXClippingViewData_zoomingView";
+NSString *const kPAEBClippingViewData_zoomingView = @"HXClippingViewData_zoomingView";
 
 @interface PAEBPhotoClippingView ()<UIScrollViewDelegate>
 @property (nonatomic, strong) PAEBPhotoEditImageView *imageView;
@@ -764,23 +764,23 @@ NSString *const kHXClippingViewData_zoomingView = @"HXClippingViewData_zoomingVi
     
     if ([self canReset]) { /** 可还原证明已编辑过 */
         //        CGRect trueFrame = CGRectApplyAffineTransform(self.frame, CGAffineTransformInvert(self.transform));
-        NSDictionary *myData = @{kHXClippingViewData_frame:[NSValue valueWithCGRect:self.saveRect]
-                                 , kHXClippingViewData_zoomScale:@(self.zoomScale)
-                                 , kHXClippingViewData_contentSize:[NSValue valueWithCGSize:self.contentSize]
-                                 , kHXClippingViewData_contentOffset:[NSValue valueWithCGPoint:self.contentOffset]
-                                 , kHXClippingViewData_minimumZoomScale:@(self.minimumZoomScale)
-                                 , kHXClippingViewData_maximumZoomScale:@(self.maximumZoomScale)
-                                 , kHXClippingViewData_clipsToBounds:@(self.clipsToBounds)
-                                 , kHXClippingViewData_first_minimumZoomScale:@(self.first_minimumZoomScale)
-                                 , kHXClippingViewData_transform:[NSValue valueWithCGAffineTransform:self.transform]
-                                 , kHXClippingViewData_angle:@(self.angle)
-                                 , kHXStickerViewData_screenScale:@(self.screenScale)
+        NSDictionary *myData = @{kPAEBClippingViewData_frame:[NSValue valueWithCGRect:self.saveRect]
+                                 , kPAEBClippingViewData_zoomScale:@(self.zoomScale)
+                                 , kPAEBClippingViewData_contentSize:[NSValue valueWithCGSize:self.contentSize]
+                                 , kPAEBClippingViewData_contentOffset:[NSValue valueWithCGPoint:self.contentOffset]
+                                 , kPAEBClippingViewData_minimumZoomScale:@(self.minimumZoomScale)
+                                 , kPAEBClippingViewData_maximumZoomScale:@(self.maximumZoomScale)
+                                 , kPAEBClippingViewData_clipsToBounds:@(self.clipsToBounds)
+                                 , kPAEBClippingViewData_first_minimumZoomScale:@(self.first_minimumZoomScale)
+                                 , kPAEBClippingViewData_transform:[NSValue valueWithCGAffineTransform:self.transform]
+                                 , kPAEBClippingViewData_angle:@(self.angle)
+                                 , kPAEBStickerViewData_screenScale:@(self.screenScale)
         };
-        [data setObject:myData forKey:kHXClippingViewData];
+        [data setObject:myData forKey:kPAEBClippingViewData];
     }
     
     NSDictionary *imageViewData = self.imageView.photoEditData;
-    if (imageViewData) [data setObject:imageViewData forKey:kHXClippingViewData_zoomingView];
+    if (imageViewData) [data setObject:imageViewData forKey:kPAEBClippingViewData_zoomingView];
     
     if (data.count) {
         return data;
@@ -790,23 +790,23 @@ NSString *const kHXClippingViewData_zoomingView = @"HXClippingViewData_zoomingVi
 
 - (void)setPhotoEditData:(NSDictionary *)photoEditData
 {
-    NSDictionary *myData = photoEditData[kHXClippingViewData];
+    NSDictionary *myData = photoEditData[kPAEBClippingViewData];
     if (myData) {
-        self.transform = [myData[kHXClippingViewData_transform] CGAffineTransformValue];
-        self.angle = [myData[kHXClippingViewData_angle] integerValue];
-        self.saveRect = [myData[kHXClippingViewData_frame] CGRectValue];
+        self.transform = [myData[kPAEBClippingViewData_transform] CGAffineTransformValue];
+        self.angle = [myData[kPAEBClippingViewData_angle] integerValue];
+        self.saveRect = [myData[kPAEBClippingViewData_frame] CGRectValue];
         self.frame = self.saveRect;
-        self.minimumZoomScale = [myData[kHXClippingViewData_minimumZoomScale] floatValue];
-        self.maximumZoomScale = [myData[kHXClippingViewData_maximumZoomScale] floatValue];
-        self.zoomScale = [myData[kHXClippingViewData_zoomScale] floatValue];
-        self.contentSize = [myData[kHXClippingViewData_contentSize] CGSizeValue];
-        self.contentOffset = [myData[kHXClippingViewData_contentOffset] CGPointValue];
-        self.clipsToBounds = [myData[kHXClippingViewData_clipsToBounds] boolValue];
-        self.first_minimumZoomScale = [myData[kHXClippingViewData_first_minimumZoomScale] floatValue];
-        self.screenScale = [myData[kHXStickerViewData_screenScale] floatValue];
+        self.minimumZoomScale = [myData[kPAEBClippingViewData_minimumZoomScale] floatValue];
+        self.maximumZoomScale = [myData[kPAEBClippingViewData_maximumZoomScale] floatValue];
+        self.zoomScale = [myData[kPAEBClippingViewData_zoomScale] floatValue];
+        self.contentSize = [myData[kPAEBClippingViewData_contentSize] CGSizeValue];
+        self.contentOffset = [myData[kPAEBClippingViewData_contentOffset] CGPointValue];
+        self.clipsToBounds = [myData[kPAEBClippingViewData_clipsToBounds] boolValue];
+        self.first_minimumZoomScale = [myData[kPAEBClippingViewData_first_minimumZoomScale] floatValue];
+        self.screenScale = [myData[kPAEBStickerViewData_screenScale] floatValue];
     }
 
-    self.imageView.photoEditData = photoEditData[kHXClippingViewData_zoomingView];
+    self.imageView.photoEditData = photoEditData[kPAEBClippingViewData_zoomingView];
 }
 
 @end

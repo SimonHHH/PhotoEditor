@@ -14,10 +14,10 @@
 #import "UIView+HXExtension.h"
 #import "PAEBPhotoEditDefine.h"
 
-NSString *const kHXImageViewData_draw = @"HXImageViewData_draw";
-NSString *const kHXImageViewData_sticker = @"HXImageViewData_sticker";
-NSString *const kHXImageViewData_splash = @"HXImageViewData_splash";
-NSString *const kHXImageViewData_filter = @"HXImageViewData_filter";
+NSString *const kPAEBImageViewData_draw = @"HXImageViewData_draw";
+NSString *const kPAEBImageViewData_sticker = @"HXImageViewData_sticker";
+NSString *const kPAEBImageViewData_splash = @"HXImageViewData_splash";
+NSString *const kPAEBImageViewData_filter = @"HXImageViewData_filter";
 
 @interface PAEBPhotoEditImageView ()
 @property (nonatomic, strong) UIImageView *imageView;
@@ -213,9 +213,9 @@ NSString *const kHXImageViewData_filter = @"HXImageViewData_filter";
     NSDictionary *splashData = self.splashView.data;
     
     NSMutableDictionary *data = [@{} mutableCopy];
-    if (drawData) [data setObject:drawData forKey:kHXImageViewData_draw];
-    if (stickerData) [data setObject:stickerData forKey:kHXImageViewData_sticker];
-    if (splashData) [data setObject:splashData forKey:kHXImageViewData_splash];
+    if (drawData) [data setObject:drawData forKey:kPAEBImageViewData_draw];
+    if (stickerData) [data setObject:stickerData forKey:kPAEBImageViewData_sticker];
+    if (splashData) [data setObject:splashData forKey:kPAEBImageViewData_splash];
     
     if (data.count) {
         return data;
@@ -224,9 +224,9 @@ NSString *const kHXImageViewData_filter = @"HXImageViewData_filter";
 }
 
 - (void)setPhotoEditData:(NSDictionary *)photoEditData {
-    self.drawView.data = photoEditData[kHXImageViewData_draw];
-    self.stickerView.data = photoEditData[kHXImageViewData_sticker];
-    self.splashView.data = photoEditData[kHXImageViewData_splash];
+    self.drawView.data = photoEditData[kPAEBImageViewData_draw];
+    self.stickerView.data = photoEditData[kPAEBImageViewData_sticker];
+    self.splashView.data = photoEditData[kPAEBImageViewData_splash];
 }
 
 @end

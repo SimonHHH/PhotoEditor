@@ -10,9 +10,9 @@
 #import "PAEBPhotoEditSplashMaskLayer.h"
 #import "UIImage+HXExtension.h"
 
-NSString *const kHXSplashViewData = @"HXSplashViewData";
-NSString *const kHXSplashViewData_layerArray = @"HXSplashViewData_layerArray";
-NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
+NSString *const kPAEBSplashViewData = @"PAEBSplashViewData";
+//NSString *const kPAEBSplashViewData_layerArray = @"PAEBSplashViewData_layerArray";
+//NSString *const kPAEBSplashViewData_frameArray = @"PAEBSplashViewData_frameArray";
 
 @interface PAEBPhotoEditSplashView () {
     BOOL _isWork;
@@ -60,6 +60,9 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    for (CALayer *layer in self.layerArray) {
+        layer.frame = self.bounds;
+    }
 }
 
 - (void)setImage:(UIImage *)image {
@@ -85,7 +88,7 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
             [path moveToPoint:point];
             [self.lineArray addObject:path];
 
-            CALayer *layer = [self createShapeLayer:path];
+            CALayer *layer = [self createLayer:path];
             [self.layer addSublayer:layer];
             [self.layerArray addObject:layer];
             
@@ -95,7 +98,7 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
     }
 }
 
-- (CALayer *)createShapeLayer:(UIBezierPath *)path {
+- (CALayer *)createLayer:(UIBezierPath *)path {
     
     CAShapeLayer *slayer = [CAShapeLayer layer];
     slayer.path = path.CGPath;
@@ -137,7 +140,7 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
 }
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    if ([event allTouches].count == 1){
+    if ([event allTouches].count == 1) {
         
         if (_isWork) {
             if (self.splashEnded) {
@@ -165,6 +168,12 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
     }
 }
 
+- (void)clearCoverage {
+    [self.lineArray removeAllObjects];
+    [self.layerArray performSelector:@selector(removeFromSuperlayer)];
+    [self.layerArray removeAllObjects];
+}
+
 /** 是否可撤销 */
 - (BOOL)canUndo {
     return self.layerArray.count;
@@ -178,36 +187,24 @@ NSString *const kHXSplashViewData_frameArray = @"HXSplashViewData_frameArray";
 }
 
 #pragma mark  - 数据
-//- (NSDictionary *)data {
-//    if (self.layerArray.count) {
-//        NSMutableArray *lineArray = [@[] mutableCopy];
-//        for (PAEBPhotoEditSplashMaskLayer *layer in self.layerArray) {
-//            [lineArray addObject:layer.lineArray];
-//        }
-//
-//        return @{kHXSplashViewData:@{
-//                         kHXSplashViewData_layerArray:[lineArray copy],
-//                         kHXSplashViewData_frameArray:[self.frameArray copy]
-//                         }};
-//    }
-//    return nil;
-//}
+- (NSDictionary *)data {
+    if (self.lineArray.count) {
+        return @{kPAEBSplashViewData:[self.lineArray copy]};
+    }
+    return nil;
+}
 
-//- (void)setData:(NSDictionary *)data {
-//    NSDictionary *dataDict = data[kHXSplashViewData];
-//    NSArray *lineArray = dataDict[kHXSplashViewData_layerArray];
-//    for (NSArray *subLineArray in lineArray) {
-//        PAEBPhotoEditSplashMaskLayer *layer = [PAEBPhotoEditSplashMaskLayer layer];
-//        layer.frame = self.bounds;
-//        [layer.lineArray addObjectsFromArray:subLineArray];
-//
-//        [self.layer addSublayer:layer];
-//        [self.layerArray addObject:layer];
-//        [layer setNeedsDisplay];
-//    }
-//    NSArray *frameArray = dataDict[kHXSplashViewData_frameArray];
-//    [self.frameArray addObjectsFromArray:frameArray];
-//}
+- (void)setData:(NSDictionary *)data {
+    NSArray *lineArray = data[kPAEBSplashViewData];
+    if (lineArray.count) {
+        for (UIBezierPath *path in lineArray) {
+            CALayer *layer = [self createLayer:path];
+            [self.layer addSublayer:layer];
+            [self.layerArray addObject:layer];
+        }
+        [self.lineArray addObjectsFromArray:lineArray];
+    }
+}
 
 #pragma mark - 转成马赛克图
 - (UIImage *)mosaicImage:(UIImage *)sourceImage mosaicLevel:(NSUInteger)level {

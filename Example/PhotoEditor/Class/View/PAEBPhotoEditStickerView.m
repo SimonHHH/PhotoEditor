@@ -18,14 +18,14 @@
 #import "PAEBPhotoClippingView.h"
 
 
-NSString *const kHXStickerViewData_angel = @"HXStickerViewData_angel";
+NSString *const kPAEBStickerViewData_angel = @"HXStickerViewData_angel";
 
-NSString *const kHXStickerViewData_movingView = @"HXStickerViewData_movingView";
-NSString *const kHXStickerViewData_movingView_content = @"HXStickerViewData_movingView_content";
-NSString *const kHXStickerViewData_movingView_center = @"HXStickerViewData_movingView_center";
-NSString *const kHXStickerViewData_movingView_scale = @"HXStickerViewData_movingView_scale";
-NSString *const kHXStickerViewData_movingView_rotation = @"HXStickerViewData_movingView_rotation";
-NSString *const kHXStickerViewData_movingView_superAngel = @"HXStickerViewData_movingView_superAngel";
+NSString *const kPAEBStickerViewData_movingView = @"HXStickerViewData_movingView";
+NSString *const kPAEBStickerViewData_movingView_content = @"HXStickerViewData_movingView_content";
+NSString *const kPAEBStickerViewData_movingView_center = @"HXStickerViewData_movingView_center";
+NSString *const kPAEBStickerViewData_movingView_scale = @"HXStickerViewData_movingView_scale";
+NSString *const kPAEBStickerViewData_movingView_rotation = @"HXStickerViewData_movingView_rotation";
+NSString *const kPAEBStickerViewData_movingView_superAngel = @"HXStickerViewData_movingView_superAngel";
 
 @interface PAEBPhotoEditStickerView ()
 @property (nonatomic, weak) PAEBPhotoEditStickerItemView *selectItemView;
@@ -386,22 +386,22 @@ NSString *const kHXStickerViewData_movingView_superAngel = @"HXStickerViewData_m
     for (PAEBPhotoEditStickerItemView *view in self.subviews) {
         if ([view isKindOfClass:[PAEBPhotoEditStickerItemView class]]) {
 
-            [itemDatas addObject:@{kHXStickerViewData_movingView_content:view.contentView.item
-                                     , kHXStickerViewData_movingView_scale:@(view.scale)
-                                     , kHXStickerViewData_movingView_rotation:@(view.arg)
-                                     , kHXStickerViewData_movingView_center:[NSValue valueWithCGPoint:view.center]
-                                   , kHXStickerViewData_movingView_superAngel:@(view.superAngle)
+            [itemDatas addObject:@{kPAEBStickerViewData_movingView_content:view.contentView.item
+                                     , kPAEBStickerViewData_movingView_scale:@(view.scale)
+                                     , kPAEBStickerViewData_movingView_rotation:@(view.arg)
+                                     , kPAEBStickerViewData_movingView_center:[NSValue valueWithCGPoint:view.center]
+                                   , kPAEBStickerViewData_movingView_superAngel:@(view.superAngle)
                                      }];
         }
     }
     if (itemDatas.count) {
-        return @{kHXStickerViewData_movingView:[itemDatas copy],
-                 kHXStickerViewData_angel : @(self.angle)
+        return @{kPAEBStickerViewData_movingView:[itemDatas copy],
+                 kPAEBStickerViewData_angel : @(self.angle)
         };
     }else {
         if (self.angle != 0) {
             return @{
-                kHXStickerViewData_angel : @(self.angle)
+                kPAEBStickerViewData_angel : @(self.angle)
             };
         }
     }
@@ -409,16 +409,16 @@ NSString *const kHXStickerViewData_movingView_superAngel = @"HXStickerViewData_m
 }
 
 - (void)setData:(NSDictionary *)data {
-    NSInteger angle = [data[kHXStickerViewData_angel] integerValue];
+    NSInteger angle = [data[kPAEBStickerViewData_angel] integerValue];
     self.angle = angle;
-    NSArray *itemDatas = data[kHXStickerViewData_movingView];
+    NSArray *itemDatas = data[kPAEBStickerViewData_movingView];
     if (itemDatas.count) {
         for (NSDictionary *itemData in itemDatas) {
-            PAEBPhotoEditStickerItem *item = itemData[kHXStickerViewData_movingView_content];
-            CGFloat scale = [itemData[kHXStickerViewData_movingView_scale] floatValue];
-            NSInteger superAngle= [itemData[kHXStickerViewData_movingView_superAngel] integerValue];
-            CGFloat rotation = [itemData[kHXStickerViewData_movingView_rotation] floatValue];
-            CGPoint center = [itemData[kHXStickerViewData_movingView_center] CGPointValue];
+            PAEBPhotoEditStickerItem *item = itemData[kPAEBStickerViewData_movingView_content];
+            CGFloat scale = [itemData[kPAEBStickerViewData_movingView_scale] floatValue];
+            NSInteger superAngle= [itemData[kPAEBStickerViewData_movingView_superAngel] integerValue];
+            CGFloat rotation = [itemData[kPAEBStickerViewData_movingView_rotation] floatValue];
+            CGPoint center = [itemData[kPAEBStickerViewData_movingView_center] CGPointValue];
             
             PAEBPhotoEditStickerItemView *view = [self addStickerItem:item isSelected:NO];
             view.superAngle = superAngle;
