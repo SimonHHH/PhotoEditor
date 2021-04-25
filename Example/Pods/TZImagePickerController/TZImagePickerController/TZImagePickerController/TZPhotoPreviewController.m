@@ -30,7 +30,6 @@
     UIImageView *_numberImageView;
     UILabel *_numberLabel;
     UIButton *_originalPhotoButton;
-    UIButton *_editPhotoButton;
     UILabel *_originalPhotoLabel;
     
     CGFloat _offsetItemCount;
@@ -159,12 +158,6 @@
         if (_isSelectOriginalPhoto) [self showPhotoBytes];
     }
     
-    _editPhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _editPhotoButton.backgroundColor = [UIColor clearColor];
-    _editPhotoButton.titleLabel.font = [UIFont systemFontOfSize:13];
-    [_editPhotoButton setTitle:@"编辑" forState:UIControlStateNormal];
-    [_editPhotoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    
     _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _doneButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [_doneButton addTarget:self action:@selector(doneButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -194,12 +187,11 @@
     [_toolBar addSubview:_doneButton];
     [_toolBar addSubview:_originalPhotoButton];
     [_toolBar addSubview:_numberImageView];
-    [_toolBar addSubview:_editPhotoButton];
     [_toolBar addSubview:_numberLabel];
     [self.view addSubview:_toolBar];
     
     if (_tzImagePickerVc.photoPreviewPageUIConfigBlock) {
-        _tzImagePickerVc.photoPreviewPageUIConfigBlock(_collectionView, _naviBar, _backButton, _selectButton, _indexLabel, _toolBar, _originalPhotoButton, _originalPhotoLabel, _editPhotoButton, _doneButton, _numberImageView, _numberLabel);
+        _tzImagePickerVc.photoPreviewPageUIConfigBlock(_collectionView, _naviBar, _backButton, _selectButton, _indexLabel, _toolBar, _originalPhotoButton, _originalPhotoLabel, _doneButton, _numberImageView, _numberLabel);
     }
 }
 
@@ -295,9 +287,7 @@
         _originalPhotoButton.frame = CGRectMake(0, 0, fullImageWidth + 56, 44);
         _originalPhotoLabel.frame = CGRectMake(fullImageWidth + 42, 0, 80, 44);
     }
-    
-    _editPhotoButton.frame = CGRectMake(self.view.tz_width/2 - 30, 0, 60, 44);
-    
+        
     [_doneButton sizeToFit];
     _doneButton.frame = CGRectMake(self.view.tz_width - _doneButton.tz_width - 12, 0, _doneButton.tz_width, 44);
     _numberImageView.frame = CGRectMake(_doneButton.tz_left - 24 - 5, 10, 24, 24);

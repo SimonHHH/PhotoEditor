@@ -45,7 +45,9 @@
     [self.imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         PAEBPhotoEditConfiguration *photoEditConfig = [[PAEBPhotoEditConfiguration alloc] init];
         photoEditConfig.isRoundCliping = YES;
+        photoEditConfig.onlyCliping = YES;
         PAEBPhotoEditViewController *ctl = [[PAEBPhotoEditViewController alloc] initWithConfiguration:photoEditConfig];
+        ctl.delegate = self;
         PAEBPhotoModel *photoModel = [PAEBPhotoModel photoModelWithPHAsset:[assets firstObject]];
         ctl.photoModel = photoModel;
         ctl.onlyCliping = YES;

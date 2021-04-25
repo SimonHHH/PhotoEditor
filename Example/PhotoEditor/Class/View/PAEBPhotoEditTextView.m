@@ -17,8 +17,8 @@
 #import "PAEBPhotoEditGraffitiColorViewCell.h"
 
 
-#define HXEditTextBlankWidth 22
-#define HXEditTextRadius 8.f
+#define PAEBEditTextBlankWidth 22
+#define PAEBHXEditTextRadius 8.f
 
 @interface PAEBPhotoEditTextView ()<UITextViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, NSLayoutManagerDelegate>
 
@@ -341,8 +341,7 @@
         self.textLayer.path = nil;
         return;
     }
-    NSRange range = [self.textView.layoutManager characterRangeForGlyphRange:NSMakeRange(0, self.textView.text.length)
-                                     actualGlyphRange:NULL];
+    NSRange range = [self.textView.layoutManager characterRangeForGlyphRange:NSMakeRange(0, self.textView.text.length) actualGlyphRange:NULL];
     NSRange glyphRange = [self.textView.layoutManager glyphRangeForCharacterRange:range
                                       actualCharacterRange:NULL];
     NSMutableArray *rectArray = @[].mutableCopy;
@@ -387,101 +386,99 @@
     self.rectArray = rectArray;
     [self preProccess];
     UIBezierPath *path = [UIBezierPath bezierPath];
-//    if (self.showBackgroudColor) {
-        UIBezierPath *bezierPath;
-        CGPoint startPoint = CGPointZero;
-        for (int i = 0; i < self.rectArray.count; i++) {
-            NSValue *curValue = [self.rectArray objectAtIndex:i];
-            CGRect cur = curValue.CGRectValue;
-            if (cur.size.width <= HXEditTextBlankWidth) {
-                continue;
-            }
-            CGFloat loctionX = cur.origin.x;
-            CGFloat loctionY = cur.origin.y;
-            BOOL half = NO;
-            if (!bezierPath) {
-                // 设置起点
-                bezierPath = [UIBezierPath bezierPath];
-                startPoint = CGPointMake(loctionX , loctionY + HXEditTextRadius);
-                [bezierPath moveToPoint:startPoint];
-                [bezierPath addArcWithCenter:CGPointMake(loctionX + HXEditTextRadius, loctionY + HXEditTextRadius) radius:HXEditTextRadius startAngle:M_PI endAngle:1.5 * M_PI clockwise:YES];
-                [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(cur) - HXEditTextRadius, loctionY)];
-                [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) - HXEditTextRadius, loctionY + HXEditTextRadius) radius:HXEditTextRadius startAngle:M_PI * 1.5 endAngle:0 clockwise:YES];
-            }else {
-                NSValue *lastCurValue = [self.rectArray objectAtIndex:i - 1];
-                CGRect lastCur = lastCurValue.CGRectValue;
-                CGRect nextCur;
-                if (CGRectGetMaxX(lastCur) > CGRectGetMaxX(cur)) {
-                    if (i + 1 < self.rectArray.count) {
-                        NSValue *nextCurValue = [self.rectArray objectAtIndex:i + 1];
-                        nextCur = nextCurValue.CGRectValue;
-                        if (nextCur.size.width > HXEditTextBlankWidth) {
-                            if (CGRectGetMaxX(nextCur) > CGRectGetMaxX(cur)) {
-                                half = YES;
-                            }
+    UIBezierPath *bezierPath;
+    CGPoint startPoint = CGPointZero;
+    for (int i = 0; i < self.rectArray.count; i++) {
+        NSValue *curValue = [self.rectArray objectAtIndex:i];
+        CGRect cur = curValue.CGRectValue;
+        if (cur.size.width <= PAEBEditTextBlankWidth) {
+            continue;
+        }
+        CGFloat loctionX = cur.origin.x;
+        CGFloat loctionY = cur.origin.y;
+        BOOL half = NO;
+        if (!bezierPath) {
+            // 设置起点
+            bezierPath = [UIBezierPath bezierPath];
+            startPoint = CGPointMake(loctionX , loctionY + PAEBHXEditTextRadius);
+            [bezierPath moveToPoint:startPoint];
+            [bezierPath addArcWithCenter:CGPointMake(loctionX + PAEBHXEditTextRadius, loctionY + PAEBHXEditTextRadius) radius:PAEBHXEditTextRadius startAngle:M_PI endAngle:1.5 * M_PI clockwise:YES];
+            [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(cur) - PAEBHXEditTextRadius, loctionY)];
+            [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) - PAEBHXEditTextRadius, loctionY + PAEBHXEditTextRadius) radius:PAEBHXEditTextRadius startAngle:M_PI * 1.5 endAngle:0 clockwise:YES];
+        }else {
+            NSValue *lastCurValue = [self.rectArray objectAtIndex:i - 1];
+            CGRect lastCur = lastCurValue.CGRectValue;
+            CGRect nextCur;
+            if (CGRectGetMaxX(lastCur) > CGRectGetMaxX(cur)) {
+                if (i + 1 < self.rectArray.count) {
+                    NSValue *nextCurValue = [self.rectArray objectAtIndex:i + 1];
+                    nextCur = nextCurValue.CGRectValue;
+                    if (nextCur.size.width > PAEBEditTextBlankWidth) {
+                        if (CGRectGetMaxX(nextCur) > CGRectGetMaxX(cur)) {
+                            half = YES;
                         }
                     }
-                    if (half) {
-                        CGFloat radius = (nextCur.origin.y - CGRectGetMaxY(lastCur)) / 2;
-                        CGFloat centerY = nextCur.origin.y - radius;
-                        [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) + radius, centerY) radius:radius startAngle:-0.5 * M_PI endAngle:-1.5 * M_PI clockwise:NO];
-                    }else {
-                        [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) + HXEditTextRadius, CGRectGetMaxY(lastCur) + HXEditTextRadius) radius:HXEditTextRadius startAngle:-0.5 * M_PI endAngle:-M_PI clockwise:NO];
-                    }
-                }else if (CGRectGetMaxX(lastCur) == CGRectGetMaxX(cur)) {
-                    [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(cur), CGRectGetMaxY(cur) - HXEditTextRadius)];
+                }
+                if (half) {
+                    CGFloat radius = (nextCur.origin.y - CGRectGetMaxY(lastCur)) / 2;
+                    CGFloat centerY = nextCur.origin.y - radius;
+                    [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) + radius, centerY) radius:radius startAngle:-0.5 * M_PI endAngle:-1.5 * M_PI clockwise:NO];
                 }else {
-                    [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) - HXEditTextRadius, cur.origin.y + HXEditTextRadius) radius:HXEditTextRadius startAngle:1.5 * M_PI endAngle:0.f clockwise:YES];
+                    [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) + PAEBHXEditTextRadius, CGRectGetMaxY(lastCur) + PAEBHXEditTextRadius) radius:PAEBHXEditTextRadius startAngle:-0.5 * M_PI endAngle:-M_PI clockwise:NO];
                 }
-            }
-            BOOL hasNext = NO;
-            if (i + 1 < self.rectArray.count) {
-                NSValue *nextCurValue = [self.rectArray objectAtIndex:i + 1];
-                CGRect nextCur = nextCurValue.CGRectValue;
-                if (nextCur.size.width > HXEditTextBlankWidth) {
-                    if (CGRectGetMaxX(cur) > CGRectGetMaxX(nextCur)) {
-                        CGPoint point = CGPointMake(CGRectGetMaxX(cur), CGRectGetMaxY(cur) - HXEditTextRadius);
-                        if (!CGPointEqualToPoint(point, bezierPath.currentPoint)) {
-                            [bezierPath addLineToPoint:point];
-                            [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) - HXEditTextRadius, CGRectGetMaxY(cur) - HXEditTextRadius) radius:HXEditTextRadius startAngle:0 endAngle:0.5 * M_PI clockwise:YES];
-                        }else {
-                            [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) - HXEditTextRadius, CGRectGetMaxY(cur) - HXEditTextRadius) radius:HXEditTextRadius startAngle:0 endAngle:0.5 * M_PI clockwise:YES];
-                        }
-                        
-                        [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(nextCur) + HXEditTextRadius, CGRectGetMaxY(cur))];
-                    }else if (CGRectGetMaxX(cur) == CGRectGetMaxX(nextCur)) {
-                        [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(cur), CGRectGetMaxY(cur))];
-                    }else {
-                        if (!half) {
-                            CGPoint point = CGPointMake(CGRectGetMaxX(cur), nextCur.origin.y - HXEditTextRadius);
-                            if (!CGPointEqualToPoint(point, bezierPath.currentPoint)) {
-                                [bezierPath addLineToPoint:point];
-                                [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) + HXEditTextRadius, nextCur.origin.y - HXEditTextRadius) radius:HXEditTextRadius startAngle:-M_PI endAngle:-1.5f * M_PI clockwise:NO];
-                            }else {
-                                [bezierPath addArcWithCenter:CGPointMake(bezierPath.currentPoint.x + HXEditTextRadius, bezierPath.currentPoint.y) radius:HXEditTextRadius startAngle:-M_PI endAngle:-1.5f * M_PI clockwise:NO];
-                            }
-                        }
-                        [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(nextCur) - HXEditTextRadius, nextCur.origin.y)];
-                    }
-                    hasNext = YES;
-                }
-            }
-            if (!hasNext) {
-                [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(cur), CGRectGetMaxY(cur) - HXEditTextRadius)];
-
-                [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) - HXEditTextRadius, CGRectGetMaxY(cur) - HXEditTextRadius) radius:HXEditTextRadius startAngle:0 endAngle:0.5 * M_PI clockwise:YES];
-                                                       
-                [bezierPath addLineToPoint:CGPointMake(cur.origin.x + HXEditTextRadius, CGRectGetMaxY(cur))];
-                
-                [bezierPath addArcWithCenter:CGPointMake(cur.origin.x + HXEditTextRadius, CGRectGetMaxY(cur) - HXEditTextRadius) radius:HXEditTextRadius startAngle:0.5 * M_PI endAngle:M_PI clockwise:YES];
-                
-                [bezierPath addLineToPoint:CGPointMake(cur.origin.x, startPoint.y)];
-            
-                [path appendPath:bezierPath];
-                bezierPath = nil;
+            }else if (CGRectGetMaxX(lastCur) == CGRectGetMaxX(cur)) {
+                [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(cur), CGRectGetMaxY(cur) - PAEBHXEditTextRadius)];
+            }else {
+                [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) - PAEBHXEditTextRadius, cur.origin.y + PAEBHXEditTextRadius) radius:PAEBHXEditTextRadius startAngle:1.5 * M_PI endAngle:0.f clockwise:YES];
             }
         }
-//    }
+        BOOL hasNext = NO;
+        if (i + 1 < self.rectArray.count) {
+            NSValue *nextCurValue = [self.rectArray objectAtIndex:i + 1];
+            CGRect nextCur = nextCurValue.CGRectValue;
+            if (nextCur.size.width > PAEBEditTextBlankWidth) {
+                if (CGRectGetMaxX(cur) > CGRectGetMaxX(nextCur)) {
+                    CGPoint point = CGPointMake(CGRectGetMaxX(cur), CGRectGetMaxY(cur) - PAEBHXEditTextRadius);
+                    if (!CGPointEqualToPoint(point, bezierPath.currentPoint)) {
+                        [bezierPath addLineToPoint:point];
+                        [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) - PAEBHXEditTextRadius, CGRectGetMaxY(cur) - PAEBHXEditTextRadius) radius:PAEBHXEditTextRadius startAngle:0 endAngle:0.5 * M_PI clockwise:YES];
+                    }else {
+                        [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) - PAEBHXEditTextRadius, CGRectGetMaxY(cur) - PAEBHXEditTextRadius) radius:PAEBHXEditTextRadius startAngle:0 endAngle:0.5 * M_PI clockwise:YES];
+                    }
+                    
+                    [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(nextCur) + PAEBHXEditTextRadius, CGRectGetMaxY(cur))];
+                }else if (CGRectGetMaxX(cur) == CGRectGetMaxX(nextCur)) {
+                    [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(cur), CGRectGetMaxY(cur))];
+                }else {
+                    if (!half) {
+                        CGPoint point = CGPointMake(CGRectGetMaxX(cur), nextCur.origin.y - PAEBHXEditTextRadius);
+                        if (!CGPointEqualToPoint(point, bezierPath.currentPoint)) {
+                            [bezierPath addLineToPoint:point];
+                            [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) + PAEBHXEditTextRadius, nextCur.origin.y - PAEBHXEditTextRadius) radius:PAEBHXEditTextRadius startAngle:-M_PI endAngle:-1.5f * M_PI clockwise:NO];
+                        }else {
+                            [bezierPath addArcWithCenter:CGPointMake(bezierPath.currentPoint.x + PAEBHXEditTextRadius, bezierPath.currentPoint.y) radius:PAEBHXEditTextRadius startAngle:-M_PI endAngle:-1.5f * M_PI clockwise:NO];
+                        }
+                    }
+                    [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(nextCur) - PAEBHXEditTextRadius, nextCur.origin.y)];
+                }
+                hasNext = YES;
+            }
+        }
+        if (!hasNext) {
+            [bezierPath addLineToPoint:CGPointMake(CGRectGetMaxX(cur), CGRectGetMaxY(cur) - PAEBHXEditTextRadius)];
+            
+            [bezierPath addArcWithCenter:CGPointMake(CGRectGetMaxX(cur) - PAEBHXEditTextRadius, CGRectGetMaxY(cur) - PAEBHXEditTextRadius) radius:PAEBHXEditTextRadius startAngle:0 endAngle:0.5 * M_PI clockwise:YES];
+            
+            [bezierPath addLineToPoint:CGPointMake(cur.origin.x + PAEBHXEditTextRadius, CGRectGetMaxY(cur))];
+            
+            [bezierPath addArcWithCenter:CGPointMake(cur.origin.x + PAEBHXEditTextRadius, CGRectGetMaxY(cur) - PAEBHXEditTextRadius) radius:PAEBHXEditTextRadius startAngle:0.5 * M_PI endAngle:M_PI clockwise:YES];
+            
+            [bezierPath addLineToPoint:CGPointMake(cur.origin.x, startPoint.y)];
+            
+            [path appendPath:bezierPath];
+            bezierPath = nil;
+        }
+    }
     return path;
 }
 
@@ -510,33 +507,33 @@
     NSValue *value2 = [self.rectArray objectAtIndex:index];
     CGRect last = value1.CGRectValue;
     CGRect cur = value2.CGRectValue;
-    if (cur.size.width <= HXEditTextBlankWidth || last.size.width <= HXEditTextBlankWidth) {
+    if (cur.size.width <= PAEBEditTextBlankWidth || last.size.width <= PAEBEditTextBlankWidth) {
         return;
     }
     BOOL t1 = NO;
     BOOL t2 = NO;
     //if t1 == true 改变cur的rect
     if (cur.origin.x > last.origin.x) {
-        if (cur.origin.x - last.origin.x < 2 * HXEditTextRadius) {
+        if (cur.origin.x - last.origin.x < 2 * PAEBHXEditTextRadius) {
             cur = CGRectMake(last.origin.x, cur.origin.y, cur.size.width, cur.size.height);
             t1 = YES;
         }
     }else if (cur.origin.x < last.origin.x) {
-        if (last.origin.x - cur.origin.x < 2 * HXEditTextRadius) {
+        if (last.origin.x - cur.origin.x < 2 * PAEBHXEditTextRadius) {
             cur = CGRectMake(last.origin.x, cur.origin.y, cur.size.width, cur.size.height);
             t1 = YES;
         }
     }
     if (CGRectGetMaxX(cur) > CGRectGetMaxX(last)) {
         CGFloat poor = CGRectGetMaxX(cur) - CGRectGetMaxX(last);
-        if (poor < 2 * HXEditTextRadius) {
+        if (poor < 2 * PAEBHXEditTextRadius) {
             last = CGRectMake(last.origin.x, last.origin.y, cur.size.width, last.size.height);
             t2 = YES;
         }
     }
     if (CGRectGetMaxX(cur) < CGRectGetMaxX(last)) {
         CGFloat poor = CGRectGetMaxX(last) - CGRectGetMaxX(cur);
-        if (poor < 2 * HXEditTextRadius) {
+        if (poor < 2 * PAEBHXEditTextRadius) {
             cur = CGRectMake(cur.origin.x, cur.origin.y, last.size.width, cur.size.height);
             t1 = YES;
         }
