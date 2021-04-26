@@ -185,9 +185,6 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
         _imageSize = image.size;
         CGRect cropRect = AVMakeRectWithAspectRatioInsideRect(self.imageSize, self.bounds);
         
-        /** 参数取整，否则可能会出现1像素偏差 */
-//        cropRect = HXMediaEditProundRect(cropRect);
-        
         self.gridView.controlSize = cropRect.size;
         self.gridView.gridRect = cropRect;
         self.gridView.aspectRatioHorizontally = (self.imageSize.width > self.imageSize.height);
@@ -530,14 +527,15 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
         }];
     }
 }
+
 /** 还原 */
 - (void)reset {
     if (self.isClipping) {
         /** 若可以调整长宽比例，则重置它，否则保留默认值 */
-//        [self setAspectRatioIndex:0];
         [self.clippingView reset];
     }
 }
+
 - (void)resetRotateAngle {
     [self.clippingView resetRotateAngle];
 }
@@ -578,19 +576,13 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
 /** 创建编辑图片 */
 - (void)createEditImage:(void (^)(UIImage *editImage))complete {
     CGFloat scale = self.clippingView.zoomScale;
-//    CGAffineTransform trans = self.clippingView.transform;
+    
     CGPoint contentOffset = self.clippingView.contentOffset;
-//    CGSize contentSize = self.clippingView.contentSize;
+    
     CGRect clippingRect = self.clippingView.frame;
     
-    /** 参数取整，否则可能会出现1像素偏差 */
-//    clippingRect = HXMediaEditProundRect(clippingRect);
-    
     CGSize size = clippingRect.size;
-//    CGFloat rotate = acosf(trans.a);
-//    if (trans.b < 0) {
-//        rotate = M_PI-asinf(trans.b);
-//    }
+
     CGFloat rotate = M_PI * (self.clippingView.angle) / 180.0;
     if (rotate != 0) {
         rotate = 2 * M_PI + rotate;
@@ -612,8 +604,6 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
     } else {
         clipRect = CGRectMake(contentOffset.x/clipScale, contentOffset.y/clipScale, size.width/clipScale, size.height/clipScale);
     }
-    /** 参数取整，否则可能会出现1像素偏差 */
-//    clipRect = HXMediaEditProundRect(clipRect);
     
     NSInteger angle = labs(self.clippingView.angle);
     BOOL isHorizontal = NO;
@@ -745,6 +735,7 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
     self.gridView.showMaskLayer = NO;
     hx_me_dispatch_cancel(self.maskViewBlock);
 }
+
 - (void)clippingViewDidEndDecelerating:(PAEBPhotoClippingView *)clippingView {
     /** 移动结束，显示 */
     if (!self.gridView.isDragging && !CGRectEqualToRect(self.gridView.gridRect, self.clippingView.frame)) {

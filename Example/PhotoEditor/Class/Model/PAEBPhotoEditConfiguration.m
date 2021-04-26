@@ -13,7 +13,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.maximumLimitTextLength = 0;
+        self.maximumLimitTextLength = 100;   //文字贴图最大字数限制100个字符
     }
     return self;
 }

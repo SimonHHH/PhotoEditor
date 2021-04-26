@@ -117,15 +117,6 @@ NSString *const hxGridLayerAnimtionKey = @"hxGridLayerAnimtionKey";
     
 }
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    if ([self animationForKey:hxGridLayerAnimtionKey] == anim) {
-        if (self.callback) {
-            self.callback(flag);
-            self.callback = nil;
-        }
-        [self removeAnimationForKey:hxGridLayerAnimtionKey];
-    }
-}
 - (UIBezierPath *)setAllCornerPath:(UIRectCorner)rectConrner {
     CGFloat lineWidth = 3.f;
     CGFloat length = 20.f;
@@ -234,5 +225,24 @@ NSString *const hxGridLayerAnimtionKey = @"hxGridLayerAnimtionKey";
     self.bottomLeftCornerLayer.frame = self.frame;
     self.bottomRightCornerLayer.frame = self.frame;
     self.middleLineLayer.frame = self.frame;
+}
+
+- (void)setCornerLayerHidden:(BOOL)isHidden {
+    
+}
+
+#pragma mark <CAAnimationDelegate>
+- (void)animationDidStart:(CAAnimation *)anim {
+    
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+    if ([self animationForKey:hxGridLayerAnimtionKey] == anim) {
+        if (self.callback) {
+            self.callback(flag);
+            self.callback = nil;
+        }
+        [self removeAnimationForKey:hxGridLayerAnimtionKey];
+    }
 }
 @end

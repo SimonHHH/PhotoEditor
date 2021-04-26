@@ -28,6 +28,10 @@ NSString *const kPAEBImageViewData_filter = @"HXImageViewData_filter";
 
 @implementation PAEBPhotoEditImageView
 
+- (void)dealloc {
+    NSLog(@"%@ dealloc", NSStringFromClass([self class]));
+}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {

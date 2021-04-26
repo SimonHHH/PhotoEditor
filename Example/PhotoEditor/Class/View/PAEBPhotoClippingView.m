@@ -261,59 +261,33 @@ NSString *const kPAEBClippingViewData_zoomingView = @"HXClippingViewData_zooming
     self.angle = 0;
 }
 - (void)reset {
-    [self resetToRect:CGRectZero];
-}
-
-- (void)resetToRect:(CGRect)rect {
     if (!_isReseting) {
         _isReseting = YES;
-        if (CGRectEqualToRect(rect, CGRectZero)) {
-            [UIView animateWithDuration:0.25
-                                  delay:0.0
-                                options:UIViewAnimationOptionBeginFromCurrentState
-                             animations:^{
-                                 self.transform = CGAffineTransformIdentity;
-                                 self.angle = 0;
-                                 self.minimumZoomScale = self.first_minimumZoomScale;
-                                 [self setZoomScale:self.minimumZoomScale];
-                                 self.frame = (CGRect){CGPointZero, self.imageView.hx_size};
-                                 self.center = CGPointMake(self.superview.center.x-self.offsetSuperCenter.x/2, self.superview.center.y-self.offsetSuperCenter.y/2);
-                                 self.saveRect = self.frame;
-                                 /** 重设contentSize */
-                                 self.contentSize = self.imageView.hx_size;
-                                 /** 重置contentOffset */
-                                 self.contentOffset = CGPointZero;
-                                 if ([self.clippingDelegate respondsToSelector:@selector(clippingViewWillBeginZooming:)]) {
-                                     void (^block)(CGRect) = [self.clippingDelegate clippingViewWillBeginZooming:self];
-                                     if (block) block(self.frame);
-                                 }
-                             } completion:^(BOOL finished) {
-                                 if ([self.clippingDelegate respondsToSelector:@selector(clippingViewDidEndZooming:)]) {
-                                     [self.clippingDelegate clippingViewDidEndZooming:self];
-                                 }
-                                 self->_isReseting = NO;
-                             }];
-        } else {
-            [UIView animateWithDuration:0.25
-                                  delay:0.0
-                                options:UIViewAnimationOptionBeginFromCurrentState
-                             animations:^{
-                                 self.transform = CGAffineTransformIdentity;
-                                 self.angle = 0;
-                                 self.minimumZoomScale = self.first_minimumZoomScale;
-                                 [self setZoomScale:self.minimumZoomScale];
-                                 self.frame = (CGRect){CGPointZero, self.imageView.hx_size};
-                                 self.center = CGPointMake(self.superview.center.x-self.offsetSuperCenter.x/2, self.superview.center.y-self.offsetSuperCenter.y/2);
-                                 /** 重设contentSize */
-                                 self.contentSize = self.imageView.hx_size;
-                                 /** 重置contentOffset */
-                                 self.contentOffset = CGPointZero;
-                                 [self zoomInToRect:rect];
-                                 [self zoomOutToRect:rect completion:^{
-                                     self->_isReseting = NO;
-                                 }];
-                             } completion:nil];
-        }
+        [UIView animateWithDuration:0.25
+                              delay:0.0
+                            options:UIViewAnimationOptionBeginFromCurrentState
+                         animations:^{
+            self.transform = CGAffineTransformIdentity;
+            self.angle = 0;
+            self.minimumZoomScale = self.first_minimumZoomScale;
+            [self setZoomScale:self.minimumZoomScale];
+            self.frame = (CGRect){CGPointZero, self.imageView.hx_size};
+            self.center = CGPointMake(self.superview.center.x-self.offsetSuperCenter.x/2, self.superview.center.y-self.offsetSuperCenter.y/2);
+            self.saveRect = self.frame;
+            /** 重设contentSize */
+            self.contentSize = self.imageView.hx_size;
+            /** 重置contentOffset */
+            self.contentOffset = CGPointZero;
+            if ([self.clippingDelegate respondsToSelector:@selector(clippingViewWillBeginZooming:)]) {
+                void (^block)(CGRect) = [self.clippingDelegate clippingViewWillBeginZooming:self];
+                if (block) block(self.frame);
+            }
+        } completion:^(BOOL finished) {
+            if ([self.clippingDelegate respondsToSelector:@selector(clippingViewDidEndZooming:)]) {
+                [self.clippingDelegate clippingViewDidEndZooming:self];
+            }
+            _isReseting = NO;
+        }];
     }
 }
 
@@ -328,8 +302,8 @@ NSString *const kPAEBClippingViewData_zoomingView = @"HXClippingViewData_zooming
 
 - (BOOL)canResetWithRect:(CGRect)trueFrame {
     BOOL canReset = !(CGAffineTransformIsIdentity(self.transform)
-    && HXRound(self.zoomScale) == HXRound(self.minimumZoomScale)
-    && [self verifyRect:trueFrame]);
+                      && HXRound(self.zoomScale) == HXRound(self.minimumZoomScale)
+                      && [self verifyRect:trueFrame]);
     if (self.fixedAspectRatio && !canReset) {
         if (fabs((fabs(HXRoundHundreds(self.contentSize.width) - HXRoundHundreds(self.hx_w)) / 2 - HXRoundHundreds(self.contentOffset.x))) >= 0.999) {
             canReset = YES;
@@ -520,7 +494,7 @@ NSString *const kPAEBClippingViewData_zoomingView = @"HXClippingViewData_zooming
             }
             
         } completion:^(BOOL complete) {
-            self->_isRotating = NO;
+            _isRotating = NO;
             if ([self.clippingDelegate respondsToSelector:@selector(clippingViewDidEndZooming:)]) {
                 [self.clippingDelegate clippingViewDidEndZooming:self];
             }

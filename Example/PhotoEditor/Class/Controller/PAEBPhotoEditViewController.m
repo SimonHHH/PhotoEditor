@@ -97,6 +97,10 @@
     [self showTopBottomView];
 }
 
+- (void)dealloc {
+    NSLog(@"%@ dealloc", NSStringFromClass([self class]));
+}
+
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
@@ -139,10 +143,6 @@
         [self.view addSubview:self.toolsView];
         [self.view addSubview:self.clippingToolBar];
     }
-}
-
-- (void)hideImageView {
-    self.editingView.hidden = YES;
 }
 
 - (void)completeTransition:(UIImage *)image {

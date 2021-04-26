@@ -33,8 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) BOOL isRotating;
 /** 旋转系数 */
 @property (nonatomic, assign, readonly) NSInteger angle;
-/** 是否缩放中 */
-//@property (nonatomic, readonly) BOOL isZooming;
 /** 是否可还原 */
 @property (nonatomic, readonly) BOOL canReset;
 /// 显示界面的缩放率
@@ -59,8 +57,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)rotateClockwise:(BOOL)clockwise;
 /** 还原 */
 - (void)reset;
-/** 还原到某个位置 */
-- (void)resetToRect:(CGRect)rect;
 /** 取消 */
 - (void)cancel;
 /** 数据 */

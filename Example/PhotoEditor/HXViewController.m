@@ -47,7 +47,7 @@
         photoEditConfig.isRoundCliping = YES;
         photoEditConfig.onlyCliping = YES;
         PAEBPhotoEditViewController *ctl = [[PAEBPhotoEditViewController alloc] initWithConfiguration:photoEditConfig];
-        ctl.delegate = self;
+        ctl.delegate = weakSelf;
         PAEBPhotoModel *photoModel = [PAEBPhotoModel photoModelWithPHAsset:[assets firstObject]];
         ctl.photoModel = photoModel;
         ctl.onlyCliping = YES;
