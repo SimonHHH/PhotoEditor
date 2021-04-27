@@ -334,7 +334,7 @@
             self.touchEnded(self);
         }
         sender.rotation = 0.0;
-    }else if (sender.state == UIGestureRecognizerStateChanged) {
+    } else if (sender.state == UIGestureRecognizerStateChanged) {
         self.arg = self.initialArg + sender.rotation;
         [self setScale:self.scale rotation:self.arg isInitialize:NO isPinch:NO];
     }

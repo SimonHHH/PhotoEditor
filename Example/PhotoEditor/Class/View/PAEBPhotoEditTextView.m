@@ -60,6 +60,9 @@
 + (instancetype)showEitdTextViewWithConfiguration:(PAEBPhotoEditConfiguration *)configuration
                                         textModel:(PAEBPhotoEditTextModel *)textModel
                                        completion:(void (^)(PAEBPhotoEditTextModel * _Nonnull))completion {
+    if ([[[UIApplication sharedApplication].keyWindow.subviews lastObject] isKindOfClass:[PAEBPhotoEditTextView class]]) {  //防双击出现两个编辑页
+        return nil;
+    }
     PAEBPhotoEditTextView *view = [[PAEBPhotoEditTextView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     view.hx_y = view.hx_h;
     view.configuration = configuration;
@@ -223,6 +226,7 @@
     CGSize newSize = [self.textView sizeThatFits:CGSizeMake(view.hx_w, view.hx_h)];
     return newSize.width;
 }
+
 - (UIImage *)snapshotCALayer:(UIView *)view {
     UIGraphicsBeginImageContextWithOptions(CGSizeMake([self getTextMaximumWidthWithView:view], view.hx_h), NO, [UIScreen mainScreen].scale);
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -332,6 +336,10 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if (!text.length) {
         self.textIsDelete = YES;
+    }
+    if ([text isEqualToString:@"\n"]) {
+        [self didDoneClick:nil];
+        return NO;
     }
     return YES;
 }
@@ -643,6 +651,7 @@
         _textView.editable = YES;
         _textView.selectable = YES;
         _textView.backgroundColor = [UIColor clearColor];
+        _textView.returnKeyType = UIReturnKeyDone;
         // 使用textContainerInset设置top、leaft、right
         CGFloat xMargin = 15, yMargin = 15;
         _textView.textContainerInset = UIEdgeInsetsMake(yMargin, xMargin, yMargin, xMargin);

@@ -60,7 +60,6 @@ NSString *const kPAEBStickerViewData_movingView_superAngel = @"HXStickerViewData
         if (self.selectItemView) {
             CGRect rect = self.selectItemView.frame;
             // 贴图事件范围增大，便于在过小情况下可以放大
-            // 手势逻辑不够完美，后期优化
             rect = CGRectMake(rect.origin.x - 35, rect.origin.y - 35, rect.size.width + 70, rect.size.height + 70);
             if (CGRectContainsPoint(rect, point)) {
                 self.hitTestSubView = YES;
@@ -80,7 +79,6 @@ NSString *const kPAEBStickerViewData_movingView_superAngel = @"HXStickerViewData
         if (self.selectItemView) {
             CGRect rect = self.selectItemView.frame;
             // 贴图事件范围增大，便于在过小情况下可以放大
-            // 手势逻辑不够完美，后期优化
             rect = CGRectMake(rect.origin.x - 35, rect.origin.y - 35, rect.size.width + 70, rect.size.height + 70);
             if (CGRectContainsPoint(rect, point)) {
                 self.hitTestSubView = YES;
@@ -93,6 +91,7 @@ NSString *const kPAEBStickerViewData_movingView_superAngel = @"HXStickerViewData
     self.hitTestSubView = [view isDescendantOfView:self];
     return (view == self ? nil : view);
 }
+
 - (PAEBPhotoEditStickerItemView *)addStickerItem:(PAEBPhotoEditStickerItem *)item isSelected:(BOOL)selected {
     self.selectItemView.isSelected = NO;
     PAEBPhotoEditStickerItemView *itemView = [[PAEBPhotoEditStickerItemView alloc] initWithItem:item screenScale:self.screenScale];
