@@ -12,7 +12,9 @@
 #import "UIImage+HXExtension.h"
 #import "UIView+HXExtension.h"
 
-@interface PAEBPhotoEditGraffitiColorView ()<UICollectionViewDataSource, UICollectionViewDelegate>
+#define kColorViewSectionInsetLeft 20.f
+
+@interface PAEBPhotoEditGraffitiColorView ()<UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) UIButton *repealBtn;
@@ -72,11 +74,13 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.colorModels.count;
 }
+
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PAEBPhotoEditGraffitiColorViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([PAEBPhotoEditGraffitiColorViewCell class]) forIndexPath:indexPath];
     cell.model = self.colorModels[indexPath.item];
     return cell;
 }
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PAEBPhotoEditGraffitiColorModel *model = self.colorModels[indexPath.item];
     if (self.currentSelectModel == model) {
@@ -95,6 +99,11 @@
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
 }
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    long count = self.colorModels.count;
+    return self.colorModels ? (self.repealBtn.hx_x - kColorViewSectionInsetLeft) / count - 30.f : 10.f;
+}
+
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.repealBtn.hx_x, 56) collectionViewLayout:self.flowLayout];
@@ -110,7 +119,7 @@
     if (!_flowLayout) {
         _flowLayout = [[UICollectionViewFlowLayout alloc] init];
         _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        _flowLayout.sectionInset = UIEdgeInsetsMake(0, 15, 0, 0);
+        _flowLayout.sectionInset = UIEdgeInsetsMake(0, kColorViewSectionInsetLeft, 0, 0);
         _flowLayout.minimumInteritemSpacing = 5;
         _flowLayout.itemSize = CGSizeMake(30.f, 30.f);
     }

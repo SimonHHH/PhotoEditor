@@ -9,6 +9,8 @@
 #import "PAEBPhotoEditConfiguration.h"
 #import "UIColor+HXExtension.h"
 
+#define kPAEBPhotoEditColorArr @[[UIColor hx_colorWithHexStr:@"#ffffff"], [UIColor hx_colorWithHexStr:@"#000000"], [UIColor hx_colorWithHexStr:@"#FF0000"], [UIColor hx_colorWithHexStr:@"#FFB112"], [UIColor hx_colorWithHexStr:@"#00BDAE"], [UIColor hx_colorWithHexStr:@"#0F76FF"], [UIColor hx_colorWithHexStr:@"#AC1CFF"]]
+
 @implementation PAEBPhotoEditConfiguration
 - (instancetype)init {
     self = [super init];
@@ -26,14 +28,14 @@
 
 - (NSArray<UIColor *> *)drawColors {
     if (!_drawColors) {
-        _drawColors = @[[UIColor hx_colorWithHexStr:@"#ffffff"], [UIColor hx_colorWithHexStr:@"#2B2B2B"], [UIColor hx_colorWithHexStr:@"#FA5150"], [UIColor hx_colorWithHexStr:@"#FEC200"], [UIColor hx_colorWithHexStr:@"#07C160"], [UIColor hx_colorWithHexStr:@"#10ADFF"], [UIColor hx_colorWithHexStr:@"#6467EF"]];
+        _drawColors = kPAEBPhotoEditColorArr;
         self.defaultDarwColorIndex = 2;
     }
     return _drawColors;
 }
 - (NSArray<UIColor *> *)textColors {
     if (!_textColors) {
-        _textColors = @[[UIColor hx_colorWithHexStr:@"#ffffff"], [UIColor hx_colorWithHexStr:@"#2B2B2B"], [UIColor hx_colorWithHexStr:@"#FA5150"], [UIColor hx_colorWithHexStr:@"#FEC200"], [UIColor hx_colorWithHexStr:@"#07C160"], [UIColor hx_colorWithHexStr:@"#10ADFF"], [UIColor hx_colorWithHexStr:@"#6467EF"]];
+        _textColors = kPAEBPhotoEditColorArr;
     }
     return _textColors;
 }

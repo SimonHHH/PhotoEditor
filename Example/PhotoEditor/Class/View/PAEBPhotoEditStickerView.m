@@ -269,19 +269,7 @@ NSString *const kPAEBStickerViewData_movingView_superAngel = @"HXStickerViewData
         [itemView setScale:itemView.scale rotation:itemView.arg - self.currentItemDegrees isInitialize:NO isPinch:NO];
     }
 }
-- (CGAffineTransform)getMirrorTransform:(CGFloat)radians {
-    CGAffineTransform transfrom = CGAffineTransformMakeScale(-1, 1);
-    if (radians == 0) {
-        return transfrom;
-    }else if (radians == M_PI_2 || radians == -M_PI_2) {
-        return CGAffineTransformRotate(transfrom, M_PI_2);
-    }else if (radians == M_PI || radians == -M_PI) {
-        return CGAffineTransformRotate(transfrom, M_PI);
-    }else if (radians == (M_PI + M_PI_2) || radians == -(M_PI + M_PI_2)) {
-        return CGAffineTransformRotate(transfrom, -M_PI_2);
-    }
-    return transfrom;
-}
+
 - (CGFloat)currentAngleRadians {
     CGFloat angleInRadians = 0.0f;
     switch (self.angle) {
@@ -342,14 +330,17 @@ NSString *const kPAEBStickerViewData_movingView_superAngel = @"HXStickerViewData
 - (BOOL)isEnable {
     return self.isHitTestSubView && self.selectItemView.isSelected;
 }
+
 - (void)removeSelectItem {
     self.selectItemView.isSelected = NO;
     self.selectItemView = nil;
 }
+
 /** 贴图数量 */
 - (NSUInteger)count {
     return self.subviews.count;
 }
+
 - (void)setScreenScale:(CGFloat)screenScale {
     if (screenScale > 0) {
         _screenScale = screenScale;
@@ -360,6 +351,7 @@ NSString *const kPAEBStickerViewData_movingView_superAngel = @"HXStickerViewData
         }
     }
 }
+
 - (void)setMoveCenter:(BOOL (^)(CGRect))moveCenter {
     _moveCenter = moveCenter;
     for (PAEBPhotoEditStickerItemView *subView in self.subviews) {

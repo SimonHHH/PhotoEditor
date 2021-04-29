@@ -20,7 +20,7 @@
 #define PAEBEditTextBlankWidth 22
 #define PAEBHXEditTextRadius 8.f
 
-@interface PAEBPhotoEditTextView ()<UITextViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, NSLayoutManagerDelegate>
+@interface PAEBPhotoEditTextView ()<UITextViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, NSLayoutManagerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *rectArray;
 @property (nonatomic, strong) UIView *topView;
@@ -314,6 +314,11 @@
         [self changeTextViewTextColor:model.color];
     }
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    long count = self.colorModels.count;
+    return self.colorModels ? (self.hx_w - self.textBtn.hx_maxX - self.flowLayout.sectionInset.left - self.flowLayout.sectionInset.right) / count - 30.f : 10.f;
 }
 
 #pragma mark <TextViewDelegate>
@@ -637,7 +642,7 @@
     if (!_flowLayout) {
         _flowLayout = [[UICollectionViewFlowLayout alloc] init];
         _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        _flowLayout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 20);
+        _flowLayout.sectionInset = UIEdgeInsetsMake(0, 10, 0, 10);
         _flowLayout.minimumInteritemSpacing = 5;
         _flowLayout.itemSize = CGSizeMake(30.f, 30.f);
     }
