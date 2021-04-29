@@ -11,6 +11,7 @@
 #import "UIButton+HXExtension.h"
 #import "UIView+HXExtension.h"
 #import "UIFont+HXExtension.h"
+#import "UIColor+HXExtension.h"
 #import "PAEBPhotoEditDefine.h"
 
 #define HXClipBarHeight 56.f
@@ -51,7 +52,7 @@
     self.rotateBtn.center = CGPointMake(self.cancelBtn.hx_maxX+(self.resetBtn.hx_x-self.cancelBtn.hx_maxX)*0.5, self.hx_centerY);
     [self addSubview:self.rotateBtn];
     
-    [self.confirmBtn setFrame:CGRectMake(self.hx_w-6-btnWidHei, 0, btnWidHei, btnWidHei)];
+    [self.confirmBtn setFrame:CGRectMake(HX_ScreenWidth-72, btnWidHei*0.5-32*0.5, 52, 32)];
     [self addSubview:self.confirmBtn];
     
     self.resetBtn.enabled = NO;
@@ -105,10 +106,14 @@
 
 - (UIButton *)confirmBtn {
     if (!_confirmBtn) {
-        _confirmBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        _confirmBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _confirmBtn.tag = 1;
-        [_confirmBtn setImage:[UIImage imageNamed:@"photo_edit_clip_confirm"] forState:UIControlStateNormal];
-        _confirmBtn.tintColor = [UIColor whiteColor];
+        [_confirmBtn setTitle:@"完成" forState:UIControlStateNormal];
+        [_confirmBtn.titleLabel setFont:[UIFont hx_pingFangFontOfSize:14.0]];
+        [_confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_confirmBtn setBackgroundColor:[UIColor hx_colorWithHexStr:HXThemeColor]];
+        _confirmBtn.layer.cornerRadius = 16.0;
+        _confirmBtn.clipsToBounds = YES;
         [_confirmBtn addTarget:self action:@selector(didBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _confirmBtn;
