@@ -104,8 +104,9 @@
         _graffitiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_graffitiBtn setFrame:CGRectMake(10, 0, 56, 56)];
         UIImage *image = [UIImage imageNamed:@"photo_edit_tools_graffiti"];
+        UIImage *imageSelected = [UIImage imageNamed:@"photo_edit_tools_graffiti_selected"];
         [_graffitiBtn setImage:image forState:UIControlStateNormal];
-        [_graffitiBtn setImage:image forState:UIControlStateSelected];
+        [_graffitiBtn setImage:imageSelected forState:UIControlStateSelected];
         [_graffitiBtn setTitle:@"画笔" forState:UIControlStateNormal];
         [_graffitiBtn.titleLabel setFont:[UIFont hx_pingFangFontOfSize:10.0]];
         [_graffitiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10, 0, 0, -_graffitiBtn.titleLabel.intrinsicContentSize.width)];
@@ -130,7 +131,6 @@
         [_textBtn setImageEdgeInsets:UIEdgeInsetsMake(-10, 0, 0, -_textBtn.titleLabel.intrinsicContentSize.width)];
         [_textBtn setTitleEdgeInsets:UIEdgeInsetsMake(30, -_textBtn.currentImage.size.width, 0, 0)];
         [_textBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_textBtn setTitleColor:[UIColor hx_colorWithHexStr:HXThemeColor] forState:UIControlStateSelected];
         _textBtn.tag = 1;
         [_textBtn addTarget:self action:@selector(didToolsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -149,7 +149,6 @@
         [_clipBtn setImageEdgeInsets:UIEdgeInsetsMake(-10, 0, 0, -_clipBtn.titleLabel.intrinsicContentSize.width)];
         [_clipBtn setTitleEdgeInsets:UIEdgeInsetsMake(30, -_clipBtn.currentImage.size.width, 0, 0)];
         [_clipBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_clipBtn setTitleColor:[UIColor hx_colorWithHexStr:HXThemeColor] forState:UIControlStateSelected];
         _clipBtn.tag = 2;
         [_clipBtn addTarget:self action:@selector(didToolsBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -161,8 +160,9 @@
         _mosaicBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_mosaicBtn setFrame:CGRectMake(CGRectGetMaxX(_clipBtn.frame), 0, 56, 56)];
         UIImage *image = [UIImage imageNamed:@"photo_edit_tools_mosaic"];
+        UIImage *imageSelected = [UIImage imageNamed:@"photo_edit_tools_mosaic_selected"];
         [_mosaicBtn setImage:image forState:UIControlStateNormal];
-        [_mosaicBtn setImage:image forState:UIControlStateSelected];
+        [_mosaicBtn setImage:imageSelected forState:UIControlStateSelected];
         [_mosaicBtn setTitle:@"模糊" forState:UIControlStateNormal];
         [_mosaicBtn.titleLabel setFont:[UIFont hx_pingFangFontOfSize:10.0]];
         [_mosaicBtn setImageEdgeInsets:UIEdgeInsetsMake(-10, 0, 0, -_mosaicBtn.titleLabel.intrinsicContentSize.width)];
