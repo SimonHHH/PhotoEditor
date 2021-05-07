@@ -73,7 +73,7 @@
     CGPathAddRect(mPath, NULL, self.bounds);
     if (self.isRound) {
         CGPathAddRoundedRect(mPath, NULL, maskRect, maskRect.size.width / 2.f, maskRect.size.height / 2.f);
-    }else {
+    } else {
         CGPathAddRect(mPath, NULL, maskRect);
     }
     return mPath;

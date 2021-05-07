@@ -14,10 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PAEBPhotoEditTextView : UIView
 @property (nonatomic, strong) PAEBPhotoEditConfiguration *configuration;
 @property (nonatomic, copy) NSArray<UIColor *> *textColors;
-+ (instancetype)showEitdTextViewWithConfiguration:(PAEBPhotoEditConfiguration *)configuration
++ (instancetype)showEditTextViewWithConfiguration:(PAEBPhotoEditConfiguration *)configuration
                                        completion:(void (^ _Nullable)(PAEBPhotoEditTextModel *textModel))completion;
 
-+ (instancetype)showEitdTextViewWithConfiguration:(PAEBPhotoEditConfiguration *)configuration
++ (instancetype)showEditTextViewWithConfiguration:(PAEBPhotoEditConfiguration *)configuration
                                         textModel:(PAEBPhotoEditTextModel * _Nullable)textModel
                                        completion:(void (^ _Nullable)(PAEBPhotoEditTextModel *textModel))completion;
 @end

@@ -65,6 +65,7 @@
     if (imgWidth > width) {
         imgHeight = width / imgWidth * imgHeight;
     }
+    
     if (imgHeight > height) {
         w = height / self.image.size.height * imgWidth;
         h = height;

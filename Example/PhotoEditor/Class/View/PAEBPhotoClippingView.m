@@ -17,21 +17,21 @@
 
 #define HXDefaultMaximumZoomScale 5.f
 
-NSString *const kPAEBClippingViewData = @"HXClippingViewData";
-NSString *const kPAEBStickerViewData_screenScale = @"HXStickerViewData_screenScale";
-NSString *const kPAEBClippingViewData_frame = @"HXClippingViewData_frame";
-NSString *const kPAEBClippingViewData_zoomScale = @"HXClippingViewData_zoomScale";
-NSString *const kPAEBClippingViewData_contentSize = @"HXClippingViewData_contentSize";
-NSString *const kPAEBClippingViewData_contentOffset = @"HXClippingViewData_contentOffset";
-NSString *const kPAEBClippingViewData_minimumZoomScale = @"HXClippingViewData_minimumZoomScale";
-NSString *const kPAEBClippingViewData_maximumZoomScale = @"HXClippingViewData_maximumZoomScale";
-NSString *const kPAEBClippingViewData_clipsToBounds = @"HXClippingViewData_clipsToBounds";
-NSString *const kPAEBClippingViewData_transform = @"HXClippingViewData_transform";
-NSString *const kPAEBClippingViewData_angle = @"HXClippingViewData_angle";
+NSString *const kPAEBClippingViewData = @"PAEBClippingViewData";
+NSString *const kPAEBStickerViewData_screenScale = @"PAEBStickerViewData_screenScale";
+NSString *const kPAEBClippingViewData_frame = @"PAEBClippingViewData_frame";
+NSString *const kPAEBClippingViewData_zoomScale = @"PAEBClippingViewData_zoomScale";
+NSString *const kPAEBClippingViewData_contentSize = @"PAEBClippingViewData_contentSize";
+NSString *const kPAEBClippingViewData_contentOffset = @"PAEBClippingViewData_contentOffset";
+NSString *const kPAEBClippingViewData_minimumZoomScale = @"PAEBClippingViewData_minimumZoomScale";
+NSString *const kPAEBClippingViewData_maximumZoomScale = @"PAEBClippingViewData_maximumZoomScale";
+NSString *const kPAEBClippingViewData_clipsToBounds = @"PAEBClippingViewData_clipsToBounds";
+NSString *const kPAEBClippingViewData_transform = @"PAEBClippingViewData_transform";
+NSString *const kPAEBClippingViewData_angle = @"PAEBClippingViewData_angle";
 
-NSString *const kPAEBClippingViewData_first_minimumZoomScale = @"HXClippingViewData_first_minimumZoomScale";
+NSString *const kPAEBClippingViewData_first_minimumZoomScale = @"PAEBClippingViewData_first_minimumZoomScale";
 
-NSString *const kPAEBClippingViewData_zoomingView = @"HXClippingViewData_zoomingView";
+NSString *const kPAEBClippingViewData_zoomingView = @"PAEBClippingViewData_zoomingView";
 
 @interface PAEBPhotoClippingView ()<UIScrollViewDelegate>
 @property (nonatomic, strong) PAEBPhotoEditImageView *imageView;
@@ -166,7 +166,7 @@ NSString *const kPAEBClippingViewData_zoomingView = @"HXClippingViewData_zooming
     /** 参数取整，否则可能会出现1像素偏差 */
 //    inRect = HXMediaEditProundRect(inRect);
     
-    return [self.imageView editOtherImagesInRect:inRect rotate:rotate mirrorHorizontally:NO];
+    return [self.imageView editOtherImagesInRect:inRect rotate:rotate];
 }
 
 - (void)setCropRect:(CGRect)cropRect {

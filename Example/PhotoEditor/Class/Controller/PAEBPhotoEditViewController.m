@@ -448,7 +448,7 @@
                 }
             }else if (tag == 1) {
                 // 文字
-                [PAEBPhotoEditTextView showEitdTextViewWithConfiguration:weakSelf.configuration completion:^(PAEBPhotoEditTextModel * _Nonnull textModel) {
+                [PAEBPhotoEditTextView showEditTextViewWithConfiguration:weakSelf.configuration completion:^(PAEBPhotoEditTextModel * _Nonnull textModel) {
                     PAEBPhotoEditStickerItem *item = [[PAEBPhotoEditStickerItem alloc] init];
                     item.textModel = textModel;
                     [weakSelf.editingView.clippingView.imageView.stickerView addStickerItem:item isSelected:YES];
@@ -563,7 +563,7 @@
         }else {
             _editingView.clippingView.imageView.drawView.lineColor = self.configuration.drawColors.firstObject;
         }
-
+        
         CGFloat lineWidth = self.configuration.brushLineWidth;
         _editingView.drawLineWidth = lineWidth;
         HXWeakSelf

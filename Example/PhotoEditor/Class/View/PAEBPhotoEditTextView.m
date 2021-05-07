@@ -52,12 +52,12 @@
 
 @implementation PAEBPhotoEditTextView
 
-+ (instancetype)showEitdTextViewWithConfiguration:(PAEBPhotoEditConfiguration *)configuration
++ (instancetype)showEditTextViewWithConfiguration:(PAEBPhotoEditConfiguration *)configuration
                                        completion:(void (^ _Nullable)(PAEBPhotoEditTextModel *textModel))completion {
-    return [self showEitdTextViewWithConfiguration:configuration textModel:nil completion:completion];
+    return [self showEditTextViewWithConfiguration:configuration textModel:nil completion:completion];
 }
 
-+ (instancetype)showEitdTextViewWithConfiguration:(PAEBPhotoEditConfiguration *)configuration
++ (instancetype)showEditTextViewWithConfiguration:(PAEBPhotoEditConfiguration *)configuration
                                         textModel:(PAEBPhotoEditTextModel *)textModel
                                        completion:(void (^)(PAEBPhotoEditTextModel * _Nonnull))completion {
     if ([[[UIApplication sharedApplication].keyWindow.subviews lastObject] isKindOfClass:[PAEBPhotoEditTextView class]]) {  //防双击出现两个编辑页

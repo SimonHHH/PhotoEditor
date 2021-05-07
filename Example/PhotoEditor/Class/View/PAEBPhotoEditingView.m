@@ -18,9 +18,9 @@
 
 #import <AVFoundation/AVFoundation.h>
 
-#define HXMaxZoomScale 2.5f
+#define PAEBHXMaxZoomScale 2.5f
 
-#define HXClipZoom_margin 20.f
+#define PAEBHXClipZoom_margin 20.f
 CGFloat const hx_editingView_splashWidth = 50.f;
 
 typedef NS_ENUM(NSUInteger, PAEBPhotoEditingViewOperation) {
@@ -96,10 +96,10 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
     self.delegate = self;
     self.clipsToBounds = YES;
     /** 缩放 */
-    self.maximumZoomScale = HXMaxZoomScale;
+    self.maximumZoomScale = PAEBHXMaxZoomScale;
     self.minimumZoomScale = 1.0;
     _editToolbarDefaultHeight = 56.f;
-    _defaultMaximumZoomScale = HXMaxZoomScale;
+    _defaultMaximumZoomScale = PAEBHXMaxZoomScale;
     
     /** 创建缩放层，避免直接缩放LFClippingView，会改变其transform */
     UIView *clipZoomView = [[UIView alloc] initWithFrame:self.bounds];
@@ -153,15 +153,15 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
 }
 
 - (UIEdgeInsets)refer_clippingInsets {
-    CGFloat top = HXClipZoom_margin + HXTopMargin;
-    CGFloat left = HXClipZoom_margin;
+    CGFloat top = PAEBHXClipZoom_margin + HXTopMargin;
+    CGFloat left = PAEBHXClipZoom_margin;
     CGFloat bottom = self.editToolbarDefaultHeight + HXBottomMargin + 20;
-    CGFloat right = HXClipZoom_margin;
+    CGFloat right = PAEBHXClipZoom_margin;
     UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
     if (orientation == UIInterfaceOrientationLandscapeRight || orientation == UIInterfaceOrientationLandscapeLeft) {
-        top = HXClipZoom_margin + 15;
-        left = HXClipZoom_margin + HXTopMargin;
-        bottom = self.editToolbarDefaultHeight + HXClipZoom_margin + 15;
+        top = PAEBHXClipZoom_margin + 15;
+        left = PAEBHXClipZoom_margin + HXTopMargin;
+        bottom = self.editToolbarDefaultHeight + PAEBHXClipZoom_margin + 15;
         right = left;
     }
     return UIEdgeInsetsMake(top, left, bottom, right);
@@ -191,9 +191,9 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
         /** 调整最大缩放比例 */
         {
             if (cropRect.size.width < cropRect.size.height) {
-                self.defaultMaximumZoomScale = self.frame.size.width * HXMaxZoomScale / cropRect.size.width;
+                self.defaultMaximumZoomScale = self.frame.size.width * PAEBHXMaxZoomScale / cropRect.size.width;
             } else {
-                self.defaultMaximumZoomScale = self.frame.size.height * HXMaxZoomScale / cropRect.size.height;
+                self.defaultMaximumZoomScale = self.frame.size.height * PAEBHXMaxZoomScale / cropRect.size.height;
             }
             self.maximumZoomScale = self.defaultMaximumZoomScale;
         }
@@ -973,7 +973,9 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
     NSMutableDictionary *data = [@{} mutableCopy];
     
     NSDictionary *clippingViewData = self.clippingView.photoEditData;
-    if (clippingViewData) [data setObject:clippingViewData forKey:kPAEBEditingViewData_clippingView];
+    if (clippingViewData) {
+        [data setObject:clippingViewData forKey:kPAEBEditingViewData_clippingView];
+    }
     
     if (data.count) {
         return data;

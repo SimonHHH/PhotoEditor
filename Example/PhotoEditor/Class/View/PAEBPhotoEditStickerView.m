@@ -18,14 +18,14 @@
 #import "PAEBPhotoClippingView.h"
 
 
-NSString *const kPAEBStickerViewData_angel = @"HXStickerViewData_angel";
+NSString *const kPAEBStickerViewData_angel = @"PAEBStickerViewData_angel";
 
-NSString *const kPAEBStickerViewData_movingView = @"HXStickerViewData_movingView";
-NSString *const kPAEBStickerViewData_movingView_content = @"HXStickerViewData_movingView_content";
-NSString *const kPAEBStickerViewData_movingView_center = @"HXStickerViewData_movingView_center";
-NSString *const kPAEBStickerViewData_movingView_scale = @"HXStickerViewData_movingView_scale";
-NSString *const kPAEBStickerViewData_movingView_rotation = @"HXStickerViewData_movingView_rotation";
-NSString *const kPAEBStickerViewData_movingView_superAngel = @"HXStickerViewData_movingView_superAngel";
+NSString *const kPAEBStickerViewData_movingView = @"PAEBStickerViewData_movingView";
+NSString *const kPAEBStickerViewData_movingView_content = @"PAEBStickerViewData_movingView_content";
+NSString *const kPAEBStickerViewData_movingView_center = @"PAEBStickerViewData_movingView_center";
+NSString *const kPAEBStickerViewData_movingView_scale = @"PAEBStickerViewData_movingView_scale";
+NSString *const kPAEBStickerViewData_movingView_rotation = @"PAEBStickerViewData_movingView_rotation";
+NSString *const kPAEBStickerViewData_movingView_superAngel = @"PAEBStickerViewData_movingView_superAngel";
 
 @interface PAEBPhotoEditStickerView ()
 @property (nonatomic, weak) PAEBPhotoEditStickerItemView *selectItemView;

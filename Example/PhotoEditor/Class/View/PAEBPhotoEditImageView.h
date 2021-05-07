@@ -39,7 +39,7 @@ typedef NS_ENUM(NSUInteger, PAEBPhotoEditImageViewType) {
 @property (nonatomic, strong) PAEBPhotoEditConfiguration *configuration;
 /** 数据 */
 @property (nonatomic, strong, nullable) NSDictionary *photoEditData;
-- (UIImage * _Nullable)editOtherImagesInRect:(CGRect)rect rotate:(CGFloat)rotate mirrorHorizontally:(BOOL)mirrorHorizontally;
+- (UIImage * _Nullable)editOtherImagesInRect:(CGRect)rect rotate:(CGFloat)rotate;
 - (void)changeSubviewFrame;
 - (void)clearCoverage;
 @end

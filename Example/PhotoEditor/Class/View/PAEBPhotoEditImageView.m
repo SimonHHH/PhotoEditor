@@ -14,10 +14,10 @@
 #import "UIView+HXExtension.h"
 #import "PAEBPhotoEditDefine.h"
 
-NSString *const kPAEBImageViewData_draw = @"HXImageViewData_draw";
-NSString *const kPAEBImageViewData_sticker = @"HXImageViewData_sticker";
-NSString *const kPAEBImageViewData_splash = @"HXImageViewData_splash";
-NSString *const kPAEBImageViewData_filter = @"HXImageViewData_filter";
+NSString *const kPAEBImageViewData_draw = @"PAEBImageViewData_draw";
+NSString *const kPAEBImageViewData_sticker = @"PAEBImageViewData_sticker";
+NSString *const kPAEBImageViewData_splash = @"PAEBImageViewData_splash";
+NSString *const kPAEBImageViewData_filter = @"PAEBImageViewData_filter";
 
 @interface PAEBPhotoEditImageView ()
 @property (nonatomic, strong) UIImageView *imageView;
@@ -101,7 +101,7 @@ NSString *const kPAEBImageViewData_filter = @"HXImageViewData_filter";
     self.splashView.screenScale = screenScale;
 }
 
-- (UIImage * _Nullable)editOtherImagesInRect:(CGRect)rect rotate:(CGFloat)rotate mirrorHorizontally:(BOOL)mirrorHorizontally {
+- (UIImage * _Nullable)editOtherImagesInRect:(CGRect)rect rotate:(CGFloat)rotate {
     UIImage *image = nil;
     NSMutableArray *array = nil;
     for (UIView *subView in self.subviews) {
@@ -131,30 +131,14 @@ NSString *const kPAEBImageViewData_filter = @"HXImageViewData_filter";
     }
     if (array.count) {
         image = [UIImage hx_mergeimages:array];
-        if (rotate || mirrorHorizontally) {
+        if (rotate) {
             NSInteger angle = fabs(rotate * 180 / M_PI - 360);
-            if (angle == 0 || angle == 360) {
-                if (mirrorHorizontally) {
-                    image = [image hx_rotationImage:UIImageOrientationUpMirrored];
-                }
-            }else if (angle == 90) {
-                if (!mirrorHorizontally) {
-                    image = [image hx_rotationImage:UIImageOrientationLeft];
-                }else {
-                    image = [image hx_rotationImage:UIImageOrientationRightMirrored];
-                }
+            if (angle == 90) {
+                image = [image hx_rotationImage:UIImageOrientationLeft];
             }else if (angle == 180) {
-                if (!mirrorHorizontally) {
-                    image = [image hx_rotationImage:UIImageOrientationDown];
-                }else {
-                    image = [image hx_rotationImage:UIImageOrientationDownMirrored];
-                }
+                image = [image hx_rotationImage:UIImageOrientationDown];
             }else if (angle == 270) {
-                if (!mirrorHorizontally) {
-                    image = [image hx_rotationImage:UIImageOrientationRight];
-                }else {
-                    image = [image hx_rotationImage:UIImageOrientationLeftMirrored];
-                }
+                image = [image hx_rotationImage:UIImageOrientationRight];
             }
         }
     }

@@ -75,6 +75,7 @@
         self.userInteractionEnabled = NO;
     }
 }
+
 - (void)initGestures {
     self.contentView.userInteractionEnabled = YES;
     [self.contentView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidTap:)]];
@@ -83,6 +84,7 @@
     [self.contentView addGestureRecognizer:[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidPinch:)]];
     [self.contentView addGestureRecognizer:[[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(viewDidRotation:)]];
 }
+
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
     UIView *view = [super hitTest:point withEvent:event];
     if (CGRectContainsPoint(self.bounds, point)) {
@@ -90,6 +92,7 @@
     }
     return view;
 }
+
 - (void)updateItem:(PAEBPhotoEditStickerItem *)item {
     [self.contentView updateItem:item];
     [self updateFrameWithViewSize:item.itemFrame.size];
@@ -123,6 +126,7 @@
     [self setScale:scale rotation:rotation isInitialize:isInitialize isPinch:NO];
 }
 - (void)setScale:(CGFloat)scale rotation:(CGFloat)rotation isInitialize:(BOOL)isInitialize isPinch:(BOOL)isPinch {
+    NSLog(@"scale: %f, rotation: %f", scale, rotation);
     if (rotation != MAXFLOAT) {
         self.arg = rotation;
     }
@@ -130,9 +134,11 @@
     CGFloat maxScale = 3.0f / self.screenScale;
     if (self.getMaxScale) {
         maxScale = self.getMaxScale(self.contentView.item.itemFrame.size) / self.screenScale;
+        NSLog(@"^^^^^^^^maxScale:  %.2f", maxScale);
     }
     if (self.getMinScale) {
         minScale = self.getMinScale(self.contentView.item.itemFrame.size) / self.screenScale;
+        NSLog(@"^^^^^^^^minScale:  %.2f", minScale);
     }
     if (isInitialize) {
         _scale = scale;
@@ -195,12 +201,13 @@
         }
     }
 }
+
 - (CGFloat)scale {
     return _scale;
 }
 - (void)setScreenScale:(CGFloat)screenScale {
     _screenScale = screenScale;
-    
+    NSLog(@"&&&&&& screenScale : %.6f", screenScale);
 }
 - (void)viewDidTap:(UITapGestureRecognizer*)sender {
     if (!self.shouldTouchBegan(self)) {
@@ -219,7 +226,7 @@
     if (self.tapEnded) self.tapEnded(self);
     if (self.firstTouch && self.isSelected && self.contentView.item.textModel) {
         HXWeakSelf
-        [PAEBPhotoEditTextView showEitdTextViewWithConfiguration:self.getConfiguration() textModel:self.contentView.item.textModel completion:^(PAEBPhotoEditTextModel * _Nonnull textModel) {
+        [PAEBPhotoEditTextView showEditTextViewWithConfiguration:self.getConfiguration() textModel:self.contentView.item.textModel completion:^(PAEBPhotoEditTextModel * _Nonnull textModel) {
             PAEBPhotoEditStickerItem *item = [[PAEBPhotoEditStickerItem alloc] init];
             item.textModel = textModel;
             [weakSelf updateItem:item];
