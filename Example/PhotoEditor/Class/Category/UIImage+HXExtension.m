@@ -7,6 +7,7 @@
 //
 
 #import "UIImage+HXExtension.h"
+#import "NSBundle+HXExtension.h"
 
 @implementation UIImage (HXExtension)
 
@@ -292,6 +293,23 @@ static CGRect swapWidthAndHeight(CGRect rect) {
     UIImage *normalizedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return normalizedImage;
+}
+
++ (UIImage *)hx_imageOfName:(NSString *)imageName {
+    if (!imageName) {
+        return nil;
+    }
+    UIImage *image;
+    NSBundle *bundle = [NSBundle hx_photoPickerBundle];
+    if (bundle) {
+        NSString *path = [bundle pathForResource:@"images" ofType:nil];
+        path = [path stringByAppendingPathComponent:imageName];
+        image = [UIImage imageWithContentsOfFile:path];
+    }
+    if (!image) {
+        image = [self hx_imageOfName:imageName];
+    }
+    return image;
 }
 
 @end

@@ -75,7 +75,7 @@
     if (!_cancelBtn) {
         _cancelBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         _cancelBtn.tag = 0;
-        [_cancelBtn setImage:[UIImage imageNamed:@"photo_edit_clip_cancel"] forState:UIControlStateNormal];
+        [_cancelBtn setImage:[UIImage hx_imageOfName:@"photo_edit_clip_cancel"] forState:UIControlStateNormal];
         _cancelBtn.tintColor = [UIColor whiteColor];
         [_cancelBtn addTarget:self action:@selector(didBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -85,7 +85,7 @@
 - (UIButton *)rotateBtn {
     if (!_rotateBtn) {
         _rotateBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_rotateBtn setImage:[UIImage imageNamed:@"photo_edit_clip_rotate"] forState:UIControlStateNormal];
+        [_rotateBtn setImage:[UIImage hx_imageOfName:@"photo_edit_clip_rotate"] forState:UIControlStateNormal];
         _rotateBtn.tintColor = [UIColor whiteColor];
         [_rotateBtn addTarget:self action:@selector(didRotateBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }

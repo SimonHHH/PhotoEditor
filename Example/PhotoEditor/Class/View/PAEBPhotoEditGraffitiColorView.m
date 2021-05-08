@@ -42,7 +42,7 @@
     [self addSubview:self.collectionView];
     
     self.repealBtn.enabled = NO;
-    [self.repealBtn setImage:[UIImage imageNamed:@"photo_edit_repeal"] forState:UIControlStateNormal];
+    [self.repealBtn setImage:[UIImage hx_imageOfName:@"photo_edit_repeal"] forState:UIControlStateNormal];
 }
 
 - (void)setUndo:(BOOL)undo {

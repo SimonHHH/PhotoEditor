@@ -53,7 +53,7 @@
         _undoBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         _undoBtn.tintColor = [UIColor whiteColor];
         [_undoBtn addTarget:self action:@selector(didUndoBtn:) forControlEvents:UIControlEventTouchUpInside];
-        [_undoBtn setImage:[UIImage imageNamed:@"photo_edit_repeal"] forState:UIControlStateNormal];
+        [_undoBtn setImage:[UIImage hx_imageOfName:@"photo_edit_repeal"] forState:UIControlStateNormal];
     }
     return _undoBtn;
 }

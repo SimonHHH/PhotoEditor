@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (UIImage *)hx_normalizedImage;
 
++ (UIImage *)hx_imageOfName:(NSString *)imageName;
+
 @end
 
 NS_ASSUME_NONNULL_END

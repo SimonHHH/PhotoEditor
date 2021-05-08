@@ -83,7 +83,7 @@ CGFloat angleBetweenLines(CGPoint line1Start, CGPoint line1End, CGPoint line2Sta
         
         if ([blur isMemberOfClass:[PAEBPhotoEditSplashImageBlur class]]) {
             
-            UIImage *image = [UIImage imageNamed:((PAEBPhotoEditSplashImageBlur *)blur).imageName];
+            UIImage *image = [UIImage hx_imageOfName:((PAEBPhotoEditSplashImageBlur *)blur).imageName];
             
             if (image) {
 //                CGPoint firstPoint = CGPointZero;

@@ -48,7 +48,7 @@
     
     self.inArea = NO;
     self.redView.hidden = YES;
-    self.imageView.image = [UIImage imageNamed:@"photo_edit_trash_close"];
+    self.imageView.image = [UIImage hx_imageOfName:@"photo_edit_trash_close"];
 }
 - (void)setInArea:(BOOL)inArea {
     _inArea = inArea;

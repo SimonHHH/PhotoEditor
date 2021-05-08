@@ -103,8 +103,8 @@
     if (!_graffitiBtn) {
         _graffitiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_graffitiBtn setFrame:CGRectMake(10, 0, 56, 56)];
-        UIImage *image = [UIImage imageNamed:@"photo_edit_tools_graffiti"];
-        UIImage *imageSelected = [UIImage imageNamed:@"photo_edit_tools_graffiti_selected"];
+        UIImage *image = [UIImage hx_imageOfName:@"photo_edit_tools_graffiti"];
+        UIImage *imageSelected = [UIImage hx_imageOfName:@"photo_edit_tools_graffiti_selected"];
         [_graffitiBtn setImage:image forState:UIControlStateNormal];
         [_graffitiBtn setImage:imageSelected forState:UIControlStateSelected];
         [_graffitiBtn setTitle:@"画笔" forState:UIControlStateNormal];
@@ -123,7 +123,7 @@
     if (!_textBtn) {
         _textBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_textBtn setFrame:CGRectMake(CGRectGetMaxX(_graffitiBtn.frame), 0, 56, 56)];
-        UIImage *image = [UIImage imageNamed:@"photo_edit_tools_text"];
+        UIImage *image = [UIImage hx_imageOfName:@"photo_edit_tools_text"];
         [_textBtn setImage:image forState:UIControlStateNormal];
         [_textBtn setImage:image forState:UIControlStateSelected];
         [_textBtn setTitle:@"备注" forState:UIControlStateNormal];
@@ -141,7 +141,7 @@
     if (!_clipBtn) {
         _clipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_clipBtn setFrame:CGRectMake(CGRectGetMaxX(_textBtn.frame), 0, 56, 56)];
-        UIImage *image = [UIImage imageNamed:@"photo_edit_tools_clip"];
+        UIImage *image = [UIImage hx_imageOfName:@"photo_edit_tools_clip"];
         [_clipBtn setImage:image forState:UIControlStateNormal];
         [_clipBtn setImage:image forState:UIControlStateSelected];
         [_clipBtn setTitle:@"裁剪" forState:UIControlStateNormal];
@@ -159,8 +159,8 @@
     if (!_mosaicBtn) {
         _mosaicBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_mosaicBtn setFrame:CGRectMake(CGRectGetMaxX(_clipBtn.frame), 0, 56, 56)];
-        UIImage *image = [UIImage imageNamed:@"photo_edit_tools_mosaic"];
-        UIImage *imageSelected = [UIImage imageNamed:@"photo_edit_tools_mosaic_selected"];
+        UIImage *image = [UIImage hx_imageOfName:@"photo_edit_tools_mosaic"];
+        UIImage *imageSelected = [UIImage hx_imageOfName:@"photo_edit_tools_mosaic_selected"];
         [_mosaicBtn setImage:image forState:UIControlStateNormal];
         [_mosaicBtn setImage:imageSelected forState:UIControlStateSelected];
         [_mosaicBtn setTitle:@"模糊" forState:UIControlStateNormal];

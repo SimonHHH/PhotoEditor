@@ -620,8 +620,8 @@
     if (!_textBtn) {
         _textBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_textBtn setFrame:CGRectMake(10, 0, 47, 56)];
-        [_textBtn setImage:[UIImage imageNamed:@"photo_edit_text_normal"] forState:UIControlStateNormal];
-        [_textBtn setImage:[UIImage imageNamed:@"photo_edit_text_selected"] forState:UIControlStateSelected];
+        [_textBtn setImage:[UIImage hx_imageOfName:@"photo_edit_text_normal"] forState:UIControlStateNormal];
+        [_textBtn setImage:[UIImage hx_imageOfName:@"photo_edit_text_selected"] forState:UIControlStateSelected];
         [_textBtn addTarget:self action:@selector(didTextBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _textBtn;
