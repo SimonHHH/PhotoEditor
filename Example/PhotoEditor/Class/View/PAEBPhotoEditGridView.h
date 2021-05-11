@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGColorRef maskColor;
 @property (nonatomic, weak, readonly) PAEBPhotoEditGridLayer *gridLayer;
 
-@property (nonatomic, assign) BOOL isRound;
+@property (nonatomic, assign) BOOL isAvatarClipping;
 
 - (void)changeSubviewFrame:(CGRect)frame;
 @end

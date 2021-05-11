@@ -44,7 +44,7 @@
     __weak typeof(self) weakSelf = self;
     [self.imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         PAEBPhotoEditConfiguration *photoEditConfig = [[PAEBPhotoEditConfiguration alloc] init];
-        photoEditConfig.isRoundCliping = YES;
+//        photoEditConfig.isAvatarCliping = YES;
         photoEditConfig.onlyCliping = YES;
         PAEBPhotoEditViewController *ctl = [[PAEBPhotoEditViewController alloc] initWithConfiguration:photoEditConfig];
         ctl.delegate = weakSelf;

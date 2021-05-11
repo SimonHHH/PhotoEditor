@@ -40,8 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - < 裁剪相关 >
 
-/// 圆形裁剪框，只要裁剪功能
-@property (nonatomic, assign) BOOL isRoundCliping;
+/// 头像裁剪框，只要裁剪功能
+@property (nonatomic, assign) BOOL isAvatarCliping;
 
 @end
 

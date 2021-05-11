@@ -84,11 +84,6 @@ const CGFloat HXControlWidth = 30.f;
     _maskColor = maskColor;
     self.gridMaskLayer.maskColor = maskColor;
 }
-- (void)setIsRound:(BOOL)isRound {
-    _isRound = isRound;
-    self.gridLayer.isRound = isRound;
-    self.gridMaskLayer.isRound = isRound;
-}
 - (void)layoutSubviews {
     [super layoutSubviews];
     
@@ -187,6 +182,19 @@ const CGFloat HXControlWidth = 30.f;
     [self.gridLayer setGridRect:gridRect animated:animated completion:completion];
     if (isMaskLayer && _showMaskLayer) {
         [self.gridMaskLayer setMaskRect:gridRect animated:YES];
+    }
+}
+
+- (void)setIsAvatarClipping:(BOOL)isAvatarClipping {
+    _isAvatarClipping = isAvatarClipping;
+    if (isAvatarClipping) {
+        _aspectRatioSize = CGSizeMake(1.f, 1.f);
+        __weak typeof(self) weakSelf = self;
+        [self setGridRect:self.gridRect maskLayer:NO animated:NO completion:^(BOOL finished) {
+            if ([weakSelf.delegate respondsToSelector:@selector(gridViewDidAspectRatio:)]) {
+                [weakSelf.delegate gridViewDidAspectRatio:weakSelf];
+            }
+        }];
     }
 }
 

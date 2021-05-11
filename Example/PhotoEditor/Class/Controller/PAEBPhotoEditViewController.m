@@ -409,12 +409,11 @@
 }
 /** 开始编辑目标 */
 - (void)editingViewWillBeginEditing:(PAEBPhotoEditingView *)EditingView {
-
+    
 }
 /** 停止编辑目标 */
 - (void)editingViewDidEndEditing:(PAEBPhotoEditingView *)EditingView {
-    [UIView animateWithDuration:0.25f animations:^{
-    }];
+
     self.clippingToolBar.enableReset = self.editingView.canReset;
 }
 /** 进入剪切界面 */
@@ -566,6 +565,12 @@
         
         CGFloat lineWidth = self.configuration.brushLineWidth;
         _editingView.drawLineWidth = lineWidth;
+        
+        if (self.configuration.isAvatarCliping) {
+            _editingView.fixedAspectRatio = YES;
+            _editingView.isAvatarCliping = YES;
+        }
+        
         HXWeakSelf
         /** 模糊 */
         _editingView.clippingView.imageView.splashView.splashBegan = ^{
@@ -652,7 +657,6 @@
             }else if (tag == 2) {
                 // 还原
                 if (aspectRotioNone) {
-                    weakSelf.editingView.clippingView.fixedAspectRatio = NO;
                     [weakSelf.editingView resetToRridRectWithAspectRatioIndex:0];
                 }
                 [weakSelf.editingView reset];

@@ -71,11 +71,7 @@
     CGRect maskRect = self.maskRect;
     CGMutablePathRef mPath = CGPathCreateMutable();
     CGPathAddRect(mPath, NULL, self.bounds);
-    if (self.isRound) {
-        CGPathAddRoundedRect(mPath, NULL, maskRect, maskRect.size.width / 2.f, maskRect.size.height / 2.f);
-    } else {
-        CGPathAddRect(mPath, NULL, maskRect);
-    }
+    CGPathAddRect(mPath, NULL, maskRect);
     return mPath;
 }
 

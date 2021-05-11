@@ -63,9 +63,6 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
 /** 真实的图片尺寸 */
 @property (nonatomic, assign) CGSize imageSize;
 
-/** 默认长宽比例，执行一次 */
-@property (nonatomic, assign) NSInteger onceDefaultAspectRatioIndex;
-
 @property (nonatomic, assign) BOOL firstShow;
 @end
 @implementation PAEBPhotoEditingView
@@ -147,13 +144,13 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
 - (void)setConfiguration:(PAEBPhotoEditConfiguration *)configuration {
     _configuration = configuration;
     if (configuration.onlyCliping) {
-        self.gridView.isRound = configuration.isRoundCliping;
+        self.gridView.isAvatarClipping = configuration.isAvatarCliping;
     }
     self.clippingView.configuration = configuration;
 }
 
 - (UIEdgeInsets)refer_clippingInsets {
-    CGFloat top = PAEBHXClipZoom_margin + HXTopMargin;
+    CGFloat top = PAEBHXClipZoom_margin + HXTopMargin + 20;
     CGFloat left = PAEBHXClipZoom_margin;
     CGFloat bottom = self.editToolbarDefaultHeight + HXBottomMargin + 20;
     CGFloat right = PAEBHXClipZoom_margin;
@@ -348,12 +345,12 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
 
                 /** 显示多余部分 */
                 self.clippingView.clipsToBounds = NO;
-                if (self.onceDefaultAspectRatioIndex) {
+                if (self.isAvatarCliping) {
                     /** 代理优先执行，下面可能是编辑操作，gridView.gridRect会发生改变，影响计算结果 */
                     if ([self.clippingDelegate respondsToSelector:@selector(editingViewDidAppearClip:)]) {
                         [self.clippingDelegate editingViewDidAppearClip:self];
                     }
-                    self.onceDefaultAspectRatioIndex = 0;
+                    self.gridView.isAvatarClipping = YES;
                     self.gridView.maskColor = [[UIColor blackColor] colorWithAlphaComponent:0.6].CGColor;
                     hasOnceIndex = YES;
                 }else {
@@ -363,7 +360,7 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
                 [self.gridView.gridLayer setGridRect:self.gridView.gridRect animated:YES];
                 [UIView animateWithDuration:0.25f animations:^{
                     
-                    if (!self.onceDefaultAspectRatioIndex && !hasOnceIndex) {
+                    if (!self.isAvatarCliping && !hasOnceIndex) {
                         /** 处理缩放比例 */
                         [self gridViewDidAspectRatio:self.gridView];
                         /** 代理延迟执行，因为gridView.gridRect并没有发生改变，等待clippingView的大小调整后触发 */
@@ -391,11 +388,10 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
             /** 显示多余部分 */
             self.clippingView.clipsToBounds = NO;
             
-            if (self.onceDefaultAspectRatioIndex) {
+            if (self.isAvatarCliping) {
                 if ([self.clippingDelegate respondsToSelector:@selector(editingViewDidAppearClip:)]) {
                     [self.clippingDelegate editingViewDidAppearClip:self];
                 }
-                self.onceDefaultAspectRatioIndex = 0;
             } else {
                 /** 处理缩放比例 */
                 [self gridViewDidAspectRatio:self.gridView];
@@ -498,6 +494,7 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
             [self.clippingDelegate editingViewDidDisappearClip:self];
         }
         self.clippingView.imageView.stickerView.angle = self.clippingView.angle;
+        
     }
 }
 
@@ -514,7 +511,6 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
 }
 - (void)resetToRridRectWithAspectRatioIndex:(NSInteger)aspectRatioIndex {
     CGRect oldGridRect = self.gridView.gridRect;
-    self.onceDefaultAspectRatioIndex = 0;
     CGRect newGridRect = self.gridView.gridRect;
     BOOL isSame = CGRectEqualToRect(oldGridRect, newGridRect);
     if (!isSame && aspectRatioIndex != 0) {
@@ -532,7 +528,11 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
 - (void)reset {
     if (self.isClipping) {
         /** 若可以调整长宽比例，则重置它，否则保留默认值 */
-        [self.clippingView reset];
+        if (self.fixedAspectRatio) {
+            [self.clippingView resetToRect:self.gridView.gridRect];
+        } else {
+            [self.clippingView reset];
+        }
     }
 }
 
@@ -541,7 +541,11 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
 }
 - (BOOL)canReset {
     if (self.isClipping) {
-        return self.clippingView.canReset;
+        if (self.fixedAspectRatio) {
+            return [self.clippingView canResetWithRect:self.gridView.gridRect];
+        } else {
+            return self.clippingView.canReset;
+        }
     }
     return NO;
 }
@@ -553,10 +557,13 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
     }
 }
 
-/** 默认长宽比例 */
-- (void)setDefaultAspectRatioIndex:(NSUInteger)defaultAspectRatioIndex {
-    _defaultAspectRatioIndex = defaultAspectRatioIndex;
-    _onceDefaultAspectRatioIndex = defaultAspectRatioIndex;
+- (void)setFixedAspectRatio:(BOOL)fixedAspectRatio {
+    _fixedAspectRatio = fixedAspectRatio;
+    self.clippingView.fixedAspectRatio = fixedAspectRatio;
+}
+
+- (void)setIsAvatarCliping:(BOOL)isAvatarCliping {
+    _isAvatarCliping = isAvatarCliping;
 }
 
 - (void)setCustomRatioSize:(CGSize)customRatioSize {
@@ -607,7 +614,6 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
     
     NSInteger angle = labs(self.clippingView.angle);
     BOOL isHorizontal = NO;
-    BOOL isRoundCliping = self.configuration.isRoundCliping;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         /** 创建方法 */
         UIImage *(^ClipEditImage)(UIImage *) = ^UIImage * (UIImage *image) {
@@ -615,9 +621,6 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
             @autoreleasepool {
                 /** 剪裁图片 */
                 returnedImage = [image hx_cropInRect:clipRect];
-                if (isRoundCliping) {
-                    returnedImage = [returnedImage hx_roundClipingImage];
-                }
                 if (rotate > 0 || isHorizontal) {
                     /** 调整角度 */
                     if (angle == 0 || angle == 360) {
@@ -971,6 +974,11 @@ NSString *const kPAEBEditingViewData_clippingView = @"kPAEBEditingViewData_clipp
 #pragma mark - 数据
 - (NSDictionary *)photoEditData {
     NSMutableDictionary *data = [@{} mutableCopy];
+    
+    if (self.gridView.isAvatarClipping) {
+        NSDictionary *myData = @{kPAEBEditingViewData_gridView_aspectRatio:@(self.gridView.isAvatarClipping)};
+        [data setObject:myData forKey:kPAEBEditingViewData];
+    }
     
     NSDictionary *clippingViewData = self.clippingView.photoEditData;
     if (clippingViewData) {

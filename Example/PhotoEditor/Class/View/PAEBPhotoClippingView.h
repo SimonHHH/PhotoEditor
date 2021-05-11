@@ -57,6 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)rotateClockwise:(BOOL)clockwise;
 /** 还原 */
 - (void)reset;
+/** 还原到某个位置 */
+- (void)resetToRect:(CGRect)rect;
 /** 取消 */
 - (void)cancel;
 /** 数据 */

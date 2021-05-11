@@ -275,15 +275,6 @@ static CGRect swapWidthAndHeight(CGRect rect) {
     return smallImage;
 }
 
-- (UIImage *)hx_roundClipingImage {
-    UIGraphicsBeginImageContext(self.size);
-    UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, self.size.width, self.size.height)];
-    [path addClip];
-    [self drawAtPoint:CGPointZero];
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
 
 - (UIImage *)hx_normalizedImage {
     if (self.imageOrientation == UIImageOrientationUp) return self;

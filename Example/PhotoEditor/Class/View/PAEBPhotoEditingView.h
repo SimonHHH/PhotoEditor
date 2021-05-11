@@ -62,8 +62,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)canReset;
 /// 旋转
 - (void)rotate;
-/// 默认长宽比例
-@property (nonatomic, assign) NSUInteger defaultAspectRatioIndex;
+/// 头像裁剪
+@property (nonatomic, assign) BOOL isAvatarCliping;
+/// 固定长宽比例
+@property (nonatomic, assign) BOOL fixedAspectRatio;
 /// 自定义固定比例
 @property (nonatomic, assign) CGSize customRatioSize;
 /// 只要裁剪
