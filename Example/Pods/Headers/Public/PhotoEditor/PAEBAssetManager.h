@@ -1,0 +1,1 @@
+../../../../../PhotoEditor/Classes/PAEBAssetManager.h

@@ -9,14 +9,19 @@
     "file": "LICENSE"
   },
   "authors": {
-    "234539037@qq.com": "ex-huangxi001@pingan.com.cn"
+    "HuangXi": "234539037@qq.com"
   },
   "source": {
     "git": "https://github.com/234539037@qq.com/PhotoEditor.git",
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "9.0"
+    "ios": "8.0"
   },
-  "source_files": "PhotoEditor/Classes/**/*"
+  "source_files": "PhotoEditor/Classes/**/*",
+  "resource_bundles": {
+    "PhotoEditor": [
+      "PhotoEditor/Assets/*.*"
+    ]
+  }
 }

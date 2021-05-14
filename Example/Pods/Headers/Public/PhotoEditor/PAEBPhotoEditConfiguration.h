@@ -1,0 +1,1 @@
+../../../../../PhotoEditor/Classes/Model/PAEBPhotoEditConfiguration.h

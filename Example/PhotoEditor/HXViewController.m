@@ -15,6 +15,7 @@
 @property (nonatomic, strong) TZImagePickerController *imagePickerVc;
 @property (nonatomic, strong) PAEBPhotoEdit *photoEdit;
 @property (nonatomic, strong) PAEBPhotoModel *photoModel;
+@property (nonatomic, strong) UIImageView *showImgView;
 @end
 
 @implementation HXViewController
@@ -44,7 +45,7 @@
     __weak typeof(self) weakSelf = self;
     [self.imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
         PAEBPhotoEditConfiguration *photoEditConfig = [[PAEBPhotoEditConfiguration alloc] init];
-//        photoEditConfig.isAvatarCliping = YES;
+        photoEditConfig.isAvatarCliping = YES;
         photoEditConfig.onlyCliping = YES;
         PAEBPhotoEditViewController *ctl = [[PAEBPhotoEditViewController alloc] initWithConfiguration:photoEditConfig];
         ctl.delegate = weakSelf;
@@ -88,7 +89,28 @@
                     photoModel:(PAEBPhotoModel *)photoModel {
     _photoEdit = photoEdit;
     _photoModel = photoModel;
+    
+    self.showImgView.frame = UIScreen.mainScreen.bounds;
+    self.showImgView.image = photoEdit.editPreviewImage;
+    UIWindow *window = [[UIApplication sharedApplication].windows firstObject];
+    [window addSubview:self.showImgView];
+    
     NSLog(@"Finish");
+}
+
+- (void)clickImage:(UITapGestureRecognizer *)tap {
+    [_showImgView removeFromSuperview];
+}
+
+- (UIImageView *)showImgView {
+    if (!_showImgView) {
+        _showImgView = [[UIImageView alloc] init];
+        _showImgView.contentMode = UIViewContentModeScaleAspectFit;
+        _showImgView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickImage:)];
+        [_showImgView addGestureRecognizer:tap];
+    }
+    return _showImgView;
 }
 
 @end
