@@ -20,12 +20,12 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 TODO: Add long description of the pod here.
                        DESC
-
-  s.homepage         = 'https://github.com/234539037@qq.com/PhotoEditor'
+                       
+  s.homepage         = 'https://github.com/SimonHHH/PhotoEditor'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'HuangXi' => '234539037@qq.com' }
-  s.source           = { :git => 'https://github.com/234539037@qq.com/PhotoEditor.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/SimonHHH/PhotoEditor.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
