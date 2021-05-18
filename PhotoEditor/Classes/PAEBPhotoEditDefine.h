@@ -12,15 +12,10 @@
 #define HX_ScreenWidth [UIScreen mainScreen].bounds.size.width
 #define HX_ScreenHeight [UIScreen mainScreen].bounds.size.height
 
-#define HXStatusBarHeight \
-^(){\
-if (@available(iOS 13.0, *)) {\
-    UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager;\
-    return statusBarManager.statusBarFrame.size.height;\
-} else {\
-    return [UIApplication sharedApplication].statusBarFrame.size.height;\
-}\
-}()
+#define HX_SafeAreaHeight  ({int tmp = 0;if (@available(iOS 11.0, *)) {tmp = [UIApplication sharedApplication].keyWindow.safeAreaInsets.bottom;}tmp;})
+#define HX_IsIphoneX  ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) || CGSizeEqualToSize(CGSizeMake(828, 1792),  [[UIScreen mainScreen] currentMode].size) || CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) || HX_SafeAreaHeight : NO)
+
+#define HXStatusBarHeight HX_IsIphoneX ? 44.0 : 20.0
 
 #define HXNavigationBarHeight HXStatusBarHeight + 44.0
 

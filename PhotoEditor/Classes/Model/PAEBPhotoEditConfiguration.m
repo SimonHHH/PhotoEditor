@@ -8,6 +8,7 @@
 
 #import "PAEBPhotoEditConfiguration.h"
 #import "UIColor+HXExtension.h"
+#import "UIFont+HXExtension.h"
 
 #define kPAEBPhotoEditColorArr @[[UIColor hx_colorWithHexStr:@"#ffffff"], [UIColor hx_colorWithHexStr:@"#000000"], [UIColor hx_colorWithHexStr:@"#FF0000"], [UIColor hx_colorWithHexStr:@"#FFB112"], [UIColor hx_colorWithHexStr:@"#00BDAE"], [UIColor hx_colorWithHexStr:@"#0F76FF"], [UIColor hx_colorWithHexStr:@"#AC1CFF"]]
 
@@ -41,7 +42,7 @@
 }
 - (UIFont *)textFont {
     if (!_textFont) {
-        _textFont = [UIFont boldSystemFontOfSize:25];
+        _textFont = [UIFont hx_boldPingFangOfSize:25];
     }
     return _textFont;
 }

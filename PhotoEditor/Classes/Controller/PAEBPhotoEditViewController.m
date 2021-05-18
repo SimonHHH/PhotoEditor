@@ -73,6 +73,13 @@
     return self;
 }
 
+
+// 屏幕的哪些边缘不需要首先响应系统手势
+- (UIRectEdge)preferredScreenEdgesDeferringSystemGestures {
+    return UIRectEdgeAll;
+}
+
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     if (self.requestId) {
@@ -83,11 +90,6 @@
     [super viewWillAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES];
-    
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored"-Wdeprecated-declarations"
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-#pragma clang diagnostic pop
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -170,7 +172,7 @@
 }
 
 - (void)hiddenTopBottomView {
-    self.backBtn.hx_y = HXNavigationBarHeight - 20 - self.backBtn.hx_h - 13;
+    self.backBtn.hx_y = HXNavigationBarHeight - self.backBtn.hx_h - 13;
     self.clippingToolBar.hx_y = self.view.hx_h;
     self.toolsView.hx_y = self.view.hx_h;
 }
@@ -197,7 +199,7 @@
     
     self.mosaicView.frame = CGRectMake(leftMargin, self.toolsView.hx_y - HXmosaicViewHeight, self.view.hx_w, HXmosaicViewHeight);
     self.topMaskView.frame = CGRectMake(0, 0, HX_ScreenWidth, HXNavigationBarHeight);
-    self.topMaskLayer.frame = CGRectMake(0, 0, HX_ScreenWidth, HXNavigationBarHeight + 30.f);
+    self.topMaskLayer.frame = self.topMaskView.frame;
 
     self.bottomMaskView.frame = CGRectMake(0, HX_ScreenHeight - HXBottomMargin - 120, HX_ScreenWidth, HXBottomMargin + 120);
     self.bottomMaskLayer.frame = self.bottomMaskView.bounds;
@@ -682,10 +684,24 @@
 - (UIView *)topMaskView {
     if (!_topMaskView) {
         _topMaskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, HX_ScreenWidth, HXNavigationBarHeight)];
-        self.topMaskLayer.frame = CGRectMake(0, 0, HX_ScreenWidth, HXNavigationBarHeight + 30.f);
+        self.topMaskLayer.frame = CGRectMake(0, 0, HX_ScreenWidth, HXNavigationBarHeight);
         [_topMaskView.layer addSublayer:self.topMaskLayer];
     }
     return _topMaskView;
+}
+
+- (CAGradientLayer *)topMaskLayer {
+    if (!_topMaskLayer) {
+        _topMaskLayer = [CAGradientLayer layer];
+        _topMaskLayer.colors = @[
+                                (id)[[UIColor blackColor] colorWithAlphaComponent:0.4].CGColor,
+                                (id)[[UIColor blackColor] colorWithAlphaComponent:0].CGColor];
+        _topMaskLayer.startPoint = CGPointMake(0, 0);
+        _topMaskLayer.endPoint = CGPointMake(0, 1);
+        _topMaskLayer.locations = @[@(0),@(1.f)];
+        _topMaskLayer.borderWidth  = 0.0;
+    }
+    return _topMaskLayer;
 }
 
 - (UIView *)bottomMaskView {
@@ -703,8 +719,7 @@
         _bottomMaskLayer = [CAGradientLayer layer];
         _bottomMaskLayer.colors = @[
                                     (id)[[UIColor blackColor] colorWithAlphaComponent:0].CGColor,
-                                    (id)[[UIColor blackColor] colorWithAlphaComponent:0.4].CGColor
-                                    ];
+                                    (id)[[UIColor blackColor] colorWithAlphaComponent:0.4].CGColor];
         _bottomMaskLayer.startPoint = CGPointMake(0, 0);
         _bottomMaskLayer.endPoint = CGPointMake(0, 1);
         _bottomMaskLayer.locations = @[@(0),@(1.f)];
@@ -721,7 +736,8 @@
 }
 
 - (void)setEditImage:(UIImage *)editImage {
-    _editImage = HX_UIImageDecodedCopy(editImage);
+//    _editImage = HX_UIImageDecodedCopy(editImage);
+    _editImage = editImage;
 }
 
 - (void)setPhotoEdit:(PAEBPhotoEdit *)photoEdit {
