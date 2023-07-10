@@ -22,7 +22,7 @@ pod 'PhotoEditor'
 
 ## Author
 
-234539037@qq.com, ex-huangxi001@pingan.com.cn
+234539037@qq.com
 
 ## License
 
